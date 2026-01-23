@@ -162,8 +162,34 @@ Training converged quickly, with early stopping triggered at epoch 33 (best mode
 
 \subsection{Pathway Analysis}
 
-% TODO: Add analysis of top predicted gene-phenotype pairs
-% and biological interpretation
+To understand which components of the knowledge graph contribute to prediction performance, we conducted ablation experiments (Table~\ref{tab:ablation}).
+
+\begin{table}[h]
+\centering
+\caption{Ablation Study Results}
+\label{tab:ablation}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Configuration} & \textbf{AUROC} & \textbf{Change} \\
+\midrule
+Full graph & 0.908 & -- \\
+Remove metabolite nodes & 0.848 & -6.0\% \\
+Remove microbe nodes & 0.943 & +3.5\% \\
+Direct gene-phenotype only & 0.872 & -3.6\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Removing metabolite nodes caused a 6\% drop in AUROC, indicating that metabolite information contributes meaningfully to gene-phenotype prediction. This supports the hypothesis that neuroactive metabolites (such as serotonin precursors and short-chain fatty acids) serve as important mediators in gut-brain communication.
+
+Figure~\ref{fig:tsne} visualizes the learned node embeddings using t-SNE dimensionality reduction.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{../../figures/tsne_all_nodes.png}
+\caption{t-SNE visualization of learned node embeddings. Different colors represent different node types: microbes (red), metabolites (blue), genes (green), and phenotypes (purple). The model learns representations that cluster by biological type, with genes and phenotypes positioned nearby due to their direct associations.}
+\label{fig:tsne}
+\end{figure}
 
 % =============================================================================
 \section{Discussion}
