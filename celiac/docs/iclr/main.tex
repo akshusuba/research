@@ -168,6 +168,15 @@ MLP & 0.743 & 0.701 \\
 
 \subsection{Embedding Analysis}
 
+Figure~\ref{fig:training} shows the training dynamics. The model converges quickly, with validation AUROC reaching 0.99 by epoch 13.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../../figures/gene_phenotype_training.png}
+\caption{Training dynamics of the HetGNN. \textbf{Left:} Training loss decreases rapidly, indicating effective learning of the heterogeneous graph structure. \textbf{Right:} Validation AUROC and AUPRC plateau near 0.99, with test performance (dashed red line) at 0.958 AUROC. Early stopping triggered at epoch 33 (best model at epoch 13).}
+\label{fig:training}
+\end{figure}
+
 % TODO: Add t-SNE visualization of learned embeddings
 % TODO: Show clustering by biological pathway
 

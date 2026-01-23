@@ -153,6 +153,13 @@ AUPRC & 0.985 & 0.906 \\
 
 Training converged quickly, with early stopping triggered at epoch 33 (best model at epoch 13). Figure~\ref{fig:training} shows the training curves.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../../figures/gene_phenotype_training.png}
+\caption{Training dynamics of the heterogeneous GNN. \textbf{Left:} Training loss decreases rapidly over epochs, indicating effective learning. \textbf{Right:} Validation AUROC and AUPRC plateau near 0.99, with test performance (dashed red line) at 0.958 AUROC. The model was selected at epoch 13 based on best validation AUROC.}
+\label{fig:training}
+\end{figure}
+
 \subsection{Pathway Analysis}
 
 % TODO: Add analysis of top predicted gene-phenotype pairs

@@ -178,6 +178,15 @@ Direct gene-phenotype only & -- & -- \\
 
 \subsection{Attention Analysis}
 
+Figure~\ref{fig:training} shows model training dynamics. Rapid convergence suggests the graph structure provides strong inductive bias for gene-phenotype prediction.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../../figures/gene_phenotype_training.png}
+\caption{Training dynamics. \textbf{Left:} Loss decreases rapidly over epochs. \textbf{Right:} Validation metrics plateau near 0.99; test AUROC (dashed) is 0.958. The gap between 1-layer (0.892) and 2-layer (0.958) models suggests multi-hop paths are utilized.}
+\label{fig:training}
+\end{figure}
+
 % TODO: Visualize attention weights on edges
 % Show which metabolite pathways are most attended for neurological phenotypes
 
