@@ -8,6 +8,8 @@ from .gcs_storage import (
     backup_models_to_gcs,
     restore_models_from_gcs,
     ModelCheckpointer,
+    setup_gcs_credentials,
+    get_gcs_bucket,
 )
 
 __all__ = [
@@ -18,4 +20,6 @@ __all__ = [
     'backup_models_to_gcs',
     'restore_models_from_gcs',
     'ModelCheckpointer',
+    'setup_gcs_credentials',
+    'get_gcs_bucket',
 ]

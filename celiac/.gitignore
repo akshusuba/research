@@ -34,3 +34,7 @@ data/raw/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# GCS credentials
+gcs.json
+*.json.key

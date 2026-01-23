@@ -19,6 +19,26 @@ import shutil
 # Default GCS bucket for celiac models
 DEFAULT_BUCKET = "celiac-gut-brain-models"
 
+# Path to service account credentials
+CREDENTIALS_PATH = Path("/home/elrarun/research/celiac/gcs.json")
+
+
+def setup_gcs_credentials() -> bool:
+    """
+    Set up GCS credentials from service account JSON file.
+
+    Returns:
+        True if credentials were set up successfully
+    """
+    if CREDENTIALS_PATH.exists():
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(CREDENTIALS_PATH)
+        return True
+    return False
+
+
+# Auto-setup credentials on import
+setup_gcs_credentials()
+
 
 def get_gcs_bucket() -> str:
     """Get GCS bucket name from environment or default."""
