@@ -1,0 +1,2 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+serotonin,2,SLC6A4,9,high,KEGG,1.0

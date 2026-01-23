@@ -1,0 +1,3 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+kynurenic_acid,10,IDO1,8,medium,KEGG,0.6
+quinolinic_acid,11,IDO1,8,medium,KEGG,0.6

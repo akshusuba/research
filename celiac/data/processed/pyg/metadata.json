@@ -1,0 +1,107 @@
+{
+  "node_types": [
+    "microbe",
+    "metabolite",
+    "gene",
+    "phenotype"
+  ],
+  "edge_types": [
+    [
+      "microbe",
+      "metabolizes",
+      "metabolite"
+    ],
+    [
+      "microbe",
+      "produces",
+      "metabolite"
+    ],
+    [
+      "microbe",
+      "modulates",
+      "metabolite"
+    ],
+    [
+      "microbe",
+      "promotes",
+      "metabolite"
+    ],
+    [
+      "metabolite",
+      "substrate_of",
+      "gene"
+    ],
+    [
+      "metabolite",
+      "transported_by",
+      "gene"
+    ],
+    [
+      "metabolite",
+      "activates",
+      "gene"
+    ],
+    [
+      "metabolite",
+      "product_of",
+      "gene"
+    ],
+    [
+      "metabolite",
+      "downstream_of",
+      "gene"
+    ],
+    [
+      "metabolite",
+      "induces",
+      "gene"
+    ],
+    [
+      "gene",
+      "associated_with",
+      "phenotype"
+    ]
+  ],
+  "stats": {
+    "node_counts": {
+      "microbe": 14,
+      "metabolite": 12,
+      "gene": 113,
+      "phenotype": 86
+    },
+    "edge_counts": {
+      "('microbe', 'metabolizes', 'metabolite')": 3,
+      "('microbe', 'produces', 'metabolite')": 15,
+      "('microbe', 'modulates', 'metabolite')": 1,
+      "('microbe', 'promotes', 'metabolite')": 2,
+      "('metabolite', 'substrate_of', 'gene')": 3,
+      "('metabolite', 'transported_by', 'gene')": 1,
+      "('metabolite', 'activates', 'gene')": 12,
+      "('metabolite', 'product_of', 'gene')": 1,
+      "('metabolite', 'downstream_of', 'gene')": 2,
+      "('metabolite', 'induces', 'gene')": 2,
+      "('gene', 'associated_with', 'phenotype')": 187
+    },
+    "total_nodes": 225,
+    "total_edges": 229
+  },
+  "node_counts": {
+    "microbe": 14,
+    "metabolite": 12,
+    "gene": 113,
+    "phenotype": 86
+  },
+  "edge_counts": {
+    "microbe_metabolizes_metabolite": 3,
+    "microbe_produces_metabolite": 15,
+    "microbe_modulates_metabolite": 1,
+    "microbe_promotes_metabolite": 2,
+    "metabolite_substrate_of_gene": 3,
+    "metabolite_transported_by_gene": 1,
+    "metabolite_activates_gene": 12,
+    "metabolite_product_of_gene": 1,
+    "metabolite_downstream_of_gene": 2,
+    "metabolite_induces_gene": 2,
+    "gene_associated_with_phenotype": 187
+  }
+}

@@ -1,0 +1,3 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+Escherichia,1,kynurenine,4,medium,Kennedy 2017,0.6
+Klebsiella,6,kynurenine,4,low,inferred,0.3

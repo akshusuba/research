@@ -1,0 +1,13 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+serotonin,2,HTR1A,10,high,KEGG,1.0
+serotonin,2,HTR2A,11,high,KEGG,1.0
+butyrate,5,FFAR2,12,high,Brown 2003,1.0
+butyrate,5,FFAR3,13,high,Brown 2003,1.0
+propionate,7,FFAR2,12,high,Brown 2003,1.0
+propionate,7,FFAR3,13,high,Brown 2003,1.0
+acetate,6,FFAR2,12,high,Brown 2003,1.0
+LPS,9,TLR4,14,high,textbook,1.0
+LPS,9,NFKB1,17,high,textbook,1.0
+GABA,8,GABRA1,18,high,textbook,1.0
+indole,1,AHR,19,high,Zelante 2013,1.0
+indole-3-propionic_acid,3,AHR,19,medium,Zelante 2013,0.6

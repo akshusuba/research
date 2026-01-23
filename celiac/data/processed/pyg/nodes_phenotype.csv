@@ -1,0 +1,87 @@
+node_id,node_idx,label,neurological
+HP:0001251,0,Ataxia,True
+HP:0001271,1,Polyneuropathy,True
+HP:0002354,2,Memory impairment,True
+HP:0000708,3,Atypical behavior,True
+HP:0002076,4,Migraine,True
+HP:0001250,5,Seizures,True
+HP:0100543,6,Cognitive impairment,True
+HP:0002078,7,Truncal ataxia,True
+HP:0007340,8,Lower limb muscle weakness,True
+HP:0009830,9,Peripheral neuropathy,True
+HP:0001288,10,Gait disturbance,True
+HP:0001260,11,Dysarthria,True
+HP:0002080,12,Intention tremor,True
+HP:0001272,13,Cerebellar atrophy,True
+HP:0000006,14,Autosomal dominant inheritance,False
+HP:0003487,15,Babinski sign,False
+HP:0003677,16,Slowly progressive,False
+HP:0001347,17,Hyperreflexia,False
+HP:0001310,18,Dysmetria,False
+HP:0010831,19,Impaired proprioception,False
+HP:0000467,20,Neck muscle weakness,False
+HP:0003596,21,Middle age onset,False
+HP:0002311,22,Incoordination,False
+HP:0002505,23,Loss of ambulation,False
+HP:0000473,24,Torticollis,False
+HP:0000514,25,Slow saccadic eye movements,False
+HP:0007024,26,Pseudobulbar paralysis,False
+HP:0003281,27,Increased circulating ferritin concentration,False
+HP:0001894,28,Thrombocytosis,False
+HP:0001744,29,Splenomegaly,False
+HP:0001903,30,Anemia,False
+HP:0012156,31,Hemophagocytosis,False
+HP:0000007,32,Autosomal recessive inheritance,False
+HP:0001876,33,Pancytopenia,False
+HP:0001974,34,Increased total leukocyte count,False
+HP:0003593,35,Infantile onset,False
+HP:0001945,36,Fever,False
+HP:0020086,37,BCGitis,False
+HP:0001508,38,Failure to thrive,False
+HP:0020087,39,BCGosis,False
+HP:0001433,40,Hepatosplenomegaly,False
+HP:0000988,41,Skin rash,False
+HP:0002014,42,Diarrhea,False
+HP:0200067,43,Recurrent spontaneous abortion,False
+HP:0003118,44,Increased circulating cortisol level,False
+HP:0001596,45,Alopecia,False
+HP:0006510,46,Chronic pulmonary obstruction,False
+HP:0001581,47,Recurrent skin infections,False
+HP:0004313,48,Decreased circulating immunoglobulin concentration,False
+HP:0002582,49,Atrophic gastritis,False
+HP:0011463,50,Childhood onset,False
+HP:0003581,51,Adult onset,False
+HP:0011108,52,Recurrent sinusitis,False
+HP:0002110,53,Bronchiectasis,False
+HP:0001873,54,Thrombocytopenia,False
+HP:0003621,55,Juvenile onset,False
+HP:0025452,56,Pyoderma gangrenosum,False
+HP:0005387,57,Combined immunodeficiency,False
+HP:0001890,58,Autoimmune hemolytic anemia,False
+HP:0006532,59,Recurrent pneumonia,False
+HP:0005425,60,Recurrent sinopulmonary infections,False
+HP:0002719,61,Recurrent infections,False
+HP:0010852,62,EEG with photoparoxysmal response,False
+HP:0001249,63,Intellectual disability,False
+HP:0032794,64,Myoclonic seizure,False
+HP:0010819,65,Atonic seizure,False
+HP:0002373,66,Febrile seizure (within the age range of 3 months to 6 years),False
+HP:0010850,67,EEG with spike-wave complexes,False
+HP:0001263,68,Global developmental delay,False
+HP:0200134,69,Epileptic encephalopathy,False
+HP:0002121,70,Generalized non-motor (absence) seizure,False
+HP:0006813,71,Focal hemiclonic seizure,False
+HP:0002384,72,Focal impaired awareness seizure,False
+HP:0002133,73,Status epilepticus,False
+HP:0007688,74,Undetectable light- and dark-adapted electroretinogram,False
+HP:0000510,75,Rod-cone dystrophy,False
+HP:0007663,76,Reduced visual acuity,False
+HP:0011462,77,Young adult onset,False
+HP:0007737,78,Bone spicule pigmentation of the retina,False
+HP:0001133,79,Constriction of peripheral visual field,False
+HP:0000543,80,Optic disc pallor,False
+HP:0007675,81,Progressive night blindness,False
+HP:0000662,82,Nyctalopia,False
+HP:0000575,83,Scotoma,False
+HP:0000545,84,Myopia,False
+HP:0007843,85,Attenuation of retinal blood vessels,False

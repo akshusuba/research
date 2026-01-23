@@ -1,0 +1,22 @@
+metabolite,gene,relation,evidence,source
+tryptophan,TPH1,substrate_of,high,KEGG
+tryptophan,TPH2,substrate_of,high,KEGG
+tryptophan,IDO1,substrate_of,high,KEGG
+serotonin,SLC6A4,transported_by,high,KEGG
+serotonin,HTR1A,activates,high,KEGG
+serotonin,HTR2A,activates,high,KEGG
+kynurenine,IDO1,product_of,high,KEGG
+kynurenic_acid,IDO1,downstream_of,medium,KEGG
+quinolinic_acid,IDO1,downstream_of,medium,KEGG
+butyrate,FFAR2,activates,high,Brown 2003
+butyrate,FFAR3,activates,high,Brown 2003
+propionate,FFAR2,activates,high,Brown 2003
+propionate,FFAR3,activates,high,Brown 2003
+acetate,FFAR2,activates,high,Brown 2003
+LPS,TLR4,activates,high,textbook
+LPS,NFKB1,activates,high,textbook
+LPS,TNF,induces,high,textbook
+LPS,IL6,induces,high,textbook
+GABA,GABRA1,activates,high,textbook
+indole,AHR,activates,high,Zelante 2013
+indole-3-propionic_acid,AHR,activates,medium,Zelante 2013

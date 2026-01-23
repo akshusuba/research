@@ -1,0 +1,22 @@
+microbe,metabolite,relation,evidence,source
+Bifidobacterium,tryptophan,metabolizes,high,Gao 2018
+Bifidobacterium,indole,produces,medium,Roager 2018
+Lactobacillus,tryptophan,metabolizes,high,Gao 2018
+Lactobacillus,serotonin,modulates,medium,Yano 2015
+Escherichia,indole,produces,high,Lee 2015
+Escherichia,tryptophan,metabolizes,high,Agus 2018
+Bacteroides,indole-3-propionic_acid,produces,medium,Dodd 2017
+Escherichia,kynurenine,promotes,medium,Kennedy 2017
+Klebsiella,kynurenine,promotes,low,inferred
+Faecalibacterium,butyrate,produces,high,Louis 2014
+Blautia,acetate,produces,high,Louis 2014
+Blautia,butyrate,produces,medium,Louis 2014
+Dorea,acetate,produces,medium,Louis 2014
+Bacteroides,propionate,produces,high,Louis 2014
+Bacteroides,acetate,produces,high,Louis 2014
+Prevotella,propionate,produces,medium,Chen 2017
+Lactobacillus,GABA,produces,high,Barrett 2012
+Bifidobacterium,GABA,produces,high,Barrett 2012
+Escherichia,LPS,produces,high,textbook
+Klebsiella,LPS,produces,high,textbook
+Pseudomonas,LPS,produces,high,textbook

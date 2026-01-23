@@ -1,0 +1,3 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+LPS,9,TNF,16,high,textbook,1.0
+LPS,9,IL6,15,high,textbook,1.0

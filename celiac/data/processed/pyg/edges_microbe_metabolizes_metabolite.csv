@@ -1,0 +1,4 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+Bifidobacterium,8,tryptophan,0,high,Gao 2018,1.0
+Lactobacillus,9,tryptophan,0,high,Gao 2018,1.0
+Escherichia,1,tryptophan,0,high,Agus 2018,1.0

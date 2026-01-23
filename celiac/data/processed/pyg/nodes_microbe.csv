@@ -1,0 +1,15 @@
+node_id,node_idx,ced_specific,direction,source
+Bacteroides,0,True,enriched,Arcila-Galvis 2022
+Escherichia,1,True,enriched,Arcila-Galvis 2022
+Staphylococcus,2,True,enriched,Arcila-Galvis 2022
+Neisseria,3,True,enriched,Arcila-Galvis 2022
+Haemophilus,4,True,enriched,Arcila-Galvis 2022
+Prevotella,5,True,enriched,Arcila-Galvis 2022
+Klebsiella,6,True,enriched,Caminero 2019
+Pseudomonas,7,True,enriched,Caminero 2019
+Bifidobacterium,8,True,depleted,Arcila-Galvis 2022
+Lactobacillus,9,True,depleted,Arcila-Galvis 2022
+Streptococcus,10,True,depleted,Arcila-Galvis 2022
+Faecalibacterium,11,True,depleted,Arcila-Galvis 2022
+Blautia,12,True,depleted,Wacklin 2014
+Dorea,13,True,depleted,Wacklin 2014

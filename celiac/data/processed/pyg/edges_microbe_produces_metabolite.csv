@@ -1,0 +1,16 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+Bifidobacterium,8,indole,1,medium,Roager 2018,0.6
+Escherichia,1,indole,1,high,Lee 2015,1.0
+Bacteroides,0,indole-3-propionic_acid,3,medium,Dodd 2017,0.6
+Faecalibacterium,11,butyrate,5,high,Louis 2014,1.0
+Blautia,12,acetate,6,high,Louis 2014,1.0
+Blautia,12,butyrate,5,medium,Louis 2014,0.6
+Dorea,13,acetate,6,medium,Louis 2014,0.6
+Bacteroides,0,propionate,7,high,Louis 2014,1.0
+Bacteroides,0,acetate,6,high,Louis 2014,1.0
+Prevotella,5,propionate,7,medium,Chen 2017,0.6
+Lactobacillus,9,GABA,8,high,Barrett 2012,1.0
+Bifidobacterium,8,GABA,8,high,Barrett 2012,1.0
+Escherichia,1,LPS,9,high,textbook,1.0
+Klebsiella,6,LPS,9,high,textbook,1.0
+Pseudomonas,7,LPS,9,high,textbook,1.0

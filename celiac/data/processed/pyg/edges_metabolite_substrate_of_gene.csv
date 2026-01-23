@@ -1,0 +1,4 @@
+src_id,src_idx,dst_id,dst_idx,evidence,source,weight
+tryptophan,0,TPH1,6,high,KEGG,1.0
+tryptophan,0,TPH2,7,high,KEGG,1.0
+tryptophan,0,IDO1,8,high,KEGG,1.0
