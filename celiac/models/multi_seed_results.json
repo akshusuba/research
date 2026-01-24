@@ -1,0 +1,98 @@
+{
+  "timestamp": "2026-01-24T03:50:01.436153",
+  "config": {
+    "hidden_channels": 64,
+    "num_layers": 2,
+    "dropout": 0.3,
+    "lr": 0.01,
+    "epochs": 100,
+    "patience": 20
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    42,
+    123
+  ],
+  "results": {
+    "auroc": {
+      "mean": 0.866326530612245,
+      "std": 0.07542742290847484,
+      "values": [
+        0.9119897959183674,
+        0.9247448979591837,
+        0.7181122448979591,
+        0.8903061224489796,
+        0.8864795918367346
+      ]
+    },
+    "auprc": {
+      "mean": 0.8505767712722875,
+      "std": 0.07261019439520704,
+      "values": [
+        0.8976502915114299,
+        0.946684709945171,
+        0.7310499252398707,
+        0.8518283063177587,
+        0.8256706233472073
+      ]
+    },
+    "val_auroc": {
+      "mean": 0.903954081632653,
+      "std": 0.04487838743176534,
+      "values": [
+        0.8852040816326531,
+        0.9579081632653061,
+        0.8278061224489797,
+        0.9336734693877551,
+        0.9151785714285715
+      ]
+    },
+    "val_auprc": {
+      "mean": 0.9127942443923885,
+      "std": 0.04624738415284793,
+      "values": [
+        0.8306128602726108,
+        0.9655979345761293,
+        0.8988608800635293,
+        0.9376144683370707,
+        0.9312850787126028
+      ]
+    },
+    "best_epoch": {
+      "mean": 22.2,
+      "std": 16.12947612292476,
+      "values": [
+        14,
+        6,
+        8,
+        45,
+        38
+      ]
+    }
+  },
+  "kg_stats": {
+    "total_nodes": 225,
+    "total_edges": 229,
+    "node_types": {
+      "microbe": 14,
+      "metabolite": 12,
+      "gene": 113,
+      "phenotype": 86
+    },
+    "edge_types": {
+      "('microbe', 'metabolizes', 'metabolite')": 3,
+      "('microbe', 'produces', 'metabolite')": 15,
+      "('microbe', 'modulates', 'metabolite')": 1,
+      "('microbe', 'promotes', 'metabolite')": 2,
+      "('metabolite', 'substrate_of', 'gene')": 3,
+      "('metabolite', 'transported_by', 'gene')": 1,
+      "('metabolite', 'activates', 'gene')": 12,
+      "('metabolite', 'product_of', 'gene')": 1,
+      "('metabolite', 'downstream_of', 'gene')": 2,
+      "('metabolite', 'induces', 'gene')": 2,
+      "('gene', 'associated_with', 'phenotype')": 187
+    }
+  }
+}
