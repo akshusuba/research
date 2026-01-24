@@ -79,7 +79,7 @@ We constructed a heterogeneous knowledge graph integrating four biological entit
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.85\textwidth]{../../figures/kg_schema.png}
+\includegraphics[width=0.85\textwidth]{kg_schema.png}
 \caption{Knowledge graph schema showing the four node types (Microbe, Metabolite, Gene, Phenotype) and their relationships. Edges represent biological interactions such as metabolite production by microbes, gene activation by metabolites, and gene-phenotype associations from the Monarch Initiative.}
 \label{fig:kg_schema}
 \end{figure}
@@ -190,7 +190,7 @@ Figure~\ref{fig:kg_stats} illustrates the distribution of nodes and edges in our
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{../../figures/kg_statistics.png}
+\includegraphics[width=\textwidth]{kg_statistics.png}
 \caption{Knowledge graph composition. \textbf{(a)} Node type distribution showing genes as the largest category. \textbf{(b)} Edge type distribution showing gene-phenotype associations as the dominant edge type, with microbe-metabolite and metabolite-gene edges providing multi-hop connectivity.}
 \label{fig:kg_stats}
 \end{figure}
@@ -225,7 +225,7 @@ Training converged rapidly, with early stopping triggered at a mean of $22.2 \pm
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{../../figures/training_curves.png}
+\includegraphics[width=\textwidth]{training_curves.png}
 \caption{Training dynamics. \textbf{(a)} Training loss decreases rapidly, indicating effective optimization. \textbf{(b)} Validation AUROC and AUPRC converge to high values, with the best model selected by early stopping. Test AUROC (dashed line) closely matches validation performance.}
 \label{fig:training}
 \end{figure}
@@ -252,7 +252,7 @@ Direct gene-phenotype only & $0.850 \pm 0.061$ & $0.841 \pm 0.096$ & $-6.0\%$ \\
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.85\textwidth]{../../figures/ablation_results.png}
+\includegraphics[width=0.85\textwidth]{ablation_results.png}
 \caption{Ablation study results showing the impact of removing node types on prediction performance. Removing metabolites causes a 4.8\% decrease in AUROC, while removing all intermediates (direct gene-phenotype only) causes a 6.0\% decrease. Error bars indicate standard deviation across 5 random seeds.}
 \label{fig:ablation}
 \end{figure}
@@ -273,7 +273,7 @@ Figure~\ref{fig:tsne} visualizes the learned node embeddings using t-SNE dimensi
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{../../figures/tsne_embeddings.png}
+\includegraphics[width=0.75\textwidth]{tsne_embeddings.png}
 \caption{t-SNE visualization of learned node embeddings after training. Different colors represent different node types. The model learns to cluster similar entities while positioning genes and phenotypes nearby, reflecting their biological associations.}
 \label{fig:tsne}
 \end{figure}
