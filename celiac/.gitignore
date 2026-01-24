@@ -38,3 +38,5 @@ data/raw/
 # GCS credentials
 gcs.json
 *.json.key
+gcs.json
+*.json
