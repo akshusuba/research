@@ -1,0 +1,25 @@
+{
+  "name": "exp04_connectome",
+  "task": "graph-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 1.0,
+    "acc": 1.0,
+    "f1": 1.0,
+    "conv": "gcn"
+  },
+  "mlp": {
+    "auc": 0.4944453137224222,
+    "acc": 0.5,
+    "f1": 0.4520547945205479
+  },
+  "xgboost": {
+    "auc": 0.48677828195900485,
+    "acc": 0.46875,
+    "f1": 0.46540880503144655
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.5055546862775778,
+  "notes": "Modular vs degraded brain connectivity at matched edge density; node-feature marginals identical across classes, so only the edge-reading GNN detects loss of modularity.",
+  "ts": "2026-06-13 07:34:16"
+}

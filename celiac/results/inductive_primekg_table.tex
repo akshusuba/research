@@ -1,0 +1,15 @@
+\begin{tabular}{llccccc}
+\toprule
+Regime & Model & AUROC & AUPRC & HITS@10 & MRR & F1 \\
+\midrule
+transductive & Feature-GNN (ours) & 0.866 $\pm$ 0.016 & 0.835 $\pm$ 0.025 & 0.021 $\pm$ 0.002 & 0.015 $\pm$ 0.001 & 0.847 $\pm$ 0.007 \\
+transductive & Feature-MLP (no graph) & 0.929 $\pm$ 0.004 & 0.913 $\pm$ 0.004 & 0.024 $\pm$ 0.000 & 0.015 $\pm$ 0.000 & 0.867 $\pm$ 0.004 \\
+transductive & Embed-GNN & 0.888 $\pm$ 0.007 & 0.861 $\pm$ 0.009 & 0.023 $\pm$ 0.002 & 0.015 $\pm$ 0.000 & 0.845 $\pm$ 0.012 \\
+transductive & Embed-Lookup (no graph) & 0.884 $\pm$ 0.007 & 0.862 $\pm$ 0.012 & 0.022 $\pm$ 0.002 & 0.015 $\pm$ 0.000 & 0.842 $\pm$ 0.011 \\
+\midrule
+inductive & Feature-GNN (ours) & 0.635 $\pm$ 0.078 & 0.675 $\pm$ 0.057 & 0.021 $\pm$ 0.004 & 0.013 $\pm$ 0.002 & 0.678 $\pm$ 0.014 \\
+inductive & Feature-MLP (no graph) & 0.647 $\pm$ 0.107 & 0.683 $\pm$ 0.089 & 0.023 $\pm$ 0.004 & 0.013 $\pm$ 0.002 & 0.686 $\pm$ 0.027 \\
+inductive & Embed-GNN & 0.619 $\pm$ 0.040 & 0.635 $\pm$ 0.030 & 0.015 $\pm$ 0.004 & 0.010 $\pm$ 0.001 & 0.675 $\pm$ 0.012 \\
+inductive & Embed-Lookup (no graph) & 0.614 $\pm$ 0.037 & 0.625 $\pm$ 0.037 & 0.018 $\pm$ 0.006 & 0.012 $\pm$ 0.003 & 0.669 $\pm$ 0.002 \\
+\bottomrule
+\end{tabular}

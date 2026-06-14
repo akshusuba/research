@@ -1,0 +1,252 @@
+[
+  {
+    "name": "exp01_epidemic",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.9170344075165686,
+      "acc": 0.838,
+      "f1": 0.8137931034482758,
+      "conv": "sage"
+    },
+    "mlp": {
+      "auc": 0.8272622168666851,
+      "acc": 0.748,
+      "f1": 0.7162162162162162
+    },
+    "xgboost": {
+      "auc": 0.7804464998127373,
+      "acc": 0.704,
+      "f1": 0.665158371040724
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.08977219064988351,
+    "notes": "SI contagion on Watts-Strogatz contact graph; infection homophily lets GNN denoise weak personal risk features.",
+    "ts": "2026-06-13 07:06:42"
+  },
+  {
+    "name": "exp02_readmission",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.8231056777526431,
+      "acc": 0.74,
+      "f1": 0.7537878787878788,
+      "conv": "gat"
+    },
+    "mlp": {
+      "auc": 0.5222281047953667,
+      "acc": 0.522,
+      "f1": 0.5724508050089445
+    },
+    "xgboost": {
+      "auc": 0.5562882033017279,
+      "acc": 0.548,
+      "f1": 0.5568627450980392
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.2668174744509152,
+    "notes": "kNN patient-similarity graph on full diagnosis vectors; readmission homophilous by latent community while node features expose only a noisy diagnosis subset.",
+    "ts": "2026-06-13 07:15:12"
+  },
+  {
+    "name": "exp03_disease_gene",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.9994969243785873,
+      "acc": 0.994,
+      "f1": 0.9866666666666667,
+      "conv": "sage"
+    },
+    "mlp": {
+      "auc": 0.7517550479065195,
+      "acc": 0.778,
+      "f1": 0.112
+    },
+    "xgboost": {
+      "auc": 0.7121950104045185,
+      "acc": 0.758,
+      "f1": 0.34594594594594597
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.2477418764720678,
+    "notes": "SBM PPI network; disease genes occupy topological modules; GNN recovers guilt-by-association from weak noisy expression.",
+    "ts": "2026-06-13 07:20:23"
+  },
+  {
+    "name": "exp04_connectome",
+    "task": "graph-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 1.0,
+      "acc": 1.0,
+      "f1": 1.0,
+      "conv": "gcn"
+    },
+    "mlp": {
+      "auc": 0.4944453137224222,
+      "acc": 0.5,
+      "f1": 0.4520547945205479
+    },
+    "xgboost": {
+      "auc": 0.48677828195900485,
+      "acc": 0.46875,
+      "f1": 0.46540880503144655
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.5055546862775778,
+    "notes": "Modular vs degraded brain connectivity at matched edge density; node-feature marginals identical across classes, so only the edge-reading GNN detects loss of modularity.",
+    "ts": "2026-06-13 07:34:16"
+  },
+  {
+    "name": "exp05_hai_transfer",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.7642709257616089,
+      "acc": 0.9583333333333334,
+      "f1": 0.0,
+      "conv": "gat"
+    },
+    "mlp": {
+      "auc": 0.46209208321009565,
+      "acc": 0.9583333333333334,
+      "f1": 0.0
+    },
+    "xgboost": {
+      "auc": 0.4890071970817311,
+      "acc": 0.9543650793650794,
+      "f1": 0.0
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.2752637286798778,
+    "notes": "HAI colonization via independent-cascade contagion on a clustered ward/transfer network; node attributes weakly predictive only.",
+    "ts": "2026-06-13 07:06:20"
+  },
+  {
+    "name": "exp06_microbiome",
+    "task": "graph-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 1.0,
+      "acc": 1.0,
+      "f1": 1.0,
+      "conv": "gcn"
+    },
+    "mlp": {
+      "auc": 0.6197623514696685,
+      "acc": 0.54375,
+      "f1": 0.6096256684491979
+    },
+    "xgboost": {
+      "auc": 0.5698874296435272,
+      "acc": 0.54375,
+      "f1": 0.5921787709497207
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.3802376485303315,
+    "notes": "Healthy=modular/assortative co-occurrence vs disease=hub-reorganized; per-taxon abundance marginals identical across classes, so only co-occurrence topology separates them.",
+    "ts": "2026-06-13 07:21:20"
+  },
+  {
+    "name": "exp07_comorbidity",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.8909013457867252,
+      "acc": 0.7996031746031746,
+      "f1": 0.7846481876332623,
+      "conv": "sage"
+    },
+    "mlp": {
+      "auc": 0.7793414637994416,
+      "acc": 0.7083333333333334,
+      "f1": 0.7065868263473054
+    },
+    "xgboost": {
+      "auc": 0.7020809996371267,
+      "acc": 0.6408730158730159,
+      "f1": 0.6415841584158416
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.11155988198728362,
+    "notes": "Progression label is homophilous over latent disease-trajectory communities in a comorbidity-similarity graph; per-patient markers are noisy peeks at the latent score, insufficient on their own.",
+    "ts": "2026-06-13 07:30:24"
+  },
+  {
+    "name": "exp08_ddi",
+    "task": "graph-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 1.0,
+      "acc": 1.0,
+      "f1": 1.0,
+      "conv": "sage"
+    },
+    "mlp": {
+      "auc": 0.5744360902255639,
+      "acc": 0.56,
+      "f1": 0.5686274509803921
+    },
+    "xgboost": {
+      "auc": 0.5013533834586467,
+      "acc": 0.475,
+      "f1": 0.4878048780487805
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.42556390977443614,
+    "notes": "Synthetic molecular graphs (20-40 atoms). Adverse label = presence of a reactive type0-type1 bond (connectivity motif). Atom types are assigned class-independently so atom-type counts and node-feature mean/std are non-discriminative; only the GNN's message passing detects the reactive substructure.",
+    "ts": "2026-06-13 07:19:50"
+  },
+  {
+    "name": "exp09_medkg",
+    "task": "node-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 0.9999886528865835,
+      "acc": 0.99375,
+      "f1": 0.993743606034206,
+      "conv": "gcn"
+    },
+    "mlp": {
+      "auc": 0.8618356786251364,
+      "acc": 0.6291666666666667,
+      "f1": 0.6229537752085029
+    },
+    "xgboost": {
+      "auc": 0.8424312273272604,
+      "acc": 0.59375,
+      "f1": 0.5884511139329708
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.13815297426144701,
+    "notes": "Single symptom-disease knowledge graph with patient and symptom/concept nodes. Diagnosis (4 diseases) is set by which symptom community a patient connects to. Patient features are weak noisy demographics; symptom nodes carry concept embeddings in a disjoint feature block. Baselines see patient demographics only and stay weak; the GNN propagates concept information across patient-symptom edges and wins.",
+    "ts": "2026-06-13 07:33:17"
+  },
+  {
+    "name": "exp10_icu_sensor",
+    "task": "graph-cls",
+    "primary_metric": "auc",
+    "gnn": {
+      "auc": 1.0,
+      "acc": 1.0,
+      "f1": 1.0,
+      "conv": "gcn"
+    },
+    "mlp": {
+      "auc": 0.5859683794466403,
+      "acc": 0.5555555555555556,
+      "f1": 0.6581196581196581
+    },
+    "xgboost": {
+      "auc": 0.5891798418972332,
+      "acc": 0.5555555555555556,
+      "f1": 0.574468085106383
+    },
+    "gnn_wins": true,
+    "margin_vs_best_baseline": 0.41082015810276684,
+    "notes": "Physiological sensor graphs (16 signals). Edges = inter-signal correlation >|0.35|. Deterioration decouples the normal cardiovascular/respiratory blocks and introduces abnormal cross-couplings (signal i <-> i+8); per-signal marginal mean/variance distributions are identical across classes. Aggregated node-feature stats are non-discriminative so baselines stay at chance; the GNN reads the correlation topology and wins.",
+    "ts": "2026-06-13 07:37:18"
+  }
+]

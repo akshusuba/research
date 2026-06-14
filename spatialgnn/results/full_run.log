@@ -1,0 +1,71 @@
+######################################################################
+# SpatialGNN -- synthetic tissue demonstration
+######################################################################
+
+=== Split mode: cross_slice ===
+  seed=0 xgboost  acc=0.880 F1=0.875 ARI=0.732
+  seed=0 mlp      acc=0.899 F1=0.897 ARI=0.767
+  seed=0 sage     acc=0.986 F1=0.984 ARI=0.969
+  seed=1 xgboost  acc=0.844 F1=0.841 ARI=0.641
+  seed=1 mlp      acc=0.879 F1=0.877 ARI=0.713
+  seed=1 sage     acc=0.994 F1=0.993 ARI=0.985
+  seed=2 xgboost  acc=0.879 F1=0.856 ARI=0.752
+  seed=2 mlp      acc=0.912 F1=0.895 ARI=0.814
+  seed=2 sage     acc=0.985 F1=0.983 ARI=0.967
+  seed=42 xgboost  acc=0.883 F1=0.878 ARI=0.737
+  seed=42 mlp      acc=0.899 F1=0.895 ARI=0.770
+  seed=42 sage     acc=0.985 F1=0.984 ARI=0.966
+  seed=123 xgboost  acc=0.848 F1=0.847 ARI=0.649
+  seed=123 mlp      acc=0.881 F1=0.881 ARI=0.718
+  seed=123 sage     acc=0.993 F1=0.993 ARI=0.983
+
+=== Split mode: within_slice ===
+  seed=0 xgboost  acc=0.886 F1=0.876 ARI=0.742
+  seed=0 mlp      acc=0.888 F1=0.875 ARI=0.758
+  seed=0 sage     acc=0.989 F1=0.988 ARI=0.973
+  seed=1 xgboost  acc=0.879 F1=0.866 ARI=0.733
+  seed=1 mlp      acc=0.901 F1=0.889 ARI=0.781
+  seed=1 sage     acc=0.993 F1=0.994 ARI=0.982
+  seed=2 xgboost  acc=0.881 F1=0.869 ARI=0.738
+  seed=2 mlp      acc=0.901 F1=0.888 ARI=0.784
+  seed=2 sage     acc=0.975 F1=0.972 ARI=0.939
+  seed=42 xgboost  acc=0.876 F1=0.865 ARI=0.724
+  seed=42 mlp      acc=0.895 F1=0.882 ARI=0.773
+  seed=42 sage     acc=0.992 F1=0.992 ARI=0.979
+  seed=123 xgboost  acc=0.874 F1=0.862 ARI=0.724
+  seed=123 mlp      acc=0.891 F1=0.880 ARI=0.758
+  seed=123 sage     acc=0.984 F1=0.983 ARI=0.963
+
+================================================================
+SUMMARY (test, mean +/- std over seeds)
+================================================================
+
+[CROSS_SLICE]
+model           accuracy       macro_f1            ari
+xgboost   0.867+/-0.02 0.859+/-0.01 0.702+/-0.05
+mlp       0.894+/-0.01 0.889+/-0.01 0.756+/-0.04
+sage      0.989+/-0.00 0.987+/-0.00 0.974+/-0.01
+
+[WITHIN_SLICE]
+model           accuracy       macro_f1            ari
+xgboost   0.879+/-0.00 0.868+/-0.00 0.732+/-0.01
+mlp       0.895+/-0.01 0.883+/-0.01 0.771+/-0.01
+sage      0.986+/-0.01 0.986+/-0.01 0.967+/-0.02
+
+Saved comparison -> /home/elrarun/code/research/spatialgnn/results/synthetic_comparison.json
+
+Graph-removal ablation (cross_slice)...
+  seed=0 intact=0.984 shuffled=0.890 empty=0.902 mlp=0.897
+  seed=1 intact=0.993 shuffled=0.879 empty=0.876 mlp=0.877
+  seed=2 intact=0.983 shuffled=0.893 empty=0.897 mlp=0.895
+  seed=42 intact=0.984 shuffled=0.889 empty=0.891 mlp=0.895
+  seed=123 intact=0.993 shuffled=0.878 empty=0.872 mlp=0.881
+
+============================================================
+GRAPH-REMOVAL ABLATION (test macro-F1)
+============================================================
+  GNN [intact  ] F1=0.987+/-0.00  ARI=0.974
+  GNN [shuffled] F1=0.886+/-0.01  ARI=0.755
+  GNN [empty   ] F1=0.887+/-0.01  ARI=0.756
+  MLP [blind   ] F1=0.889+/-0.01  ARI=0.756
+Saved ablation -> results/graph_ablation.json

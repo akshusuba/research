@@ -1,0 +1,25 @@
+{
+  "name": "exp01_epidemic",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.9170344075165686,
+    "acc": 0.838,
+    "f1": 0.8137931034482758,
+    "conv": "sage"
+  },
+  "mlp": {
+    "auc": 0.8272622168666851,
+    "acc": 0.748,
+    "f1": 0.7162162162162162
+  },
+  "xgboost": {
+    "auc": 0.7804464998127373,
+    "acc": 0.704,
+    "f1": 0.665158371040724
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.08977219064988351,
+  "notes": "SI contagion on Watts-Strogatz contact graph; infection homophily lets GNN denoise weak personal risk features.",
+  "ts": "2026-06-13 07:06:42"
+}

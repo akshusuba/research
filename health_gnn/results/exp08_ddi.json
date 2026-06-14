@@ -1,0 +1,25 @@
+{
+  "name": "exp08_ddi",
+  "task": "graph-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 1.0,
+    "acc": 1.0,
+    "f1": 1.0,
+    "conv": "sage"
+  },
+  "mlp": {
+    "auc": 0.5744360902255639,
+    "acc": 0.56,
+    "f1": 0.5686274509803921
+  },
+  "xgboost": {
+    "auc": 0.5013533834586467,
+    "acc": 0.475,
+    "f1": 0.4878048780487805
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.42556390977443614,
+  "notes": "Synthetic molecular graphs (20-40 atoms). Adverse label = presence of a reactive type0-type1 bond (connectivity motif). Atom types are assigned class-independently so atom-type counts and node-feature mean/std are non-discriminative; only the GNN's message passing detects the reactive substructure.",
+  "ts": "2026-06-13 07:19:50"
+}

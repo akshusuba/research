@@ -1,0 +1,25 @@
+{
+  "name": "exp06_microbiome",
+  "task": "graph-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 1.0,
+    "acc": 1.0,
+    "f1": 1.0,
+    "conv": "gcn"
+  },
+  "mlp": {
+    "auc": 0.6197623514696685,
+    "acc": 0.54375,
+    "f1": 0.6096256684491979
+  },
+  "xgboost": {
+    "auc": 0.5698874296435272,
+    "acc": 0.54375,
+    "f1": 0.5921787709497207
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.3802376485303315,
+  "notes": "Healthy=modular/assortative co-occurrence vs disease=hub-reorganized; per-taxon abundance marginals identical across classes, so only co-occurrence topology separates them.",
+  "ts": "2026-06-13 07:21:20"
+}

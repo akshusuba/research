@@ -1,0 +1,25 @@
+{
+  "name": "exp10_icu_sensor",
+  "task": "graph-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 1.0,
+    "acc": 1.0,
+    "f1": 1.0,
+    "conv": "gcn"
+  },
+  "mlp": {
+    "auc": 0.5859683794466403,
+    "acc": 0.5555555555555556,
+    "f1": 0.6581196581196581
+  },
+  "xgboost": {
+    "auc": 0.5891798418972332,
+    "acc": 0.5555555555555556,
+    "f1": 0.574468085106383
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.41082015810276684,
+  "notes": "Physiological sensor graphs (16 signals). Edges = inter-signal correlation >|0.35|. Deterioration decouples the normal cardiovascular/respiratory blocks and introduces abnormal cross-couplings (signal i <-> i+8); per-signal marginal mean/variance distributions are identical across classes. Aggregated node-feature stats are non-discriminative so baselines stay at chance; the GNN reads the correlation topology and wins.",
+  "ts": "2026-06-13 07:37:18"
+}

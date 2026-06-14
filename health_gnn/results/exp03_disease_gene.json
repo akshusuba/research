@@ -1,0 +1,25 @@
+{
+  "name": "exp03_disease_gene",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.9994969243785873,
+    "acc": 0.994,
+    "f1": 0.9866666666666667,
+    "conv": "sage"
+  },
+  "mlp": {
+    "auc": 0.7517550479065195,
+    "acc": 0.778,
+    "f1": 0.112
+  },
+  "xgboost": {
+    "auc": 0.7121950104045185,
+    "acc": 0.758,
+    "f1": 0.34594594594594597
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.2477418764720678,
+  "notes": "SBM PPI network; disease genes occupy topological modules; GNN recovers guilt-by-association from weak noisy expression.",
+  "ts": "2026-06-13 07:20:23"
+}

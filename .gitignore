@@ -1,0 +1,30 @@
+# Virtual environments (do not commit)
+.venv/
+venv/
+env/
+**/.venv/
+**/venv/
+
+# Python caches / build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Large / regenerable data + model artifacts (download or derive locally; do not commit)
+*.pt
+*.pth
+*.h5ad
+*.npz
+**/data/kg.csv
+oncorepurpose/data/primekg_hetero.pt
+
+# LLM response cache (may contain API outputs)
+**/llm_cache/
+
+# Secrets / local env
+.env
+*.env

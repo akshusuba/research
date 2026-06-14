@@ -1,0 +1,25 @@
+{
+  "name": "exp02_readmission",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.8231056777526431,
+    "acc": 0.74,
+    "f1": 0.7537878787878788,
+    "conv": "gat"
+  },
+  "mlp": {
+    "auc": 0.5222281047953667,
+    "acc": 0.522,
+    "f1": 0.5724508050089445
+  },
+  "xgboost": {
+    "auc": 0.5562882033017279,
+    "acc": 0.548,
+    "f1": 0.5568627450980392
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.2668174744509152,
+  "notes": "kNN patient-similarity graph on full diagnosis vectors; readmission homophilous by latent community while node features expose only a noisy diagnosis subset.",
+  "ts": "2026-06-13 07:15:12"
+}

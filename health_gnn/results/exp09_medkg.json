@@ -1,0 +1,25 @@
+{
+  "name": "exp09_medkg",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.9999886528865835,
+    "acc": 0.99375,
+    "f1": 0.993743606034206,
+    "conv": "gcn"
+  },
+  "mlp": {
+    "auc": 0.8618356786251364,
+    "acc": 0.6291666666666667,
+    "f1": 0.6229537752085029
+  },
+  "xgboost": {
+    "auc": 0.8424312273272604,
+    "acc": 0.59375,
+    "f1": 0.5884511139329708
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.13815297426144701,
+  "notes": "Single symptom-disease knowledge graph with patient and symptom/concept nodes. Diagnosis (4 diseases) is set by which symptom community a patient connects to. Patient features are weak noisy demographics; symptom nodes carry concept embeddings in a disjoint feature block. Baselines see patient demographics only and stay weak; the GNN propagates concept information across patient-symptom edges and wins.",
+  "ts": "2026-06-13 07:33:17"
+}

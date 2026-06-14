@@ -14,5 +14,11 @@ scikit-learn>=1.3.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 
+# Text-embedding node features (inductive experiment)
+# NOTE: transformers is pinned <5 because transformers>=5 imports torchaudio at
+# load time, which breaks on CUDA-version-mismatched torchaudio builds.
+sentence-transformers>=2.2.0
+transformers>=4.40,<5
+
 # Utilities
 tqdm>=4.65.0

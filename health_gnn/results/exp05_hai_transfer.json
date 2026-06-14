@@ -1,0 +1,25 @@
+{
+  "name": "exp05_hai_transfer",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.7642709257616089,
+    "acc": 0.9583333333333334,
+    "f1": 0.0,
+    "conv": "gat"
+  },
+  "mlp": {
+    "auc": 0.46209208321009565,
+    "acc": 0.9583333333333334,
+    "f1": 0.0
+  },
+  "xgboost": {
+    "auc": 0.4890071970817311,
+    "acc": 0.9543650793650794,
+    "f1": 0.0
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.2752637286798778,
+  "notes": "HAI colonization via independent-cascade contagion on a clustered ward/transfer network; node attributes weakly predictive only.",
+  "ts": "2026-06-13 07:06:20"
+}

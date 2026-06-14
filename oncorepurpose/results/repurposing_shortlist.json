@@ -1,0 +1,982 @@
+{
+  "target": [
+    "drug",
+    "indication",
+    "disease"
+  ],
+  "llm": false,
+  "shortlist": [
+    {
+      "disease": "glioblastoma (disease)",
+      "candidates": [
+        {
+          "drug": "Cyclosporine",
+          "disease": "glioblastoma (disease)",
+          "model_score": 0.9953769445419312,
+          "kg_paths": [
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Muscle weakness",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Cyclosporine --drug_effect--> Muscle weakness <--disease_phenotype_positive-- glioblastoma (disease)"
+            },
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Fatigue",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Cyclosporine --drug_effect--> Fatigue <--disease_phenotype_positive-- glioblastoma (disease)"
+            },
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Mood changes",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Cyclosporine --drug_effect--> Mood changes <--disease_phenotype_positive-- glioblastoma (disease)"
+            },
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Seizure",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Cyclosporine --drug_effect--> Seizure <--disease_phenotype_positive-- glioblastoma (disease)"
+            },
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Headache",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Cyclosporine --drug_effect--> Headache <--disease_phenotype_positive-- glioblastoma (disease)"
+            }
+          ],
+          "literature": [
+            {
+              "title": "Cerebral Toxoplasmosis in a Renal Transplant Recipient-A Rare Complication.",
+              "authors": "Mihaljevi\u0107 D, Sita\u0161 Z, Hanulak J, Vranji\u0107 P, Mihaljevi\u0107 J.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41900989"
+            },
+            {
+              "title": "Cerebral Toxoplasmosis in a Renal Transplant Recipient \u2013 A Rare Complication",
+              "authors": "Mihaljevi\u0107 D, Sita\u0161 Z, Hanulak J, Vranji\u0107 P, Mihaljevi\u0107 J.",
+              "year": "2026",
+              "source": "PPR",
+              "id": "PPR1159036"
+            },
+            {
+              "title": "Steroid-Resistant Focal Segmental Glomerulosclerosis with Alport-like Glomerular Basement Membrane Lesions Due to a &lt;i&gt;MYO1E&lt;/i&gt; Mutation: A Pediatric Case Report.",
+              "authors": "Angioi A, Piras D, Lepori N, Bianco P, Floris M, Cabiddu G, Barreca A, Pani A.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41898697"
+            },
+            {
+              "title": "The Pathological Role of LDL in Membranous Nephropathy and Diabetic Nephropathy and the Protective Efficacy of LDL Apheresis: A Narrative Review.",
+              "authors": "Kodama G, Taguchi K, Wada Y, Nakano K, Shibata R, Fukami K.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41591175"
+            },
+            {
+              "title": "Educational Case: Meningioma.",
+              "authors": "Carter AM, Dai H, Klause H, Musto A, Conran RM.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42007264"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Etretinate",
+          "disease": "glioblastoma (disease)",
+          "model_score": 0.9948798418045044,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Porokeratoses-A Comprehensive Review on the Genetics and Metabolomics, Imaging Methods and Management of Common Clinical Variants.",
+              "authors": "Pietkiewicz P, Korecka K, Salwowska N, Kohut I, Adhikari A, Bowszyc-Dmochowska M, Pogorzelska-Antkowiak A, Navarrete-Dechent C.",
+              "year": "2023",
+              "source": "MED",
+              "id": "38132857"
+            },
+            {
+              "title": "Retinoids in Cutaneous Squamous Cell Carcinoma.",
+              "authors": "Everts HB, Akuailou EN.",
+              "year": "2021",
+              "source": "MED",
+              "id": "33466372"
+            },
+            {
+              "title": "A case of secondary IgA nephropathy accompanied by psoriasis treated with secukinumab.",
+              "authors": "Ochi M, Toyama T, Ando M, Sato K, Kamikawa Y, Sagara A, Kitajima S, Hara A, Iwata Y, Sakai N, Shimizu M, Furuichi K, Hamaguchi Y, Kaneko S, Wada T.",
+              "year": "2019",
+              "source": "MED",
+              "id": "30941695"
+            },
+            {
+              "title": "An In Vitro Study of Saffron Carotenoids: The Effect of Crocin Extracts and Dimethylcrocetin on Cancer Cell Lines.",
+              "authors": "Hatziagapiou K, Nikola O, Marka S, Koniari E, Kakouri E, Zografaki ME, Mavrikou SS, Kanakis C, Flemetakis E, Chrousos GP, Kintzios S, Lambrou GI, Kanaka-Gantenbein C, Tarantilis PA.",
+              "year": "2022",
+              "source": "MED",
+              "id": "35739971"
+            },
+            {
+              "title": "Tumor Lysis Syndrome: Introduction of a Cutaneous Variant and a New Classification System.",
+              "authors": "Cohen PR, Prieto VG, Kurzrock R.",
+              "year": "2021",
+              "source": "MED",
+              "id": "33859885"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Calcifediol",
+          "disease": "glioblastoma (disease)",
+          "model_score": 0.994770348072052,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Multiscale analysis and optimal glioma therapeutic candidate discovery using the CANDO platform.",
+              "authors": "Xu S, Hu Y, Mangione W, Van Norden M, Elefteriou K, Falls Z, Samudrala R.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41968358"
+            },
+            {
+              "title": "Vitamin D3 suppresses the cholesterol homeostasis pathway in patient-derived glioma cell lines.",
+              "authors": "Yuan R, Zhang W, You YP, Cui G, Gao Z, Wang X, Chen J.",
+              "year": "2023",
+              "source": "MED",
+              "id": "37489660"
+            },
+            {
+              "title": "Association of 25-hydroxyvitamin D with hematological profile and anthropometry in patients with glioma.",
+              "authors": "Shahid S, Chaudary MA.",
+              "year": "2022",
+              "source": "MED",
+              "id": "36449773"
+            },
+            {
+              "title": "Vitamin D metabolites reshape bovine mammary epithelial responses relevant to mastitis through host-directed mechanisms.",
+              "authors": "Tiraboschi G, Fernandez M, Isaac P, Breser ML, Porporatto C, Bohl LP.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42146099"
+            },
+            {
+              "title": "Nuclear receptors in health and disease: signaling pathways, biological functions and pharmaceutical interventions.",
+              "authors": "Jin P, Duan X, Huang Z, Dong Y, Zhu J, Guo H, Tian H, Zou CG, Xie K.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40717128"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Azathioprine",
+          "disease": "glioblastoma (disease)",
+          "model_score": 0.9947408437728882,
+          "kg_paths": [
+            {
+              "bridge_type": "effect_phenotype",
+              "bridge_name": "Headache",
+              "drug_relation": "drug_effect",
+              "disease_relation": "disease_phenotype_positive",
+              "text": "Azathioprine --drug_effect--> Headache <--disease_phenotype_positive-- glioblastoma (disease)"
+            }
+          ],
+          "literature": [
+            {
+              "title": "Infliximab may contribute to remit rapidly progressive of IgA nephropathy secondary to Crohn's disease: A case report.",
+              "authors": "Wan S, Chen H, Liu S, Fan Z, Fan J.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40371441"
+            },
+            {
+              "title": "Overview of Primary Angiitis of the Central Nervous System: Current Insights.",
+              "authors": "Phu A, Agrawal DK.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41947889"
+            },
+            {
+              "title": "Tumefactive primary angiitis of the central nervous system mimicking glioblastoma: A case-based systematic review.",
+              "authors": "Fatani GM, Aljehani MA, Alshehri ES, Fatani MM, Aldhfyan YM, Alharthi MM, Al-Hindi HN, Kurdi KI, Baeesa SS.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41112399"
+            },
+            {
+              "title": "Malignancy-associated risk factors in patients with systemic sclerosis.",
+              "authors": "Baysal S, \u015eahin D, Sezer S, Yayla ME, Uslu E, Ate\u015f A, Turgay TM, Kinikli G.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40124982"
+            },
+            {
+              "title": "Atypical Anti-Glomerular Basement Membrane Disease.",
+              "authors": "Fern\u00e1ndez-Lorente L, Shabaka A, Mora-Guti\u00e9rrez JM, Caravaca-Font\u00e1n F, Maldonado-Mart\u00edn M, Cabello V, Marco H, Temprado A, Rivera C, Facal L, Barros X, Gonz\u00e1lez CC, Manrique J, Santos \u00c1P, Fern\u00e1ndez-Ju\u00e1rez G.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41584267"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Candesartan cilexetil",
+          "disease": "glioblastoma (disease)",
+          "model_score": 0.9946892261505127,
+          "kg_paths": [
+            {
+              "bridge_type": "gene_protein",
+              "bridge_name": "CYP2C9",
+              "drug_relation": "drug_protein",
+              "disease_relation": "disease_protein",
+              "text": "Candesartan cilexetil --drug_protein--> CYP2C9 <--disease_protein-- glioblastoma (disease)"
+            }
+          ],
+          "literature": [
+            {
+              "title": "Membranous nephropathy as a segmental pattern with solitary immunoglobulin A deposition: a case report.",
+              "authors": "Yokote S, Hatanaka S, Shimizu A, Okabe M, Haruhara K, Sasaki T, Ueda H, Joh K, Tsuboi N, Yokoo T.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40864427"
+            },
+            {
+              "title": "Cracking PRMT5: Mechanistic insights, clinical advances, and AI-driven strategies.",
+              "authors": "Alipourgivi F, Su J, Lu T.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41072789"
+            },
+            {
+              "title": "Inhibition of angiotensin II type 1 receptor by candesartan reduces tumor growth and ameliorates fibrosis in colorectal cancer.",
+              "authors": "Tabatabai E, Khazaei M, Asgharzadeh F, Nazari SE, Shakour N, Fiuji H, Ziaeemehr A, Mostafapour A, Parizadeh MR, Nouri M, Hassanian SM, Hadizadeh F, Ferns GA, Rahmati M, Rahmani F, Avan A.",
+              "year": "2021",
+              "source": "MED",
+              "id": "34121975"
+            },
+            {
+              "title": "Inhibiting neddylation: A new strategy for tumor therapy.",
+              "authors": "Sun J, Liu C, Lang C, Wang J, Li Q, Peng C, Du Z, Chen Y, Huang P.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40496066"
+            },
+            {
+              "title": "In Vitro Drug Repurposing: Focus on Vasodilators.",
+              "authors": "Ribeiro E, Costa B, Vasques-N\u00f3voa F, Vale N.",
+              "year": "2023",
+              "source": "MED",
+              "id": "36831338"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        }
+      ]
+    },
+    {
+      "disease": "pancreatic adenocarcinoma",
+      "candidates": [
+        {
+          "drug": "Cyclosporine",
+          "disease": "pancreatic adenocarcinoma",
+          "model_score": 0.9945449829101562,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Osteopontin in pancreatic cancer: A systematic review.",
+              "authors": "Weber GF.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41928921"
+            },
+            {
+              "title": "Robust Machine Learning-Driven Drug Repositioning Pipeline for Classical Subtype of Pancreatic Ductal Adenocarcinoma.",
+              "authors": "Lee KW, Bennett AN, Yiu WC, Hang Katie Chan K.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41336369"
+            },
+            {
+              "title": "Can BKPyV Infection Affect Neoplasm Transformation Among Kidney Transplant Recipients? A Case Series Study Report.",
+              "authors": "Pozna\u0144ski P, Wenta M, Augustyniak-Bartosik H, Rukasz D, Ha\u0142o\u0144 A, Ko\u015bcielska-Kasprzak K, Kami\u0144ska D, Krajewska M.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41375853"
+            },
+            {
+              "title": "Pancreatitis, panniculitis, and polyarthritis syndrome in a dog with hyalinizing pancreatic adenocarcinoma.",
+              "authors": "Hagelskamp A, White AG, Gallman J, Starbird C, Neto RLALT.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39233384"
+            },
+            {
+              "title": "Glomerular disease associated with cancer: a case series of paraneoplastic nephrotic syndrome.",
+              "authors": "Hu M, Ma Q, Wang L, Zhang T, Lin J, Yang X, Lv Z, Wang R.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41244787"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Etretinate",
+          "disease": "pancreatic adenocarcinoma",
+          "model_score": 0.9939568042755127,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Primary and Secondary Grzybowski's Generalized Eruptive Keratoacanthoma: A New Perspective on Management, Clinical Features, and Prognosis.",
+              "authors": "Kormos NF, Petrenciu CM, Vizitiu AS, Ghe\u021be R, Nadir U, Baican AL, Tolkachjov SN.",
+              "year": "2026",
+              "source": "MED",
+              "id": "40932161"
+            },
+            {
+              "title": "The Importance and Challenges of Early Diagnosis of Paraneoplastic Skin Syndromes in Cancer Detection-A Review.",
+              "authors": "Ro\u015bciszewska A, Tokarska K, Ko\u015bny A, Karp P, Leja W, \u017bebrowska A.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40227497"
+            },
+            {
+              "title": "Bazex Syndrome (Acrokeratosis Paraneoplastica): A Narrative Review of Pathogenesis, Clinical Manifestations, and Therapeutic Approaches.",
+              "authors": "Shah MH, Ferrazzano C, Karthikeyan A, Hejazi H, Bhattacharya A, Andrew Awuah W, Isik A.",
+              "year": "2023",
+              "source": "MED",
+              "id": "37720135"
+            },
+            {
+              "title": "Acrokeratosis paraneoplastica (Bazex syndrome) as the presenting sign of pancreatic adenocarcinoma.",
+              "authors": "Horton L, Bedford LM, Daveluy S.",
+              "year": "2020",
+              "source": "MED",
+              "id": "33318269"
+            },
+            {
+              "title": "Molecular mechanisms of lipid metabolism abnormalities driving sepsis and atrial fibrillation: A Systematic study based on bioinformatics and machine learning.",
+              "authors": "Ou C, Yu H, Chen B, Long H.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41359645"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Calcifediol",
+          "disease": "pancreatic adenocarcinoma",
+          "model_score": 0.9938297867774963,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Induction of Cell Death and Regulation of Autocrine Vitamin D Metabolism in Cervical Cancer by Physiological and GI20 Doses of 25-Hydroxycholecalciferol.",
+              "authors": "Zhou E, Bhoora S, Pillay TS, Punchoo R.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40362248"
+            },
+            {
+              "title": "Nuclear receptors in health and disease: signaling pathways, biological functions and pharmaceutical interventions.",
+              "authors": "Jin P, Duan X, Huang Z, Dong Y, Zhu J, Guo H, Tian H, Zou CG, Xie K.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40717128"
+            },
+            {
+              "title": "Eating for immunity: how diet shapes our defenses.",
+              "authors": "Zhang FQ, Chen J, Fan H.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39353254"
+            },
+            {
+              "title": "Melatonin and vitamin D as potential synergistic adjuvants for cancer therapy (Review).",
+              "authors": "Reiter RJ, De Almeida Chuffa LG, Sim\u00e3o VA, Mart\u00edn Gim\u00e9nez VM, De Las Heras N, Spandidos DA, Manucha W.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39450562"
+            },
+            {
+              "title": "The Effects of Vitamin D on the Breast Cancer Tumor Microenvironment.",
+              "authors": "Kanwal B, Shah SS, Shaheen F, Shiferaw MS, Maurya D, Li Y, Pounraj S, Kovacevic Z.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41374952"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Azathioprine",
+          "disease": "pancreatic adenocarcinoma",
+          "model_score": 0.9937951564788818,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Reconsidering pancreatic masses: A case of IgG4-related autoimmune pancreatitis mimicking malignancy.",
+              "authors": "Diani A, Benzalim M, Bouroumane MR, Alj S.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42170562"
+            },
+            {
+              "title": "Case report and literature review of IgG4-related autoimmune pancreatitis secondary to pancreatic involvement of IgG4-related sclerosing disease.",
+              "authors": "Xing R, Yu D, Li Y, Zhou H, Chen C, Hu M.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42210969"
+            },
+            {
+              "title": "Granulomatosis with Polyangiitis (Wegener Granulomatosis) Presenting as a Pancreatic Mass: A Rare Malignancy Mimic.",
+              "authors": "Sain S, Das S, Bhargava V, Jain S, Nundy S.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41987408"
+            },
+            {
+              "title": "The Overlap of Autoimmune Pancreatitis and Pancreatic Cancer: A Clinical Challenge.",
+              "authors": "Yakout A, Fluxa D, Nassar A, Gomez V.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40692729"
+            },
+            {
+              "title": "IgG4 Pancreatitis Presenting as a Mass: Unraveling a Diagnostic Illusion.",
+              "authors": "Liu J, Chadalawada S, Dosanjh J, Hammami M.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41531635"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Candesartan cilexetil",
+          "disease": "pancreatic adenocarcinoma",
+          "model_score": 0.9937341809272766,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Cracking PRMT5: Mechanistic insights, clinical advances, and AI-driven strategies.",
+              "authors": "Alipourgivi F, Su J, Lu T.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41072789"
+            },
+            {
+              "title": "Protein arginine methyltransferase 5 as a novel therapeutic target in solid tumors.",
+              "authors": "Song P, Yang F.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41078957"
+            },
+            {
+              "title": "Inhibition of PRMT5 by market drugs as a novel cancer therapeutic avenue.",
+              "authors": "Prabhu L, Martin M, Chen L, Demir \u00d6, Jin J, Huang X, Motolani A, Sun M, Jiang G, Nakshatri H, Fishel ML, Sun S, Safa A, Amaro RE, Kelley MR, Liu Y, Zhang ZY, Lu T.",
+              "year": "2023",
+              "source": "MED",
+              "id": "37013054"
+            },
+            {
+              "title": "B4 suppresses lymphoma progression by inhibiting fibroblast growth factor binding protein 1 through intrinsic apoptosis.",
+              "authors": "Varier KM, Dan G, Li X, Liu W, Jiang F, Linghu KG, Li Y, Ben-David Y, Zhang N, Xiao C, Gajendran B, Shen X.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39005939"
+            },
+            {
+              "title": "In Vitro Drug Repurposing: Focus on Vasodilators.",
+              "authors": "Ribeiro E, Costa B, Vasques-N\u00f3voa F, Vale N.",
+              "year": "2023",
+              "source": "MED",
+              "id": "36831338"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        }
+      ]
+    },
+    {
+      "disease": "metastatic melanoma",
+      "candidates": [
+        {
+          "drug": "Cyclosporine",
+          "disease": "metastatic melanoma",
+          "model_score": 0.9961053729057312,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Case Report: Immunotherapy-induced Felty syndrome in a patient with metastatic melanoma.",
+              "authors": "Park LS, Byrne C, Burridge H, Zhu W, Leech M, Andrews MC.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42088197"
+            },
+            {
+              "title": "Nivolumab-Induced Hemophagocytic Lymphohistiocytosis (HLH) in a Patient With Metastatic Melanoma: A Case Report and Literature Review.",
+              "authors": "Virdi RK, Hussain U, Bitran J.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41293365"
+            },
+            {
+              "title": "Managing Atopic Dermatitis with Dupilumab in Special Populations: A Case Series Study.",
+              "authors": "Tolino E, Skroza N, Di Guardo A, Proietti I, Bernardini N, Potenza C.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41190054"
+            },
+            {
+              "title": "Hemophagocytic lymphohistiocytosis induced by immune checkpoint inhibitors: observations and proposed clinical management.",
+              "authors": "Facchini BA, Switzer B, Ernstoff MS, Puzanov I, Ascierto PA.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41809997"
+            },
+            {
+              "title": "Non-Melanoma Skin Cancer in Transplant Recipients: A Single-Centre Retrospective Cohort Study on the Role of Transplant Type, Immunosuppressive Exposure, and Tumor Subtypes.",
+              "authors": "Zengarini C, Tagnin V, Sorbi G, Guglielmo A, La Placa M, Piraccini BM, Pileri A, Pignatti M.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41615235"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Etretinate",
+          "disease": "metastatic melanoma",
+          "model_score": 0.9956894516944885,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "The Role of Glucose-6-Phosphate Dehydrogenase in Skin Cancer Metabolism: A Paradigm Shift in Treatment Approaches.",
+              "authors": "Abdullah A, Kumbrink J, Liokatis P, Mock A, Abdullah A, Dewenter I, Obermeier KT.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39796677"
+            },
+            {
+              "title": "A case of paraneoplastic pityriasis rubra pilaris.",
+              "authors": "Mehta N, Coates MM, Miles JA, Miedema J, Blasiak RC.",
+              "year": "2023",
+              "source": "MED",
+              "id": "37680569"
+            },
+            {
+              "title": "Rethinking pityriasis rubra pilaris as a paraneoplastic syndrome: Two cases of pityriasis rubra pilaris with concomitant underlying malignancy.",
+              "authors": "Davis AE, Raine BE, Swartzman I, Bogner PN, Nazareth M.",
+              "year": "2023",
+              "source": "MED",
+              "id": "36691586"
+            },
+            {
+              "title": "Attempts to Improve Lipophilic Drugs' Solubility and Bioavailability: A Focus on Fenretinide.",
+              "authors": "Alfei S, Zuccari G.",
+              "year": "2024",
+              "source": "MED",
+              "id": "38794242"
+            },
+            {
+              "title": "Local Chemotherapy of Skin Pre-Neoplastic Lesions and Malignancies from the Perspective of Current Pharmaceutics.",
+              "authors": "Ivanova N.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40871030"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Calcifediol",
+          "disease": "metastatic melanoma",
+          "model_score": 0.9955939650535583,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Multiscale analysis and optimal glioma therapeutic candidate discovery using the CANDO platform.",
+              "authors": "Xu S, Hu Y, Mangione W, Van Norden M, Elefteriou K, Falls Z, Samudrala R.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41968358"
+            },
+            {
+              "title": "Severe immunotherapy-related thrombocytopenia in metastatic bone cancer: a multicenter retrospective case series highlighting early recognition and management.",
+              "authors": "Gao Q, Yao Z, Yao Y, Liu Y, Mao J, Li B.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40496609"
+            },
+            {
+              "title": "Vitamin D's Impact on Cancer Incidence and Mortality: A Systematic Review.",
+              "authors": "Wimalawansa SJ.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40732958"
+            },
+            {
+              "title": "An indirect approach to identify the healthcare services for thyroid and melanoma cancer patients in Italy: Epicost-2 project.",
+              "authors": "Mallone S, Tavilla A, Lopez T, Pierannunzio D, Dal Maso L, Guzzinati S, Fedeli U, Gagliani A, Buja A, Zorzi M, Fusco M, Toffolutti F, Francisci S.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40908786"
+            },
+            {
+              "title": "Vitamins A and D and Their Combinations for Breast and Colorectal Cancers: Analysis of the Clinical, Epidemiological, Preclinical and Transcriptomic Data.",
+              "authors": "Lawal TO, Adeniyi BA, Mahady GB.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41304928"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Azathioprine",
+          "disease": "metastatic melanoma",
+          "model_score": 0.995570957660675,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Drug-Induced Bullous Pemphigoid Triggered by Immune Checkpoint Inhibitor Opdualag in an Elderly Patient With Recurrent Metastatic Melanoma: A Case Report and Treatment Course With Dupilumab.",
+              "authors": "Moreno BA, Lutwak M, Lutwak D, Kerdel F.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41458837"
+            },
+            {
+              "title": "Management Dilemma: Myeloperoxidase (MPO)-Positive Vasculitis in a Patient With Metastatic Malignant Melanoma.",
+              "authors": "Sajjad A, Manivannan A.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42037849"
+            },
+            {
+              "title": "A Rare Case of Early-Onset Steroid-Refractory Fulminant Hepatitis Following Dual Checkpoint Inhibition in Melanoma Initially Presenting With Hemorrhagic Brain Metastasis.",
+              "authors": "Samperio VM, Patel A, Singh S, Alchaikh Hassan R.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41873658"
+            },
+            {
+              "title": "Azathioprine Toxicity in Patients With Myasthenia Gravis: A Single Center Experience.",
+              "authors": "Gaini R, Truong T, Morena J.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41603484"
+            },
+            {
+              "title": "Cutaneous Squamous Cell Carcinoma in Immunocompromised Patients.",
+              "authors": "Hwang SH, St John M.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41228268"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Candesartan cilexetil",
+          "disease": "metastatic melanoma",
+          "model_score": 0.995527446269989,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Protein arginine methyltransferase 5 as a novel therapeutic target in solid tumors.",
+              "authors": "Song P, Yang F.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41078957"
+            },
+            {
+              "title": "Effective Management of Nasal Vestibule Squamous Cell Carcinoma with Cemiplimab: A Case Report.",
+              "authors": "Costabile F, Donnarumma M, Piscosquito A, Ingenito C, Iuliucci MR, Buonerba C, Di Lorenzo G, Di Trolio R.",
+              "year": "2023",
+              "source": "MED",
+              "id": "37900804"
+            },
+            {
+              "title": "Efficacy of toripalimab in combination with anlotinib in recurrent undifferentiated pleomorphic sarcoma of the sinonasal region: a case report with biomarker analysis.",
+              "authors": "Wu F, Feng J, Wang H, Wang S, Cui X, Liu Y, Yan L, Ye K, Thorne RF, Zhang XD, La T.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40416963"
+            },
+            {
+              "title": "i-DENV: development of QSAR based regression models for predicting inhibitors targeting non-structural (NS) proteins of dengue virus.",
+              "authors": "Gautam S, Thakur A, Kumar M.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40642016"
+            },
+            {
+              "title": "B4 suppresses lymphoma progression by inhibiting fibroblast growth factor binding protein 1 through intrinsic apoptosis.",
+              "authors": "Varier KM, Dan G, Li X, Liu W, Jiang F, Linghu KG, Li Y, Ben-David Y, Zhang N, Xiao C, Gajendran B, Shen X.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39005939"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        }
+      ]
+    },
+    {
+      "disease": "female breast carcinoma",
+      "candidates": [
+        {
+          "drug": "Cyclosporine",
+          "disease": "female breast carcinoma",
+          "model_score": 0.9956845045089722,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Lymphangitic breast cancer in explanted lungs with interstitial lung disease: an unexpected finding.",
+              "authors": "Maggioni G, El Mnif O, Faccioli E, Loy M, Lunardi F, Schiavon M, Calabrese F.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42157742"
+            },
+            {
+              "title": "Clinical management of cancer after kidney transplantation.",
+              "authors": "Hiramitsu T, Ienaga A, Shimamoto Y, Himeno T, Hasegawa Y, Futamura K, Okada M, Narumi S, Watarai Y.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41958670"
+            },
+            {
+              "title": "Defining Multiple Fibroadenomas: A Systematic Review of Clinical Characteristics and Management.",
+              "authors": "Math P, Sajith G, Mahadevappa K, Hegde SG.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41919577"
+            },
+            {
+              "title": "Population-level cancer trends among solid organ transplant recipients in the United States during 1995-2021.",
+              "authors": "Engels EA, Castenson D, Luo Q, Shiels MS, Israni A, Li J, Madeleine MM, Pawlish K, Ramirez Aguilar D, Zeng Y, Pfieffer RM.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41786253"
+            },
+            {
+              "title": "Risk of Malignancy with Immunosuppressive Drugs Used in Organ Transplants Compared to Those Used for Non-Transplant Indications.",
+              "authors": "Haines C, Walton Z, Curnutt I, Golovko G, Kuo YF, Rastellini C, Cicalese L.",
+              "year": "2026",
+              "source": "MED",
+              "id": "42279367"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Etretinate",
+          "disease": "female breast carcinoma",
+          "model_score": 0.9952384233474731,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Primary and Secondary Grzybowski's Generalized Eruptive Keratoacanthoma: A New Perspective on Management, Clinical Features, and Prognosis.",
+              "authors": "Kormos NF, Petrenciu CM, Vizitiu AS, Ghe\u021be R, Nadir U, Baican AL, Tolkachjov SN.",
+              "year": "2026",
+              "source": "MED",
+              "id": "40932161"
+            },
+            {
+              "title": "Evidence- and consensus-based guideline on lichen sclerosus.",
+              "authors": "Kirtschig G, Woelber L, G\u00fcnthert A, Becker K, Ciresa-K\u00f6nig A, Fischer B, Fricke-Otto S, G\u00fcnther C, Hirchenhain C, K\u00f6llmann NH, Kreuter A, Malisiewicz B, Neis F, Mon O'Dey D, Ott H, Promm M, Renner R, Schardt AR, Schweizer I, Stein R, Ter-Nedden J, Trutnovsky G, Wand A, Weyandt G, Werner RN, Kinberger M.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41778748"
+            },
+            {
+              "title": "Attempts to Improve Lipophilic Drugs' Solubility and Bioavailability: A Focus on Fenretinide.",
+              "authors": "Alfei S, Zuccari G.",
+              "year": "2024",
+              "source": "MED",
+              "id": "38794242"
+            },
+            {
+              "title": "Management Strategies for Generalised Granuloma Annulare: A Systematic Review of Current and Emerging Therapies.",
+              "authors": "Bettolini L, Maione V, Carugno A, Stabile G, Podo Brunetti A, Fratton Z, Errichetti E, Zerbinati N, Rongioletti F, Calzavara-Pinton P, Rossi M, Bighetti S.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40586485"
+            },
+            {
+              "title": "Exploring the relationship between morphea and malignancy: a decade-long single-center study of 204 patients.",
+              "authors": "Lyakhovitsky K, Damiani G, Mimouni D, Aronovich A.",
+              "year": "2024",
+              "source": "MED",
+              "id": "39259320"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Calcifediol",
+          "disease": "female breast carcinoma",
+          "model_score": 0.9951357245445251,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Leveraging Menstrual Effluent to Investigate Vitamin D and Human Decidualization: A Potential Link with Fertility.",
+              "authors": "Metz CN, Chatterjee PK, Hyman N, Busch S, Tarasenko SA, Hoofnagle AN, Gregersen PK, Steiner AZ, Jukic AMZ.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41492807"
+            },
+            {
+              "title": "Vitamin D Supplementation: Practical Advice in Different Clinical Settings.",
+              "authors": "Bendotti G, Biamonte E, Leporati P, Goglia U, Ruggeri RM, Gallo M.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40077652"
+            },
+            {
+              "title": "Vitamins A and D and Their Combinations for Breast and Colorectal Cancers: Analysis of the Clinical, Epidemiological, Preclinical and Transcriptomic Data.",
+              "authors": "Lawal TO, Adeniyi BA, Mahady GB.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41304928"
+            },
+            {
+              "title": "Vitamin D's Impact on Cancer Incidence and Mortality: A Systematic Review.",
+              "authors": "Wimalawansa SJ.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40732958"
+            },
+            {
+              "title": "Assessment of the Ability of the ChatGPT-5 Model to Pass the Endocrinology Specialization Exam.",
+              "authors": "Latkowska A, Sawina P, Dolata T, Boczkowski D, Wielochowska A, Kowalczyk A, Loson-Kawalec M, Radej D, Jaworski W, Majchrowicz W, Olender M, Adamiak J, Sroczynska J, Suleiman R, Glinska J, Szczerbanowicz P, Dadynska P.",
+              "year": "2025",
+              "source": "MED",
+              "id": "41170234"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Azathioprine",
+          "disease": "female breast carcinoma",
+          "model_score": 0.9951081871986389,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Azathioprine Toxicity in Patients With Myasthenia Gravis: A Single Center Experience.",
+              "authors": "Gaini R, Truong T, Morena J.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41603484"
+            },
+            {
+              "title": "Clinical features of paraneoplastic neurologic syndromes with anti-Ri antibodies: PRISMA systematic review.",
+              "authors": "Chen Y, Wu C, Liu X, Cui H, Yan Y, Liu L, Xie L, Qian W.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41894019"
+            },
+            {
+              "title": "Population-level cancer trends among solid organ transplant recipients in the United States during 1995-2021.",
+              "authors": "Engels EA, Castenson D, Luo Q, Shiels MS, Israni A, Li J, Madeleine MM, Pawlish K, Ramirez Aguilar D, Zeng Y, Pfieffer RM.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41786253"
+            },
+            {
+              "title": "Malignancies in lupus nephritis: a retrospective cohort study on epidemiology and risk factors.",
+              "authors": "Reggiani F, Donato B, Calatroni M, Conte E, Tumminello F, Locatelli L, Stella M, Moroni G.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41592908"
+            },
+            {
+              "title": "Impact of Hereditary Cancer Susceptibility in Solid-Organ Transplant Recipients.",
+              "authors": "Khuu N, Jeanjean M, Donenberg T, Silva Smith R, Sussman D, Vianna R, Ciancio G, Guo Y, Tekin M, Borja NA.",
+              "year": "2026",
+              "source": "MED",
+              "id": "41576304"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        },
+        {
+          "drug": "Candesartan cilexetil",
+          "disease": "female breast carcinoma",
+          "model_score": 0.99506014585495,
+          "kg_paths": [],
+          "literature": [
+            {
+              "title": "Lifestyle and Pharmacological Interventions to Prevent Anthracycline-Related Cardiotoxicity in Cancer Patients.",
+              "authors": "Spadafora L, Di Muro FM, Intonti C, Massa L, Monelli M, Pedretti RFE, Palazzo Adriano E, Guarini P, Cantiello G, Bernardi M, Russo F, Cacciatore S, Sabouret P, Golino M, Biondi Zoccai G, Zimatore FR, Dalla Vecchia LA.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40558647"
+            },
+            {
+              "title": "Prevention of Cardiac Dysfunction During Adjuvant Breast Cancer Therapy (PRADA): Extended Follow-Up of a 2\u00d72 Factorial, Randomized, Placebo-Controlled, Double-Blind Clinical Trial of Candesartan and Metoprolol.",
+              "authors": "Heck SL, Mecinaj A, Ree AH, Hoffmann P, Schulz-Menger J, Fagerland MW, Gravdehaug B, R\u00f8sj\u00f8 H, Steine K, Geisler J, Gulati G, Omland T.",
+              "year": "2021",
+              "source": "MED",
+              "id": "33993702"
+            },
+            {
+              "title": "MYSM1 acts as a novel co-activator of ER\u03b1 to confer antiestrogen resistance in breast cancer.",
+              "authors": "Luan R, He M, Li H, Bai Y, Wang A, Sun G, Zhou B, Wang M, Wang C, Wang S, Zeng K, Feng J, Lin L, Wei Y, Kato S, Zhang Q, Zhao Y.",
+              "year": "2024",
+              "source": "MED",
+              "id": "38177530"
+            },
+            {
+              "title": "Angiotensin-converting-enzyme inhibitors and angiotensin receptor blockers for preventing the progression of diabetic kidney disease.",
+              "authors": "Natale P, Palmer SC, Navaneethan SD, Craig JC, Strippoli GF.",
+              "year": "2024",
+              "source": "MED",
+              "id": "38682786"
+            },
+            {
+              "title": "Medication-Related Osteonecrosis of the Jaws in Patients on Antiresorptive Medication With Dental Implants. A Scoping Review.",
+              "authors": "Andersen SWM, Hindocha NV, Poulsen I, Schliephake H, Jensen SS.",
+              "year": "2025",
+              "source": "MED",
+              "id": "40531168"
+            }
+          ],
+          "dossier": null,
+          "judge": {}
+        }
+      ]
+    }
+  ]
+}

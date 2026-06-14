@@ -1,0 +1,25 @@
+{
+  "name": "exp07_comorbidity",
+  "task": "node-cls",
+  "primary_metric": "auc",
+  "gnn": {
+    "auc": 0.8909013457867252,
+    "acc": 0.7996031746031746,
+    "f1": 0.7846481876332623,
+    "conv": "sage"
+  },
+  "mlp": {
+    "auc": 0.7793414637994416,
+    "acc": 0.7083333333333334,
+    "f1": 0.7065868263473054
+  },
+  "xgboost": {
+    "auc": 0.7020809996371267,
+    "acc": 0.6408730158730159,
+    "f1": 0.6415841584158416
+  },
+  "gnn_wins": true,
+  "margin_vs_best_baseline": 0.11155988198728362,
+  "notes": "Progression label is homophilous over latent disease-trajectory communities in a comorbidity-similarity graph; per-patient markers are noisy peeks at the latent score, insufficient on their own.",
+  "ts": "2026-06-13 07:30:24"
+}

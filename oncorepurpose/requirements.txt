@@ -1,0 +1,26 @@
+# Core
+torch>=2.0.0
+torch-geometric>=2.4.0
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+scikit-learn>=1.3.0
+
+# Baselines / tuning
+xgboost>=2.0.0
+optuna>=3.0.0
+
+# Shared text features (transformers pinned <5: transformers>=5 force-imports
+# torchaudio at load, which breaks on CUDA-version-mismatched torchaudio builds)
+sentence-transformers>=2.2.0
+transformers>=4.40,<5
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Agentic evidence-report layer
+requests>=2.31.0
+
+# Utilities
+tqdm>=4.65.0
