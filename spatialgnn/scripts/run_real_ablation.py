@@ -27,19 +27,28 @@ def main():
     ap.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
     ap.add_argument("--k", type=int, default=6)
     ap.add_argument("--epochs", type=int, default=300)
+    ap.add_argument("--device", default=None, help="cuda|cpu (default: cuda if available)")
+    ap.add_argument("--mode", default=None,
+                    help="cross_slice|within_slice|stratified "
+                         "(default: cross_slice if --sample-key else within_slice)")
+    ap.add_argument("--out", default="real_graph_ablation.json")
     args = ap.parse_args()
+
+    import torch
+    device = args.device or ("cuda" if torch.cuda.is_available() else "cpu")
 
     ds = load_h5ad_spatial(args.h5ad, label_key=args.label_key,
                            sample_key=args.sample_key, k_neighbors=args.k)
-    mode = "cross_slice" if args.sample_key else "within_slice"
+    mode = args.mode or ("cross_slice" if args.sample_key else "within_slice")
     scfg = SplitConfig(mode=mode)
     mcfg = ModelConfig(encoder="sage")
-    tcfg = TrainConfig(epochs=args.epochs, patience=40)
+    tcfg = TrainConfig(epochs=args.epochs, patience=40, device=device)
 
+    print(f"=== graph-removal ablation: mode={mode} device={device} ===")
     res = run_graph_ablation(ds, make_split, scfg, mcfg, tcfg, seeds=args.seeds)
     print_summary(res)
 
-    path = os.path.join(RESULTS_DIR, "real_graph_ablation.json")
+    path = os.path.join(RESULTS_DIR, args.out)
     with open(path, "w") as f:
         json.dump(res, f, indent=2)
     print(f"\nSaved -> {path}")

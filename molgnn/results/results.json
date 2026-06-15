@@ -15,9 +15,16 @@
       "per_seed": [
         {
           "GNN": {
-            "auroc": 0.8175967206052259,
-            "auprc": 0.8517272183578352,
-            "best_val_auprc": 0.8475739251741204
+            "auroc": 0.8144390629181653,
+            "auprc": 0.8391019724280635,
+            "best_val_auprc": 0.864838094114709,
+            "best_cfg": {
+              "num_layers": 5,
+              "hidden": 128,
+              "pool": "add",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
           },
           "XGBoost": {
             "auroc": 0.8699714097350504,
@@ -28,23 +35,156 @@
             "auroc": 0.885004144935672,
             "auprc": 0.9076324548182717
           }
+        },
+        {
+          "GNN": {
+            "auroc": 0.8102526980784417,
+            "auprc": 0.8401526356602937,
+            "best_val_auprc": 0.8725163084275169,
+            "best_cfg": {
+              "num_layers": 5,
+              "hidden": 128,
+              "pool": "add",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
+          },
+          "XGBoost": {
+            "auroc": 0.8599549223479862,
+            "auprc": 0.9025142939949885,
+            "best_val_auprc": 0.8867420604284637
+          },
+          "RandomForest": {
+            "auroc": 0.8863269939457753,
+            "auprc": 0.9116830612038469
+          }
+        },
+        {
+          "GNN": {
+            "auroc": 0.8066171976154953,
+            "auprc": 0.8409806212539922,
+            "best_val_auprc": 0.8604212215597522,
+            "best_cfg": {
+              "num_layers": 5,
+              "hidden": 128,
+              "pool": "add",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
+          },
+          "XGBoost": {
+            "auroc": 0.8710441738033112,
+            "auprc": 0.9116904553171763,
+            "best_val_auprc": 0.890630896214043
+          },
+          "RandomForest": {
+            "auroc": 0.8801503789048892,
+            "auprc": 0.9150415842068231
+          }
         }
       ],
       "summary": {
-        "GNN_auroc_mean": 0.8175967206052259,
-        "GNN_auroc_std": 0.0,
-        "GNN_auprc_mean": 0.8517272183578352,
-        "GNN_auprc_std": 0.0,
-        "XGBoost_auroc_mean": 0.8699714097350504,
-        "XGBoost_auroc_std": 0.0,
-        "XGBoost_auprc_mean": 0.8938322740968812,
-        "XGBoost_auprc_std": 0.0,
-        "RandomForest_auroc_mean": 0.885004144935672,
-        "RandomForest_auroc_std": 0.0,
-        "RandomForest_auprc_mean": 0.9076324548182717,
-        "RandomForest_auprc_std": 0.0
+        "GNN_auroc_mean": 0.8104363195373674,
+        "GNN_auroc_std": 0.0031959017333048527,
+        "GNN_auprc_mean": 0.8400784097807832,
+        "GNN_auprc_std": 0.0007687489679917883,
+        "XGBoost_auroc_mean": 0.8669901686287825,
+        "XGBoost_auroc_std": 0.004993911183306632,
+        "XGBoost_auprc_mean": 0.9026790078030155,
+        "XGBoost_auprc_std": 0.007291502227622763,
+        "RandomForest_auroc_mean": 0.8838271725954455,
+        "RandomForest_auroc_std": 0.0026553833694426257,
+        "RandomForest_auprc_mean": 0.9114523667429806,
+        "RandomForest_auprc_std": 0.003029159897263036
+      }
+    },
+    "random": {
+      "per_seed": [
+        {
+          "GNN": {
+            "auroc": 0.9028547815007404,
+            "auprc": 0.9347830725064246,
+            "best_val_auprc": 0.9341574656604049,
+            "best_cfg": {
+              "num_layers": 4,
+              "hidden": 128,
+              "pool": "mean",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
+          },
+          "XGBoost": {
+            "auroc": 0.9261992492854436,
+            "auprc": 0.9502486847809943,
+            "best_val_auprc": 0.9465400795781302
+          },
+          "RandomForest": {
+            "auroc": 0.9313337236130721,
+            "auprc": 0.9528907434716313
+          }
+        },
+        {
+          "GNN": {
+            "auroc": 0.8881226584795163,
+            "auprc": 0.9129555641709292,
+            "best_val_auprc": 0.936101211902679,
+            "best_cfg": {
+              "num_layers": 5,
+              "hidden": 128,
+              "pool": "add",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
+          },
+          "XGBoost": {
+            "auroc": 0.9185488997389669,
+            "auprc": 0.9467705015488423,
+            "best_val_auprc": 0.9404834789196823
+          },
+          "RandomForest": {
+            "auroc": 0.9228701462055533,
+            "auprc": 0.9506169558451668
+          }
+        },
+        {
+          "GNN": {
+            "auroc": 0.8812729349858063,
+            "auprc": 0.9276367984058898,
+            "best_val_auprc": 0.9296396133011869,
+            "best_cfg": {
+              "num_layers": 5,
+              "hidden": 128,
+              "pool": "add",
+              "dropout": 0.3,
+              "lr": 0.001
+            }
+          },
+          "XGBoost": {
+            "auroc": 0.9267205566710517,
+            "auprc": 0.9551060354429608,
+            "best_val_auprc": 0.9445905807346067
+          },
+          "RandomForest": {
+            "auroc": 0.9245430312261996,
+            "auprc": 0.9496692369506041
+          }
+        }
+      ],
+      "summary": {
+        "GNN_auroc_mean": 0.8907501249886877,
+        "GNN_auroc_std": 0.009004506647272285,
+        "GNN_auprc_mean": 0.9251251450277479,
+        "GNN_auprc_std": 0.009086302220117899,
+        "XGBoost_auroc_mean": 0.9238229018984875,
+        "XGBoost_auroc_std": 0.0037353504459905294,
+        "XGBoost_auprc_mean": 0.9507084072575992,
+        "XGBoost_auprc_std": 0.0034184587064563796,
+        "RandomForest_auroc_mean": 0.9262489670149416,
+        "RandomForest_auroc_std": 0.003659753937060874,
+        "RandomForest_auprc_mean": 0.9510589787558007,
+        "RandomForest_auprc_std": 0.0013518047828487364
       }
     }
   },
-  "runtime_sec": 125.9416036605835
+  "runtime_sec": 1618.3815207481384
 }
