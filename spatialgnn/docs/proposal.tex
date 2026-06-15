@@ -262,18 +262,14 @@ model features, so any GNN benefit is attributable to message passing over tissu
 structure rather than to memorizing absolute position.
 
 \subsection{Model: a spatial graph neural network}
-The GNN classifies each spot by pooling its neighbourhood over $L$ rounds of
-message passing. With a GraphSAGE encoder,
-\begin{equation}
-h_v^{(l)} = \sigma\!\Big( W^{(l)}\big[\,h_v^{(l-1)} \,\big\Vert\,
-\textstyle\operatorname*{AGG}_{u\in\NN(v)} h_u^{(l-1)}\,\big]\Big),
-\qquad \hat{y}_v = \operatorname{softmax}\!\big(W_o\, h_v^{(L)}\big),
-\label{eq:sage}
-\end{equation}
-trained with cross-entropy on annotated spots. Aggregation denoises the sparse
-per-spot signal, which is the property Gap~2 lacks. We compare \textbf{GraphSAGE},
-\textbf{GAT} (graph attention, which learns per-neighbour weights), and GCN
-encoders; all use PyTorch Geometric.
+The GNN will classify each spot by combining two sources of information: the
+spot's own gene-expression profile and a summary of nearby spots in the tissue.
+After several rounds of this neighborhood aggregation, the model assigns each
+spot a tissue-domain label. This is useful because aggregation can denoise a
+sparse per-spot signal, which is the limitation described in Gap~2. I will start
+with GraphSAGE because it is a standard inductive GNN, then compare it with GAT
+(graph attention, which learns per-neighbor weights) and GCN encoders if time
+allows. All models will use PyTorch Geometric.
 
 \begin{figure}[H]
 \centering
