@@ -1,0 +1,54 @@
+######################################################################
+# spatial_prognosis -- synthetic cohort demonstration
+######################################################################
+  seed=0 logreg   acc=0.500 F1=0.405 AUROC=0.560
+  seed=0 xgboost  acc=0.533 F1=0.529 AUROC=0.524
+  seed=0 mlp      acc=0.467 F1=0.365 AUROC=0.686
+  seed=0 sage     acc=1.000 F1=1.000 AUROC=1.000
+  seed=1 logreg   acc=0.467 F1=0.318 AUROC=0.535
+  seed=1 xgboost  acc=0.400 F1=0.399 AUROC=0.419
+  seed=1 mlp      acc=0.467 F1=0.318 AUROC=0.627
+  seed=1 sage     acc=1.000 F1=1.000 AUROC=1.000
+  seed=2 logreg   acc=0.467 F1=0.318 AUROC=0.507
+  seed=2 xgboost  acc=0.517 F1=0.517 AUROC=0.472
+/home/elrarun/code/research/celiac/venv/lib/python3.12/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (500) reached and the optimization hasn't converged yet.
+  warnings.warn(
+  seed=2 mlp      acc=0.517 F1=0.513 AUROC=0.507
+  seed=2 sage     acc=1.000 F1=1.000 AUROC=1.000
+  seed=42 logreg   acc=0.433 F1=0.302 AUROC=0.669
+  seed=42 xgboost  acc=0.517 F1=0.510 AUROC=0.495
+  seed=42 mlp      acc=0.433 F1=0.302 AUROC=0.613
+  seed=42 sage     acc=1.000 F1=1.000 AUROC=1.000
+  seed=123 logreg   acc=0.533 F1=0.348 AUROC=0.645
+  seed=123 xgboost  acc=0.617 F1=0.591 AUROC=0.600
+  seed=123 mlp      acc=0.533 F1=0.348 AUROC=0.552
+  seed=123 sage     acc=1.000 F1=1.000 AUROC=1.000
+
+Data stats: {"num_patients": 300, "cells_per_patient": 350, "num_features": 10, "class_balance": [151, 149], "tumor_immune_contact_excluded": 0.222, "tumor_immune_contact_infiltrated": 0.456}
+
+============================================================
+SUMMARY (test, mean +/- std over seeds)
+============================================================
+model           accuracy       macro_f1          auroc
+logreg    0.480+/-0.03 0.338+/-0.04 0.583+/-0.06
+xgboost   0.517+/-0.07 0.509+/-0.06 0.502+/-0.06
+mlp       0.483+/-0.04 0.369+/-0.08 0.597+/-0.06
+sage      1.000+/-0.00 1.000+/-0.00 1.000+/-0.00
+
+Saved -> /home/elrarun/code/research/spatial_prognosis/results/synthetic_comparison.json
+
+Graph-shuffle ablation...
+  seed=0 intact=1.000 shuffled=0.310 empty=0.310 xgb=0.529
+  seed=1 intact=1.000 shuffled=0.348 empty=0.348 xgb=0.399
+  seed=2 intact=1.000 shuffled=0.348 empty=0.348 xgb=0.517
+  seed=42 intact=1.000 shuffled=0.302 empty=0.302 xgb=0.510
+  seed=123 intact=1.000 shuffled=0.318 empty=0.318 xgb=0.591
+
+============================================================
+GRAPH-SHUFFLE ABLATION (test macro-F1)
+============================================================
+  GNN [intact  ] F1=1.000+/-0.00  AUROC=1.000
+  GNN [shuffled] F1=0.325+/-0.02  AUROC=0.465
+  GNN [empty   ] F1=0.325+/-0.02  AUROC=0.485
+  XGB [compos.] F1=0.509+/-0.06  AUROC=0.502
+Saved -> results/graph_ablation.json

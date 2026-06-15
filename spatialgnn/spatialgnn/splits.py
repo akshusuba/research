@@ -43,6 +43,8 @@ def make_split(ds, cfg: SplitConfig) -> SpatialSplit:
         train_m, val_m, test_m = _cross_slice(data, cfg, rng)
     elif cfg.mode == "within_slice":
         train_m, val_m, test_m = _within_slice(data, cfg, rng)
+    elif cfg.mode == "stratified":
+        train_m, val_m, test_m = _stratified(data, cfg, rng)
     else:
         raise ValueError(cfg.mode)
     return SpatialSplit(
@@ -71,6 +73,30 @@ def _cross_slice(data, cfg, rng):
     val_idx = np.where(np.isin(slice_id, list(val_s)))[0]
     train_idx = np.where(~np.isin(slice_id, list(test_s | val_s)))[0]
     return _mask(n, train_idx), _mask(n, val_idx), _mask(n, test_idx)
+
+
+def _stratified(data, cfg, rng, frac_train=0.6, frac_val=0.2):
+    """Stratified random node split (standard transductive node classification).
+
+    Used for single-section datasets where contiguous spatial blocks would strand
+    a whole region out of training. Every class is represented in train/val/test;
+    the GNN still must denoise each node from its neighbours (which is the tested
+    advantage), labels of val/test nodes are hidden.
+    """
+    y = data.y.numpy()
+    n = data.num_nodes
+    train_idx, val_idx, test_idx = [], [], []
+    for c in np.unique(y):
+        idx = np.where(y == c)[0]
+        rng.shuffle(idx)
+        nc = len(idx)
+        nt = max(1, int(frac_train * nc))
+        nv = max(1, int(frac_val * nc))
+        train_idx += list(idx[:nt])
+        val_idx += list(idx[nt:nt + nv])
+        test_idx += list(idx[nt + nv:])
+    return (_mask(n, np.array(train_idx)), _mask(n, np.array(val_idx)),
+            _mask(n, np.array(test_idx)))
 
 
 def _within_slice(data, cfg, rng):

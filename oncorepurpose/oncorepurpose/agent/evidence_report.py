@@ -123,8 +123,10 @@ def rank_reports(reports: List[Dict]) -> List[Dict]:
     """Rank candidates by judge plausibility+evidence (if present), else model score."""
     def keyf(r):
         j = r.get("judge") or {}
+        # Tie-break / fall back on disease-specific lift, not raw score, to avoid
+        # re-introducing the popularity ordering.
+        spec = float(r.get("specificity_lift", r["model_score"]))
         if j:
-            return (float(j.get("plausibility", 0)) + float(j.get("evidence_strength", 0)),
-                    r["model_score"])
-        return (-1.0, r["model_score"])
+            return (float(j.get("plausibility", 0)) + float(j.get("evidence_strength", 0)), spec)
+        return (-1.0, spec)
     return sorted(reports, key=keyf, reverse=True)

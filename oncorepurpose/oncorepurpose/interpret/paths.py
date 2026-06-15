@@ -43,26 +43,47 @@ def _known_pairs(data: HeteroData) -> set:
 def predict_candidates_for_diseases(
     model, data: HeteroData, target_edge_type: EdgeType, disease_indices: List[int],
     device: torch.device, top_k: int = 10, exclude_known: bool = True,
-) -> Dict[int, List[Tuple[int, float]]]:
-    """For each disease index, return [(drug_idx, score), ...] top-k novel drugs."""
+    rank_by: str = "specificity", pop_sample: int = 64, seed: int = 0,
+) -> Dict[int, List[Tuple[int, float, float]]]:
+    """For each disease, return top-k novel drugs as [(drug_idx, score, lift), ...].
+
+    With ``rank_by="specificity"`` (default) candidates are ranked by *disease-
+    specific lift* = score(drug, this disease) - the drug's average score across a
+    random sample of diseases. This removes the popularity artifact where a few
+    broadly-indicated drugs top every disease's list; ``rank_by="score"`` reverts
+    to raw model score.
+    """
     model.eval()
     z = model.encode(data)  # full-graph embeddings
-    z_drug = z[DRUG_TYPE].to(device)
-    z_dis = z[DISEASE_TYPE].to(device)
-    num_drugs = z_drug.size(0)
+    dev = z[DRUG_TYPE].device
+    num_drugs = int(data[DRUG_TYPE].num_nodes)
+    num_dis = int(data[DISEASE_TYPE].num_nodes)
     known = _known_pairs(data) if exclude_known else set()
+    all_drugs = torch.arange(num_drugs, device=dev)
 
-    out: Dict[int, List[Tuple[int, float]]] = {}
-    all_drugs = torch.arange(num_drugs, device=device)
+    def score_disease(dz: int) -> torch.Tensor:
+        eli = torch.stack([all_drugs, torch.full((num_drugs,), dz, device=dev)])
+        return torch.sigmoid(model.decode(z, target_edge_type, eli)).cpu()
+
+    pop = None
+    if rank_by == "specificity":
+        g = torch.Generator().manual_seed(seed)
+        sample = torch.randperm(num_dis, generator=g)[: min(pop_sample, num_dis)].tolist()
+        acc = torch.zeros(num_drugs)
+        for dz in sample:
+            acc += score_disease(dz)
+        pop = acc / max(1, len(sample))
+
+    out: Dict[int, List[Tuple[int, float, float]]] = {}
     for dz in disease_indices:
-        eli = torch.stack([all_drugs, torch.full((num_drugs,), dz, device=device)])
-        scores = torch.sigmoid(model.decode(z, target_edge_type, eli)).cpu()
-        order = torch.argsort(scores, descending=True).tolist()
+        scores = score_disease(dz)
+        rank_val = (scores - pop) if pop is not None else scores
+        order = torch.argsort(rank_val, descending=True).tolist()
         ranked = []
         for di in order:
             if exclude_known and (di, dz) in known:
                 continue
-            ranked.append((di, float(scores[di])))
+            ranked.append((di, float(scores[di]), float(rank_val[di])))
             if len(ranked) >= top_k:
                 break
         out[dz] = ranked

@@ -1,0 +1,50 @@
+{
+  "dataset": {
+    "target": "EGFR (CHEMBL203), Homo sapiens",
+    "source": "ChEMBL bioactivities with pchembl_value (median-aggregated per molecule)",
+    "n_molecules": 11185,
+    "threshold_active": 6.5,
+    "n_active": 7021,
+    "frac_active": 0.6277156906571301,
+    "n_scaffolds": 4052,
+    "atom_feat_dim": 40,
+    "fingerprint": "Morgan/ECFP radius=2, 2048 bits"
+  },
+  "splits": {
+    "scaffold": {
+      "per_seed": [
+        {
+          "GNN": {
+            "auroc": 0.8175967206052259,
+            "auprc": 0.8517272183578352,
+            "best_val_auprc": 0.8475739251741204
+          },
+          "XGBoost": {
+            "auroc": 0.8699714097350504,
+            "auprc": 0.8938322740968812,
+            "best_val_auprc": 0.8811783432748801
+          },
+          "RandomForest": {
+            "auroc": 0.885004144935672,
+            "auprc": 0.9076324548182717
+          }
+        }
+      ],
+      "summary": {
+        "GNN_auroc_mean": 0.8175967206052259,
+        "GNN_auroc_std": 0.0,
+        "GNN_auprc_mean": 0.8517272183578352,
+        "GNN_auprc_std": 0.0,
+        "XGBoost_auroc_mean": 0.8699714097350504,
+        "XGBoost_auroc_std": 0.0,
+        "XGBoost_auprc_mean": 0.8938322740968812,
+        "XGBoost_auprc_std": 0.0,
+        "RandomForest_auroc_mean": 0.885004144935672,
+        "RandomForest_auroc_std": 0.0,
+        "RandomForest_auprc_mean": 0.9076324548182717,
+        "RandomForest_auprc_std": 0.0
+      }
+    }
+  },
+  "runtime_sec": 125.9416036605835
+}

@@ -1,0 +1,66 @@
+
+GRADE cohort: 372 patients, 26 feats, balance={0: 210, 1: 166}
+  [grade_bin] seed=0 logreg   acc=0.608 F1=0.586 AUROC=0.650
+  [grade_bin] seed=0 xgboost  acc=0.622 F1=0.615 AUROC=0.599
+/home/elrarun/code/research/celiac/venv/lib/python3.12/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (500) reached and the optimization hasn't converged yet.
+  warnings.warn(
+  [grade_bin] seed=0 mlp      acc=0.568 F1=0.560 AUROC=0.638
+  [grade_bin] seed=0 sage     acc=0.581 F1=0.517 AUROC=0.625
+  [grade_bin] seed=1 logreg   acc=0.635 F1=0.603 AUROC=0.729
+  [grade_bin] seed=1 xgboost  acc=0.622 F1=0.619 AUROC=0.645
+/home/elrarun/code/research/celiac/venv/lib/python3.12/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (500) reached and the optimization hasn't converged yet.
+  warnings.warn(
+  [grade_bin] seed=1 mlp      acc=0.676 F1=0.670 AUROC=0.661
+  [grade_bin] seed=1 sage     acc=0.608 F1=0.605 AUROC=0.672
+  [grade_bin] seed=2 logreg   acc=0.595 F1=0.575 AUROC=0.683
+  [grade_bin] seed=2 xgboost  acc=0.595 F1=0.592 AUROC=0.651
+/home/elrarun/code/research/celiac/venv/lib/python3.12/site-packages/sklearn/neural_network/_multilayer_perceptron.py:785: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (500) reached and the optimization hasn't converged yet.
+  warnings.warn(
+  [grade_bin] seed=2 mlp      acc=0.676 F1=0.670 AUROC=0.714
+  [grade_bin] seed=2 sage     acc=0.595 F1=0.580 AUROC=0.692
+
+--- graph-shuffle ablation (grade_bin) ---
+  seed=0 intact=0.547 shuffled=0.558 empty=0.497 xgb=0.615
+  seed=1 intact=0.605 shuffled=0.539 empty=0.581 xgb=0.619
+  seed=2 intact=0.644 shuffled=0.591 empty=0.558 xgb=0.592
+
+SURVIVAL cohort: 310 patients, balance={0: 65, 1: 249} (1=survived>5yr, 0=died<5yr)
+  [survival5y] seed=0 logreg   acc=0.790 F1=0.441 AUROC=0.677
+  [survival5y] seed=0 xgboost  acc=0.790 F1=0.441 AUROC=0.691
+  [survival5y] seed=0 mlp      acc=0.790 F1=0.441 AUROC=0.625
+  [survival5y] seed=0 sage     acc=0.790 F1=0.441 AUROC=0.630
+  [survival5y] seed=1 logreg   acc=0.823 F1=0.451 AUROC=0.538
+  [survival5y] seed=1 xgboost  acc=0.790 F1=0.441 AUROC=0.478
+  [survival5y] seed=1 mlp      acc=0.823 F1=0.451 AUROC=0.553
+  [survival5y] seed=1 sage     acc=0.694 F1=0.550 AUROC=0.599
+  [survival5y] seed=2 logreg   acc=0.790 F1=0.441 AUROC=0.689
+  [survival5y] seed=2 xgboost  acc=0.790 F1=0.627 AUROC=0.661
+  [survival5y] seed=2 mlp      acc=0.790 F1=0.441 AUROC=0.510
+  [survival5y] seed=2 sage     acc=0.839 F1=0.641 AUROC=0.670
+
+--- graph-shuffle ablation (survival5y) ---
+  seed=0 intact=0.441 shuffled=0.441 empty=0.441 xgb=0.441
+  seed=1 intact=0.527 shuffled=0.569 empty=0.451 xgb=0.441
+  seed=2 intact=0.641 shuffled=0.507 empty=0.441 xgb=0.627
+
+================================================================
+SUMMARY GRADE (G3 vs G1/G2)  (test, mean +/- std over 3 seeds)
+================================================================
+model             accuracy         macro_f1            auroc
+logreg    0.613+/-0.02 0.588+/-0.01 0.687+/-0.03
+xgboost   0.613+/-0.01 0.609+/-0.01 0.632+/-0.02
+mlp       0.640+/-0.05 0.633+/-0.05 0.671+/-0.03
+sage      0.595+/-0.01 0.567+/-0.04 0.663+/-0.03
+ablation (GNN test macro-F1): intact=0.599 shuffled=0.563 empty=0.545  xgb_ref=0.609
+
+================================================================
+SUMMARY 5-YEAR SURVIVAL  (test, mean +/- std over 3 seeds)
+================================================================
+model             accuracy         macro_f1            auroc
+logreg    0.801+/-0.02 0.445+/-0.00 0.635+/-0.07
+xgboost   0.790+/-0.00 0.503+/-0.09 0.610+/-0.09
+mlp       0.801+/-0.02 0.445+/-0.00 0.563+/-0.05
+sage      0.774+/-0.06 0.544+/-0.08 0.633+/-0.03
+ablation (GNN test macro-F1): intact=0.537 shuffled=0.506 empty=0.445  xgb_ref=0.503
+
+saved: /home/elrarun/code/research/spatial_prognosis/results/real_imc_grade.json and real_imc_survival.json

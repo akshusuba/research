@@ -100,28 +100,20 @@ def _build_base_graph(
             base[nt][key] = val  # share references (x, node_names, num_nodes, masks)
 
     therapeutic = set(_therapeutic_edge_types(data))
-    s_t, _, d_t = target_edge_type
 
     for et in data.edge_types:
-        ei = data[et].edge_index
         if et == target_edge_type:
-            ei = ei[:, train_target_cols]
-        elif et in therapeutic and held_nodes:
-            # Remove therapeutic edges touching held-out nodes (both directions).
-            s_type, _, d_type = et
-            keep = torch.ones(ei.size(1), dtype=torch.bool)
-            if drop_node_side == "src":
-                if s_type == s_t:
-                    keep &= ~torch.tensor([n in held_nodes for n in ei[0].tolist()])
-                if d_type == s_t:
-                    keep &= ~torch.tensor([n in held_nodes for n in ei[1].tolist()])
-            else:  # held nodes are disease side
-                if s_type == d_t:
-                    keep &= ~torch.tensor([n in held_nodes for n in ei[0].tolist()])
-                if d_type == d_t:
-                    keep &= ~torch.tensor([n in held_nodes for n in ei[1].tolist()])
-            ei = ei[:, keep]
-        base[et].edge_index = ei
+            # Only the TRAIN target positives enter message passing.
+            base[et].edge_index = data[et].edge_index[:, train_target_cols]
+        elif et in therapeutic:
+            # Leakage control (all regimes): remove EVERY drug<->disease
+            # therapeutic edge (indication / contraindication / off-label, both
+            # directions) from the message-passing graph. Otherwise a held-out or
+            # test (drug, disease) pair could be revealed to the model through a
+            # non-target therapeutic edge between the very same two nodes.
+            base[et].edge_index = data[et].edge_index[:, :0]
+        else:
+            base[et].edge_index = data[et].edge_index
     return base
 
 

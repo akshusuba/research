@@ -26,7 +26,21 @@ If a tuned XGBoost matched the GNN, that would be reported as the finding. On
 PrimeKG repurposing the GNN has a real mechanism to win: it can traverse multi-hop
 `drug -> protein -> ... -> disease` paths that a tabular model cannot.
 
-## Results (canonical: 5 seeds, SentenceTransformer features; full data in `results/oncorepurpose.json`)
+> **Correction notice (results being refreshed).** An audit found three issues in
+> the first run, now fixed in code: (1) a **message-passing leak** — non-target
+> drug-disease therapeutic edges (`contraindication`, `off_label_use`, and the
+> reverse `indication`) between the same pairs were left in the graph, inflating
+> the GNN; (2) the XGBoost baseline was described as tuned but ran **untuned**
+> (now Optuna-tuned by default); (3) pooled **Hits@K/MRR were not meaningful** and
+> are dropped from the headline. With the leak closed, the transductive GNN
+> already falls from 0.991 to ~0.975, so the corrected GNN-vs-XGBoost gap is
+> expected to shrink (likely a tie in the cold-disease regime — consistent with
+> the honest caveat below). Canonical corrected numbers will live in
+> `results/oncorepurpose_fixed.json`. **The table below is the pre-fix run and is
+> superseded.** This project is maintained as a backup; the primary project is
+> `../spatialgnn`, where the GNN wins decisively on real data.
+
+## Results (PRE-FIX, superseded: 5 seeds, SentenceTransformer features; full data in `results/oncorepurpose.json`)
 
 Test AUROC (mean +/- std over 5 seeds):
 

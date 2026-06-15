@@ -46,7 +46,10 @@ REGIME_LABEL = {
     "inductive_cold_src": "Inductive (cold-drug)",
 }
 MODELS = ["GNN", "XGBoost", "MLP", "KGE"]
-REPORT = ["auroc", "auprc", "hits@10", "mrr", "f1"]
+# AUROC/AUPRC/F1 are the trustworthy metrics for this pooled pos/neg setup.
+# Pooled Hits@K / MRR are NOT meaningful here (they need per-query candidate
+# ranking) and are reported separately by the deliverable, not in this table.
+REPORT = ["auroc", "auprc", "f1"]
 
 
 def build_gnn(data, base, in_dims, hidden, layers, dropout):
@@ -241,6 +244,7 @@ def main():
     p.add_argument("--kge-epochs", type=int, default=300)
     p.add_argument("--patience", type=int, default=10)
     p.add_argument("--xgb-tune", action="store_true")
+    p.add_argument("--ablation-seeds", type=int, nargs="+", default=None)
     p.add_argument("--out", type=str, default=str(RESULTS_DIR / "oncorepurpose.json"))
     args = p.parse_args()
 
@@ -250,11 +254,15 @@ def main():
                    xgb_estimators=200, xgb_tune=False, xgb_trials=10, fallback=True)
         out_path = Path(args.out).with_name("oncorepurpose_smoke.json")
     else:
-        cfg = dict(seeds=list(args.seeds or DEFAULT_SEEDS), ablation_seeds=[0, 1, 2],
+        cfg = dict(seeds=list(args.seeds or DEFAULT_SEEDS),
+                   ablation_seeds=list(args.ablation_seeds or [0, 1, 2]),
                    hidden=args.hidden, layers=args.layers, dropout=args.dropout,
                    gnn_epochs=args.gnn_epochs, mlp_epochs=args.mlp_epochs, kge_epochs=args.kge_epochs,
-                   patience=args.patience, xgb_estimators=400, xgb_tune=args.xgb_tune,
-                   xgb_trials=20, fallback=False)
+                   patience=args.patience, xgb_estimators=400,
+                   # Tune XGBoost by default so the tabular baseline is genuinely strong
+                   # (the earlier run left it untuned despite the "tuned" claim).
+                   xgb_tune=(True or args.xgb_tune),
+                   xgb_trials=8, fallback=False)
         out_path = Path(args.out)
 
     out = run(cfg)

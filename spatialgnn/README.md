@@ -16,23 +16,70 @@ GNN merely *tied* XGBoost/MLP — the graph wasn't pulling its weight (see
 neighborhood**. Spatial-omics domain mapping is that task, and the GNN advantage
 is dramatic and provable.
 
-## Headline result (synthetic tissue benchmark, multi-seed)
+## Headline result — real human cortex (LIBD DLPFC, 3 seeds)
 
-Cross-section evaluation (whole tissues held out — absolute position cannot be
-memorized, so only neighborhood-relative reasoning generalizes):
+The thesis holds **decisively on gold-standard real data**. On the LIBD DLPFC
+10x Visium benchmark (12 sections, 47,329 expert-annotated spots, 7 cortical
+domains), **cross-section** evaluation (whole tissues held out — absolute
+position cannot be memorized, so only neighborhood-relative reasoning
+generalizes, the disease-cohort regime):
 
-| Cross-section (5 seeds) | XGBoost | MLP | **Spatial GNN (ours)** |
+| Real DLPFC, cross-section (3 seeds) | XGBoost | MLP | **SAGE (ours)** | **GAT (ours)** |
+|---|---|---|---|---|
+| Macro-F1 | 0.516 ± 0.02 | 0.488 ± 0.03 | **0.754 ± 0.01** | **0.742 ± 0.00** |
+| ARI | 0.369 | 0.377 | **0.651** | **0.656** |
+| Accuracy | 0.621 | 0.616 | **0.797** | **0.793** |
+
+A **+0.24 macro-F1** win over strong non-spatial baselines on the same expression
+features — and the win is **architecture-robust**: both a GraphSAGE encoder and a
+**graph-attention (GAT)** encoder land at ~0.75 F1 / ~0.65 ARI. **Graph-removal
+ablation** (the falsification test) collapses the identical GNN back onto the
+blind MLP — proving the gain is *spatial*, not features:
+
+| Real DLPFC ablation (GNN) | Intact | Shuffled graph | Empty graph | MLP ref. |
+|---|---|---|---|---|
+| Macro-F1 | **0.755** | 0.492 | 0.487 | 0.484 |
+| ARI | **0.654** | 0.378 | 0.376 | 0.375 |
+
+Honest caveat: the real-data margin is smaller than on the synthetic benchmark
+(real cortical layers carry *some* per-spot signal, so the baselines clear
+chance), but the win and the ablation collapse are unambiguous.
+
+## Second tissue, different technology (osmFISH mouse cortex, 3 seeds)
+
+To show the result is not Visium-specific, we add **osmFISH** — a single-molecule
+FISH assay at **single-cell resolution** with only **33 genes** and true cortical
+**region** labels (L1/Pia, L2-3, L4, L5, L6, white matter, ventricle,
+hippocampus…). With so few genes, per-cell features are weak, so neighborhood
+aggregation should matter even more. It does (within-section transductive split,
+all regions represented):
+
+| osmFISH cortex (3 seeds) | XGBoost | MLP | **SAGE** | **GAT** |
+|---|---|---|---|---|
+| Macro-F1 | 0.543 ± 0.01 | 0.632 ± 0.01 | **0.960 ± 0.00** | **0.966 ± 0.01** |
+| ARI | 0.436 | 0.512 | **0.947** | **0.954** |
+| Accuracy | 0.662 | 0.711 | **0.971** | **0.976** |
+
+A **+0.33–0.42 macro-F1** gap — even larger than DLPFC, exactly because the
+33-gene per-cell signal is weak and the spatial neighborhood carries the domain.
+(Note: osmFISH is a single section, so this is a within-section *transductive*
+node-classification split, an easier regime than DLPFC's cross-section test;
+reported as such. The cross-section DLPFC result above remains the harder,
+headline evidence.)
+
+## Mechanism proof (synthetic tissue benchmark, 5 seeds)
+
+A controlled benchmark where per-spot features carry **no** domain signal (so
+topology is the only route) isolates the mechanism:
+
+| Synthetic, cross-section (5 seeds) | XGBoost | MLP | **Spatial GNN (ours)** |
 |---|---|---|---|
 | Macro-F1 | 0.859 | 0.889 | **0.987** |
 | ARI | 0.702 | 0.756 | **0.974** |
 
-**Graph-removal ablation** (the falsification test): the identical GNN on a
-*shuffled* graph (F1 0.886) or *empty* graph (0.887) collapses to the MLP
-(0.889), while on the intact spatial graph it reaches **0.987**. The advantage
-is **spatial**, not features — and the baselines are strong (~0.86–0.89 F1, far
-from chance), so this is a fair, decisive win.
-
-(Exact multi-seed numbers are in `results/`; figures in `figures/`.)
+Here too the graph-removal ablation collapses the GNN (shuffled 0.886 / empty
+0.887) to the MLP (0.889). Exact multi-seed numbers are in `results/`
+(`real_comparison.json`, `real_graph_ablation.json`, `synthetic_comparison.json`).
 
 ## The idea
 

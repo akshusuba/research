@@ -262,8 +262,23 @@ graph. The KGE has no representation for unseen nodes by design.}
 held-out links; all nodes seen. (ii) \emph{Inductive cold-disease} -- whole
 cancers held out (all their drug links removed from training), the
 disease-discovery regime. (iii) \emph{Inductive cold-drug} -- whole drugs held
-out. \textbf{Metrics:} AUROC, AUPRC, Hits@$K$, MRR as mean$\pm$std over 5 seeds,
-with paired significance tests of GNN vs.\ each baseline.
+out. In every regime we remove each held-out therapeutic link from the
+message-passing graph in \emph{both} directions (knowledge graphs often store
+\texttt{indication} bidirectionally, and leaving the reverse edge would let the
+GNN -- but not the baselines -- see the answer); negatives are sampled so they
+never collide with any known positive.
+
+\noindent\textbf{Hard negatives, not random.} Random (drug, disease) negatives
+are trivially separable from true indications by node identity alone, inflating
+every model's score. We instead use \emph{class/area-matched} negatives (same
+drug class or same cancer family) and full per-disease candidate ranking, so the
+metrics reflect genuine prioritization difficulty.
+
+\noindent\textbf{Metrics.} AUROC and AUPRC, plus \emph{per-query} ranking
+metrics (Hits@$K$ and MRR computed by ranking each true link against its matched
+candidate negatives, not over a pooled set), as mean$\pm$std over 5 seeds, with
+paired significance tests of the GNN vs.\ each baseline. The tabular baseline is
+hyperparameter-tuned so the comparison is against a genuinely strong model.
 
 % ===========================================================================
 \section{Rigor: Ablations, Interpretation, and an Evidence Report}
@@ -277,10 +292,16 @@ edges) then identifies which biological links carry the signal.
 
 \subsection{From predictions to an actionable shortlist}
 For the top candidates we (i) extract short multi-hop KG paths as mechanistic
-rationale, (ii) retrieve supporting/contradicting literature (Europe PMC), and
-(iii) use a large language model to draft a structured \emph{evidence dossier}
-and an \emph{LLM-as-judge} plausibility score that triages the list. The output
-is a ranked, citation-grounded set of cancer repurposing hypotheses.
+rationale -- \emph{down-weighting hub intermediates} (e.g.\ generic phenotypes
+like ``fatigue'') so rationales are specific rather than popularity-driven,
+(ii) retrieve supporting/contradicting literature (Europe PMC), and (iii) use a
+large language model to draft a structured \emph{evidence dossier} and an
+\emph{LLM-as-judge} plausibility score that triages the list. To guard against
+the common failure where a model simply ranks globally popular drugs, we verify
+that the shortlist is \emph{disease-specific} (top candidates differ across
+cancers) and report a quantitative hit-rate against a held-out time-split of
+known indications. The output is a ranked, citation-grounded set of cancer
+repurposing hypotheses.
 
 % ===========================================================================
 \section{Alignment with Strong-Research Criteria}
@@ -293,7 +314,7 @@ is a ranked, citation-grounded set of cancer repurposing hypotheses.
 \midrule
 \rowcolor{srirow} Real, sizable public data & PrimeKG: $\sim$129k nodes, $\sim$8M edges.\\
 Clear medical motivation & Faster, cheaper cancer therapy via repurposing.\\
-\rowcolor{srirow} Rigorous evaluation & XGBoost + MLP + KGE baselines; inductive splits; 5 seeds; significance tests.\\
+\rowcolor{srirow} Rigorous evaluation & Tuned XGBoost + MLP + KGE baselines; leak-free inductive splits; hard negatives; per-query ranking metrics; 5 seeds; significance tests.\\
 Interpretability $\rightarrow$ discovery & Multi-hop rationales; literature-grounded evidence dossiers.\\
 \rowcolor{srirow} Ablations & Topology removal; relation ablation.\\
 Translational impact & A ranked, vetted oncology repurposing shortlist.\\

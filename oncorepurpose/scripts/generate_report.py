@@ -100,10 +100,12 @@ def main():
     for dz in disease_idx:
         disease_name = data[DISEASE_TYPE].node_names[dz]
         reports = []
-        for drug_i, score in preds[dz]:
+        for drug_i, score, lift in preds[dz]:
             drug_name = data[DRUG_TYPE].node_names[drug_i]
             paths = extract_paths(data, drug_i, dz)
-            reports.append(build_candidate_report(drug_name, disease_name, score, paths, use_llm=use_llm))
+            rep = build_candidate_report(drug_name, disease_name, score, paths, use_llm=use_llm)
+            rep["specificity_lift"] = lift
+            reports.append(rep)
         reports = rank_reports(reports)
         shortlist.append({"disease": disease_name, "candidates": reports})
         print(f"  {disease_name}: {len(reports)} candidates")
@@ -120,7 +122,9 @@ def main():
         for r in entry["candidates"]:
             j = r.get("judge") or {}
             jt = f" | judge plausibility={j.get('plausibility')}, evidence={j.get('evidence_strength')}" if j else ""
-            md.append(f"### {r['drug']}  (model score {r['model_score']:.3f}{jt})")
+            lift = r.get("specificity_lift")
+            lt = f" | specificity lift {lift:+.3f}" if lift is not None else ""
+            md.append(f"### {r['drug']}  (model score {r['model_score']:.3f}{lt}{jt})")
             for pth in r["kg_paths"][:4]:
                 md.append(f"- KG path: {pth['text']}")
             if r["literature"]:
