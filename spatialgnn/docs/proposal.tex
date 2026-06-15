@@ -54,8 +54,8 @@
 \begin{document}
 
 \begin{center}
-  {\LARGE\bfseries\color{sriblue} SpatialGNN: Graph Neural Networks for\\ Molecular Tissue Mapping in Precision Pathology}\\[4pt]
-  {\large\bfseries\color{sriblue!80!black} A spatial-transcriptomics framework that outperforms XGBoost and MLP\\ by modeling tissue-neighborhood structure}\\[10pt]
+  {\LARGE\bfseries\color{sriblue} Precision Tissue Mapping from Spatial\\ Transcriptomics Using Graph Learning}\\[4pt]
+  {\large\bfseries\color{sriblue!80!black} A neighborhood-aware framework for spatially\\ resolved molecular pathology}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
   {\small Student Research Institute (SRI) -- Summer 2026 Cohort \\
   Harvard Undergraduate OpenBio Laboratory}\\[2pt]
@@ -203,6 +203,27 @@ technologies; show the GNN collapses to the MLP when structure is destroyed.\\
 domain marker genes, surface candidate annotation errors, and pilot the same
 pipeline on tumor spatial transcriptomics to map microenvironment niches.
 \end{aimbox}
+
+% ===========================================================================
+\section{Relationship to Prior Work (what is and isn't new)}
+
+GNN-based spatial-domain identification is an \emph{established} field: SpaGCN
+\cite{hu2021}, STAGATE, and GraphST \cite{long2023} all apply graph neural
+networks to spatial-omics data and are standard baselines on the DLPFC
+benchmark. \textbf{We therefore do not claim a new architecture.} Those methods
+are predominantly \emph{unsupervised} (graph autoencoders + clustering, scored
+by ARI against manual labels) and are compared mainly against other clustering
+methods. Our contribution is a complementary and, in this field, under-asked
+\emph{question}: \textbf{how much does spatial structure actually add over strong
+non-graph models given the identical features?} We answer it with (i) a
+\emph{supervised}, leakage-safe \emph{cross-section} protocol (train on whole
+sections, predict held-out ones -- the disease-cohort regime); (ii) \emph{tuned
+XGBoost and MLP} baselines on the same features, which spatial-domain papers
+rarely report; (iii) a \emph{graph-removal falsification test} that isolates the
+spatial signal from model capacity; and (iv) replication across \emph{two
+technologies} (Visium, osmFISH). The deliverable is a quantified, honestly
+bounded estimate of the value of tissue structure -- a rigorous benchmark and
+analysis, not a state-of-the-art or novel-method claim.
 
 % ===========================================================================
 \section{Datasets}

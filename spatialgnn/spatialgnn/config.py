@@ -6,6 +6,12 @@ import os
 from dataclasses import dataclass, field, asdict
 from typing import List
 
+try:
+    import torch
+    DEFAULT_DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+except Exception:
+    DEFAULT_DEVICE = "cpu"
+
 PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(PACKAGE_DIR)
 DATA_DIR = os.path.join(PROJECT_DIR, "data")
@@ -58,7 +64,7 @@ class TrainConfig:
     lr: float = 5e-3
     weight_decay: float = 5e-4
     patience: int = 40
-    device: str = "cpu"
+    device: str = DEFAULT_DEVICE   # auto: "cuda" if a GPU is visible, else "cpu"
     verbose: bool = False
 
 

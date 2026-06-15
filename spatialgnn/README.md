@@ -16,6 +16,19 @@ GNN merely *tied* XGBoost/MLP — the graph wasn't pulling its weight (see
 neighborhood**. Spatial-omics domain mapping is that task, and the GNN advantage
 is dramatic and provable.
 
+## Relationship to prior work (honest positioning)
+
+GNN-based spatial-domain detection is an **established field** — SpaGCN (Nat.
+Methods 2021), STAGATE (Nat. Commun. 2022), and GraphST (Nat. Commun. 2023) all
+do this and are standard on DLPFC. **This project does not claim a new
+architecture.** Those methods are mostly *unsupervised* (autoencoder + clustering
+vs. ARI) and rarely include a strong *non-graph* baseline. The contribution here
+is the rigorous, under-asked **question**: *how much does spatial structure
+actually add over tuned XGBoost/MLP on identical features?* — answered with a
+supervised, leakage-safe cross-section protocol, a graph-removal falsification
+test, and replication across two technologies. It's a rigorous benchmark and
+honest analysis, not a SOTA or novel-method claim.
+
 ## Headline result — real human cortex (LIBD DLPFC, 3 seeds)
 
 The thesis holds **decisively on gold-standard real data**. On the LIBD DLPFC
