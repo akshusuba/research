@@ -78,25 +78,43 @@ This project builds an automated, label-efficient model for the mapping step and
 tests whether it has to be spatially aware to work.
 \end{problembox}
 
-\begin{aimbox}{Proposed study}
-This project will test whether tissue-neighborhood information improves
-spatial-domain mapping beyond expression-only machine learning. I will use two
-public datasets: the LIBD DLPFC benchmark (12 Visium sections, 47{,}329
-expert-annotated spots, 7 cortical domains) and single-cell osmFISH mouse cortex
-(33 genes). The main comparison will be between a spatial graph neural network
-and two non-graph baselines, XGBoost and an MLP, all trained on the same
-expression features. The key test is simple: if the graph is really helping, the
-GNN should perform better when it has the true tissue-neighborhood graph than
-when the graph is shuffled or removed.
+\begin{aimbox}{Preliminary results (pilot on two public datasets)}
+Initial results on two public datasets are encouraging. On the LIBD DLPFC
+benchmark (12 Visium sections, 47{,}329 expert-annotated spots, 7 cortical
+domains), our spatial GNN reaches macro-F1 $0.75$ and ARI $0.65$ under the harder
+cross-section split (whole tissues held out, 3 seeds), against $0.52$ for XGBoost
+and $0.49$ for an MLP trained on the same expression features, a gain of $+0.24$
+macro-F1. The result holds across architectures: a GraphSAGE encoder
+and a graph-attention (GAT) encoder both reach about $0.75$ F1. I also tested
+whether this was specific to Visium. On single-cell osmFISH mouse cortex (33 genes), the
+GNN reaches macro-F1 $0.96$ against $0.54$ (XGBoost) and $0.63$ (MLP). A
+graph-removal test on both tissues collapses the same GNN back to the blind MLP,
+which indicates the gain comes from spatial structure rather than from added
+model capacity. The proposal below formalizes, stress-tests, and extends these
+results toward tumor-microenvironment mapping.
 \end{aimbox}
 
 \vspace{4pt}
 \noindent\textit{Why this project.} I chose tissue mapping because it sits where
 neuroscience, cancer biology, and machine learning meet, and because the question
-is concrete: can a model tell which part of a tissue a measurement came from?
-My main interest is whether local context changes the answer. A spot can be noisy
-on its own, but its neighbors may make its tissue domain much clearer. Testing
-that idea carefully is what the project is about.
+is concrete: can a model tell which part of a tissue a measurement came from? What
+surprised me in the pilot was how much the answer depends on context. Letting the
+model look at a spot's neighbours, rather than the spot on its own, raised
+macro-F1 from about $0.5$ to $0.75$ on held-out brain sections. Understanding and
+stress-testing that gap is what the project is about.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{study_overview.png}
+\caption{Study overview. Each spatial-transcriptomics section (human cortex or
+tumor tissue) is turned into a graph whose nodes are spots or cells and whose
+edges connect spatial neighbours. A graph neural network labels each spot by
+pooling its neighbourhood, while XGBoost and MLP baselines see the same
+expression features but treat each spot in isolation. We compare the predicted
+tissue maps, run a falsification test that shuffles or removes the graph, and
+connect the method to downstream uses in oncology and neuropathology.}
+\label{fig:overview}
+\end{figure}
 
 % ===========================================================================
 \section{Background and Significance}
@@ -203,7 +221,7 @@ mapping and compare it directly against tuned XGBoost and an MLP on the same
 features, under leakage-safe splits.\\
 \textbf{Aim 2. Test whether the advantage is spatial.} Run a graph-removal test
 (intact vs.\ shuffled vs.\ empty graph) on two tissues and technologies, and check
-whether the GNN loses its advantage when the structure is destroyed.\\
+whether the GNN collapses to the MLP when the structure is destroyed.\\
 \textbf{Aim 3. Ground it biologically and extend to cancer.} Recover known domain
 marker genes, flag candidate annotation errors, and pilot the same pipeline on
 tumor spatial transcriptomics to map microenvironment niches.
@@ -216,19 +234,19 @@ GNN-based spatial-domain identification is an established field. SpaGCN
 \cite{hu2021}, STAGATE \cite{dong2022}, and GraphST \cite{long2023} all apply
 graph neural networks to spatial-omics data and are standard baselines on the
 DLPFC benchmark.
-This proposal does not claim a new architecture. Those methods are predominantly
+We therefore do not claim a new architecture. Those methods are predominantly
 unsupervised (graph autoencoders followed by clustering, scored by ARI against
-manual labels) and are compared mainly against other clustering methods. My
-goal is to ask a complementary and, in this field, under-asked question: how
+manual labels) and are compared mainly against other clustering methods. Our
+contribution is a complementary and, in this field, under-asked question: how
 much does spatial structure actually add over strong non-graph models given the
-same features? I will answer it with (i) a supervised, leakage-safe cross-section
+same features? We answer it with (i) a supervised, leakage-safe cross-section
 protocol (train on whole sections, predict held-out ones, which is the
 disease-cohort regime); (ii) tuned XGBoost and MLP baselines on the same features,
 which spatial-domain papers rarely report; (iii) a graph-removal test that
 separates the spatial signal from model capacity; and (iv) replication across two
-technologies (Visium and osmFISH). The deliverable will be a careful estimate of
-the value of tissue structure. It is planned as a rigorous benchmark and analysis,
-not a state-of-the-art or novel-method claim.
+technologies (Visium and osmFISH). The deliverable is a careful
+estimate of the value of tissue structure. It is a rigorous benchmark and
+analysis, not a state-of-the-art or novel-method claim.
 
 % ===========================================================================
 \section{Datasets}
@@ -303,8 +321,8 @@ only difference between them is access to the spatial graph.}
 \end{figure}
 
 \subsection{Baselines and leakage-safe evaluation}
-I will benchmark against tuned XGBoost and an MLP on the same expression features, so
-the comparison isolates the value of tissue structure. I will use three splits:
+We benchmark against tuned XGBoost and an MLP on the same expression features, so
+the comparison isolates the value of tissue structure. We use three splits:
 (i) \emph{cross-section}, where whole sections are held out for test (layer
 layouts differ per section, so absolute position cannot transfer and only
 neighbourhood-relative reasoning generalizes; this is the disease-cohort regime
@@ -312,55 +330,82 @@ and our headline test); (ii) \emph{within-section}, where contiguous spatial
 blocks are held out; and (iii) \emph{stratified}, a standard transductive node
 split for single-section data (osmFISH). In the cross-section disjoint-union
 graph, train and test sections are separate connected components, so message
-passing cannot leak labels across the split. I will report accuracy, macro-F1
+passing cannot leak labels across the split. We report accuracy, macro-F1
 (domains are imbalanced), and the adjusted Rand index (ARI, the field-standard
 domain metric), as mean $\pm$ std over seeds.
 
 % ===========================================================================
-\section{Planned Evaluation}
+\section{Preliminary Results}
 
-The main outcome will be whether adding spatial-neighborhood information improves
-domain mapping compared with expression-only models. I will report accuracy,
-macro-F1, and adjusted Rand index (ARI). Macro-F1 is important because tissue
-domains are not equally sized, and ARI is commonly used in spatial-domain papers.
+A working pilot already supports the claims above.
 
 \begin{table}[H]
 \centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.26\linewidth} >{\raggedright\arraybackslash}p{0.32\linewidth}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} cccc}
 \toprule
-\rowcolor{sriblue}\color{white}\textbf{Question} & \color{white}\textbf{Comparison} & \color{white}\textbf{Evidence I will look for}\\
+\rowcolor{sriblue}\color{white}\textbf{Macro-F1 / ARI} & \color{white}\textbf{XGBoost} & \color{white}\textbf{MLP} & \color{white}\textbf{SAGE} & \color{white}\textbf{GAT}\\
 \midrule
-\rowcolor{srirow} Does spatial context help? & GNN vs.\ XGBoost / MLP & Higher macro-F1 and ARI on held-out sections or cells.\\
-Does the graph itself matter? & True graph vs.\ shuffled/empty graph & Performance drops when tissue neighborhoods are destroyed.\\
-\rowcolor{srirow} Does the method generalize? & DLPFC Visium vs.\ osmFISH & Similar pattern across two spatial-omics technologies.\\
-Is the result biologically reasonable? & Predicted domains vs.\ marker genes & Recovery of known layer/domain marker genes.\\
+\rowcolor{srirow} DLPFC, \emph{cross-section} (3 seeds) & 0.52 / 0.37 & 0.49 / 0.38 & \textbf{0.75 / 0.65} & \textbf{0.74 / 0.66}\\
+osmFISH, \emph{within-section} (3 seeds) & 0.54 / 0.44 & 0.63 / 0.51 & \textbf{0.96 / 0.95} & \textbf{0.97 / 0.95}\\
 \bottomrule
 \end{tabular}
-\caption{Planned evaluation. The goal is not only to get a high score, but to
-test whether the score depends on real spatial tissue structure.}
-\label{tab:evaluation}
+\caption{Spatial GNNs beat the non-spatial baselines on the same features, on two
+tissues and two technologies. The osmFISH gap is larger because its 33-gene
+per-cell signal is weakest, so the neighbourhood matters most. osmFISH is a single
+section, so this is a transductive within-section split, an easier regime than
+DLPFC's cross-section test, and is reported as such.}
+\label{tab:prelim}
 \end{table}
 
-% ===========================================================================
-\section{Rigor and Biological Interpretation}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig1_real_comparison.png}
+\caption{Headline comparison. On both human DLPFC (Visium) and mouse cortex
+(osmFISH), the spatial GNN (GraphSAGE and GAT) clearly outperforms XGBoost and
+MLP, which see the same expression features but not the tissue graph.}
+\label{fig:comparison}
+\end{figure}
 
-\subsection{Testing whether the spatial structure is doing the work}
-The most important control will be a graph-removal experiment. I will train the
-same GNN under three graph settings: the real spatial $k$NN graph, a shuffled
-graph with similar degree but incorrect neighbors, and an empty graph with no
-neighbor messages. If the hypothesis is correct, the real graph should perform
-best, while the shuffled and empty graphs should move closer to the MLP baseline.
-If that does not happen, then the model's advantage is probably not truly
-spatial, and I will report that directly.
+% ===========================================================================
+\section{Rigor: Falsification and Biological Interpretation}
+
+\subsection{Is the spatial structure really doing the work?}
+We run the same GNN on three graphs. If the gain is genuinely spatial, destroying
+the tissue structure should erase it, and it does, on both tissues
+(Fig.~\ref{fig:ablation}, Table~\ref{tab:ablation}).
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} cccc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{GNN macro-F1} & \color{white}\textbf{Intact graph} & \color{white}\textbf{Shuffled edges} & \color{white}\textbf{Empty graph} & \color{white}\textbf{MLP ref.}\\
+\midrule
+\rowcolor{srirow} DLPFC (cross-section) & \textbf{0.75} & 0.49 & 0.49 & 0.48\\
+osmFISH (within-section) & \textbf{0.95} & 0.58 & 0.61 & 0.63\\
+\bottomrule
+\end{tabular}
+\caption{Falsification test. Replacing the true spatial $k$NN graph with
+degree-matched random edges, or with no edges, collapses the GNN onto the blind
+MLP on both tissues. The advantage comes from the graph, not the network
+capacity.}
+\label{tab:ablation}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig2_real_ablation.png}
+\caption{The same falsification test, visualized on both tissues. Only the intact
+spatial graph clears the MLP reference line; shuffled and empty graphs fall back
+to it.}
+\label{fig:ablation}
+\end{figure}
 
 \subsection{From accuracy to biology}
-For each predicted domain I will extract the genes driving predictions and check
-whether known cortical-layer marker genes are recovered in DLPFC. I will also
-look for spots where the model confidently disagrees with the manual label. Those
-spots could be model errors, annotation errors, or small local tissue structures
-that deserve closer review. This is important because the project should produce
-more than an accuracy number; it should produce biological hypotheses that a
-researcher can inspect.
+For each predicted domain we will (i) extract the genes driving predictions and
+confirm recovery of known marker genes (cortical-layer markers for DLPFC), and
+(ii) flag spots where the model confidently disagrees with the manual label,
+which are candidate annotation errors or genuine micro-domains for expert review.
+This turns an accuracy number into a hypothesis a biologist can act on.
 
 % ===========================================================================
 \section{Clinical Translation: Toward Precision Pathology}
@@ -390,7 +435,7 @@ are where it pays off. All predictions are research-only and hypothesis-generati
 % ===========================================================================
 \section{Project Strengths and Feasibility}
 
-A few things make the project feasible and worthwhile
+A few things give me confidence that the project is both feasible and worthwhile
 (Table~\ref{tab:formula}): it uses real, public data; it has a clear medical
 motivation; it compares against tuned non-graph baselines under leakage-safe
 splits; it includes a causal check on where the gain comes from; and it ties the
@@ -405,9 +450,9 @@ accuracy back to known biology.
 \rowcolor{srirow} Real, sizable public data & LIBD DLPFC: 12 sections, 47k annotated spots, plus a second technology (osmFISH).\\
 Clear medical motivation & Spatially-resolved localization of disease pathology; precision oncology bridge.\\
 \rowcolor{srirow} Rigorous evaluation & Tuned XGBoost and MLP baselines; leakage-safe splits; multi-seed macro-F1 and ARI.\\
-Causal / falsification test & Graph-removal ablation will test whether the GNN depends on real tissue neighborhoods.\\
+Causal / falsification test & Graph-removal ablation on two tissues collapses the GNN to the MLP.\\
 \rowcolor{srirow} Interpretability $\rightarrow$ discovery & Recover marker genes; surface candidate annotation errors.\\
-Transparent reporting & Any weak or negative result will be reported as-is.\\
+Transparent reporting & Any narrowing of the gap (e.g.\ easier transductive splits) is reported as-is.\\
 \bottomrule
 \end{tabular}
 \caption{Strengths and feasibility of the project.}
@@ -417,9 +462,9 @@ Transparent reporting & Any weak or negative result will be reported as-is.\\
 % ===========================================================================
 \section{Eight-Week Timeline}
 
-The eight-week plan is designed to start with a reproducible baseline and then
-add the graph model, controls, biological interpretation, and a small tumor-ST
-extension if time allows (Table~\ref{tab:timeline}).
+The pilot already de-risks the core pipeline. The eight-week plan focuses on
+validation, ablations, biological interpretation, and the tumor-ST extension
+(Table~\ref{tab:timeline}).
 
 \begin{table}[H]
 \centering\small
@@ -427,25 +472,26 @@ extension if time allows (Table~\ref{tab:timeline}).
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{Weeks} & \color{white}\textbf{Milestones}\\
 \midrule
-\rowcolor{srirow} 1--2 & Build the data pipeline for DLPFC and osmFISH; construct spatial graphs; run a small synthetic sanity check.\\
-3--4 & Implement expression-only baselines (XGBoost, MLP) and the first GraphSAGE model with shared preprocessing.\\
-\rowcolor{srirow} 5 & Run leakage-safe evaluation splits and report macro-F1, ARI, and accuracy across seeds.\\
-6 & Run graph controls: true graph, shuffled graph, empty graph, and neighborhood-size sensitivity.\\
-\rowcolor{srirow} 7 & Biological interpretation: marker-gene recovery and confident disagreement with manual labels.\\
-8 & Prepare figures, tables, manuscript draft, and a reproducible code/data manifest; add a small tumor-ST pilot if time permits.\\
+\rowcolor{srirow} 1--2 & Data pipeline (DLPFC + osmFISH to AnnData; spatial-graph builder); synthetic sanity check.\\
+3--4 & Spatial GNN (SAGE/GAT/GCN) + tuned XGBoost + MLP; shared leakage-safe trainer.\\
+\rowcolor{srirow} 5 & Cross-section, within-section, stratified experiments; multi-seed macro-F1/ARI.\\
+6 & Falsification ablations (graph removal, depth, neighbourhood size) on both tissues.\\
+\rowcolor{srirow} 7 & Biological interpretation (marker recovery, annotation-error flags); tumor-ST pilot.\\
+8 & Figures, tables, manuscript draft; reproducibility package.\\
 \bottomrule
 \end{tabular}
-\caption{Schedule for the eight-week SRI cohort. The tumor-ST extension is a
-stretch goal after the main brain and osmFISH benchmarks are complete.}
+\caption{Schedule for the eight-week SRI cohort. The pilot covers the core
+pipeline, so the schedule focuses on validation, ablations, interpretation, and
+the tumor-ST extension.}
 \label{tab:timeline}
 \end{table}
 
 % ===========================================================================
 \section{Reproducibility and Ethics}
 
-Implementation will use open tools (PyTorch Geometric for the GNN; scanpy and anndata
-for spatial-omics I/O; XGBoost). I will save code, configs, random seeds, and a
-data manifest, and every reported number will be multi-seed with standard
+Implementation uses open tools (PyTorch Geometric for the GNN; scanpy and anndata
+for spatial-omics I/O; XGBoost). All code, configs, random seeds, and a data
+manifest are released, and every reported number is multi-seed with standard
 deviations. No human subjects are involved; all inputs are public, de-identified
 post-mortem or model-organism tissue. Predictions are research-only and
 hypothesis-generating and do not constitute clinical guidance.
