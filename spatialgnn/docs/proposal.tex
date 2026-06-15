@@ -56,7 +56,7 @@
 
 \begin{center}
   {\LARGE\bfseries\color{sriblue} Precision Tissue Mapping from Spatial\\ Transcriptomics Using Graph Learning}\\[4pt]
-  {\large\bfseries\color{sriblue!80!black} A neighborhood-aware framework for spatially\\ resolved molecular pathology}\\[10pt]
+  {\large\bfseries\color{sriblue!80!black} A neighborhood-aware platform for discovering\\ spatially localized molecular pathology}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
   {\small Student Research Institute (SRI), Summer 2026 Cohort \\
   Harvard Undergraduate OpenBio Laboratory}\\[2pt]
@@ -74,20 +74,23 @@ can be interpreted, however, every measured spot must first be assigned to its
 tissue domain (a cortical layer, a tumor region, an immune niche). Today that
 assignment relies on slow, subjective manual annotation, or on expression-only
 clustering that ignores location and produces noisy, spatially incoherent maps.
-This project builds an automated, label-efficient model for the mapping step and
-tests whether it has to be spatially aware to work.
+This project builds a neighbourhood-aware tissue-mapping pipeline that turns a
+spatial slide into an interpretable molecular map, then uses that map to localize
+where disease-relevant biology appears, while testing whether the spatial
+neighbourhood is what makes the map work.
 \end{problembox}
 
 \begin{aimbox}{Proposed study}
-This project will test whether tissue-neighborhood information improves
-spatial-domain mapping beyond expression-only machine learning. I will use two
-public datasets: the LIBD DLPFC benchmark (12 Visium sections, 47{,}329
-expert-annotated spots, 7 cortical domains) and single-cell osmFISH mouse cortex
-(33 genes). The main comparison will be between a spatial graph neural network
-and two non-graph baselines, XGBoost and an MLP, all trained on the same
-expression features. The key test is simple: if the graph is really helping, the
-GNN should perform better when it has the true tissue-neighborhood graph than
-when the graph is shuffled or removed.
+I will build a neighbourhood-aware tissue-mapping pipeline that converts spatial
+transcriptomics data into interpretable molecular maps, and use it to localize
+disease-relevant biology. The pipeline assigns each spot to a tissue domain from
+its gene expression and its local spatial neighbourhood, applied to human cortex
+(LIBD DLPFC Visium, 12 sections, 47{,}329 expert-annotated spots) and extended to
+osmFISH mouse cortex and a tumor section. Beyond the maps, the project produces a
+discovery layer (marker genes, domain boundaries, and spots that disagree with
+manual labels) and a spatial-validity test that compares against non-graph
+baselines and then shuffles or removes the neighbourhood graph to confirm the
+maps depend on real tissue structure.
 \end{aimbox}
 
 \vspace{4pt}
@@ -191,22 +194,25 @@ model cannot.}
 
 \begin{problembox}
 \textbf{Central hypothesis.} A spot's tissue domain is encoded not only in its
-own gene expression but in its spatial neighbourhood. A graph neural network that
-performs tissue-neighbour message passing should therefore map domains more
-accurately than XGBoost and MLP models trained on the same expression features,
-and removing the spatial graph should erase that advantage.
+own gene expression but in its spatial neighbourhood. A model that uses that
+neighbourhood should therefore produce more accurate tissue maps than
+expression-only models, and removing the spatial graph should erase the gain.
 \end{problembox}
 
 \begin{aimbox}{Specific Aims}
-\textbf{Aim 1. Build and benchmark.} Develop a spatial GNN for tissue-domain
-mapping and compare it directly against tuned XGBoost and an MLP on the same
-features, under leakage-safe splits.\\
-\textbf{Aim 2. Test whether the advantage is spatial.} Run a graph-removal test
-(intact vs.\ shuffled vs.\ empty graph) on two tissues and technologies, and check
-whether the GNN loses its advantage when the structure is destroyed.\\
-\textbf{Aim 3. Ground it biologically and extend to cancer.} Recover known domain
-marker genes, flag candidate annotation errors, and pilot the same pipeline on
-tumor spatial transcriptomics to map microenvironment niches.
+\textbf{Aim 1 (Platform): a neighbourhood-aware tissue-mapping pipeline.} Build a
+reproducible pipeline that converts a spatial-transcriptomics slide into an
+interpretable tissue-domain map, using each spot's gene expression together with
+its local spatial neighbourhood, and apply it across technologies (Visium,
+osmFISH, and a tumor section).\\
+\textbf{Aim 2 (Validation): a spatial-validity test.} Check whether the maps
+depend on real tissue structure: compare against tuned non-graph baselines
+(XGBoost and MLP) on identical features, then shuffle or remove the neighbourhood
+graph as a falsification control.\\
+\textbf{Aim 3 (Discovery): a biological discovery layer.} Recover known marker
+genes, delineate domain boundaries, and surface spots where the map confidently
+disagrees with manual annotations, which are candidate annotation errors or
+unrecognized micro-domains for expert review.
 \end{aimbox}
 
 % ===========================================================================
