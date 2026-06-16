@@ -68,6 +68,37 @@ explanation**, not the link score — and that is the GNN's real job here.
 
 Reproduce: `PYTHONPATH=. python scripts/mechanism_demo.py`.
 
+## Finding 3 — mechanism structure separates true indications from random pairs
+
+The falsifiable claim (Aim 4), tested LLM-free on the graph mechanism signal over
+400 true oncology indications vs 400 random drug–cancer pairs
+(`scripts/evaluate_mechanism.py`, `results/mechanism_eval.json`):
+
+| Metric | True indications | Random pairs |
+|---|---|---|
+| Mean mechanism score | **2.08** | 0.18 |
+| Direct-target rate | **34.0%** | 0.25% |
+| Any mechanistic path | **81.3%** | 8.8% |
+
+**Separation AUROC (true vs random): 0.878.** True indications are ~136× more
+likely to have a direct drug-target → cancer-gene link, and a random pair almost
+never does (figure: `figures/mechanism_eval.png`). So the mechanism signal the
+graph provides is real and discriminative — the thing XGBoost's link score cannot
+give you.
+
+**Evidence verification (Aim 3).** The verifier (`agent/verify.py`) retrieves
+Europe PMC *abstracts* (not just titles) and grades each path
+**supported / weak / contradicted / unknown** — via an LLM when `ONCO_LLM_API_KEY`
+is set, and via a runnable lexical-grounding fallback otherwise. On a small
+offline (lexical) sample the grades already trend correctly: true pairs return
+mostly *supported/weak*, random pairs mostly *no-path/unknown*.
+
+**Honest caveat (DrugMechDB).** Curated-mechanism agreement is not yet reported:
+DrugMechDB labels proteins with UniProt accessions / free-text names (`BCR/ABL`,
+`c-Kit`) while PrimeKG uses HGNC symbols, so a UniProt→HGNC map is needed first
+(flagged as future work; the code fetches and parses DrugMechDB but does not
+overclaim agreement).
+
 ## Positioning (honest novelty)
 
 This project does **not** claim to invent KG-based or LLM-based drug repurposing.
@@ -105,10 +136,14 @@ oncorepurpose/
   interpret/
     paths.py             2-hop bridge rationales + candidate ranking
     mechanism_paths.py   multi-hop MOA path extractor (direct-target / PPI / pathway)
-  agent/                 llm.py, evidence_report.py (literature + LLM-as-judge)
+  agent/
+    llm.py               provider-agnostic chat client (cached)
+    evidence_report.py   Europe PMC retrieval (abstracts) + LLM-as-judge dossier
+    verify.py            mechanism verifier: LLM grade + lexical-grounding fallback
 scripts/
   run_experiment.py      4-model x 3-regime comparison + ablations
   mechanism_demo.py      multi-hop mechanism paths for oncology pairs
+  evaluate_mechanism.py  true-vs-random separation + grounding + DrugMechDB (Aim 4)
   generate_report.py     deliverable: vetted oncology repurposing shortlist
 ```
 
@@ -132,8 +167,10 @@ includes model scores, mechanism paths, and retrieved literature.
 
 - [x] Corrected, leakage-safe benchmark (tuned XGBoost); honest negative result on the link task.
 - [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
-- [ ] Upgrade LLM verifier to read **abstracts/passages** (true citation grounding), not titles.
+- [x] Verifier reads Europe PMC **abstracts** (not titles); LLM grade + lexical fallback.
+- [x] Quantitative true-vs-random separation (AUROC 0.878); the falsifiable claim holds.
+- [ ] DrugMechDB agreement: add a UniProt→HGNC map so curated-mechanism overlap is meaningful.
+- [ ] Run the LLM verifier at scale (needs `ONCO_LLM_API_KEY`) and compare LLM vs lexical grades.
 - [ ] Stronger hub down-weighting (e.g. albumin-type promiscuous bridges).
-- [ ] Quantitative evaluation vs DrugMechDB + true/random separation (the falsifiable claim).
 
 *All predictions are hypothesis-generating and not medical advice.*

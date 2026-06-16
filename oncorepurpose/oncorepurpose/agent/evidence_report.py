@@ -13,6 +13,7 @@ still contains the model score, KG rationale, and retrieved literature.
 
 from __future__ import annotations
 
+import html
 import json
 import re
 from typing import Dict, List, Optional
@@ -22,14 +23,26 @@ import requests
 from oncorepurpose.agent.llm import chat, llm_available
 
 EUROPE_PMC = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+_TAG = re.compile(r"<[^>]+>")
 
 
-def search_literature(query: str, page_size: int = 5) -> List[Dict]:
-    """Return [{title, authors, year, source, id}] from Europe PMC."""
+def _clean(text: str) -> str:
+    """Strip HTML tags (Europe PMC marks up gene/abstract text) and unescape."""
+    return html.unescape(_TAG.sub("", text or "")).strip()
+
+
+def search_literature(query: str, page_size: int = 5, with_abstract: bool = True) -> List[Dict]:
+    """Return [{title, authors, year, source, id, abstract}] from Europe PMC.
+
+    ``with_abstract`` uses resultType=core to retrieve the abstract text, so the
+    verifier can ground on what the paper actually says rather than just titles.
+    """
+    result_type = "core" if with_abstract else "lite"
     try:
         r = requests.get(
             EUROPE_PMC,
-            params={"query": query, "format": "json", "pageSize": page_size, "resultType": "lite"},
+            params={"query": query, "format": "json", "pageSize": page_size,
+                    "resultType": result_type},
             timeout=30,
         )
         r.raise_for_status()
@@ -40,11 +53,12 @@ def search_literature(query: str, page_size: int = 5) -> List[Dict]:
     out = []
     for it in results:
         out.append({
-            "title": it.get("title", ""),
+            "title": _clean(it.get("title", "")),
             "authors": it.get("authorString", ""),
             "year": it.get("pubYear", ""),
             "source": it.get("source", ""),
             "id": it.get("id", ""),
+            "abstract": _clean(it.get("abstractText", "")) if with_abstract else "",
         })
     return out
 

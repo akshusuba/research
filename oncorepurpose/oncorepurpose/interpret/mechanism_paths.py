@@ -113,6 +113,7 @@ def mechanism_paths(
             pn = _name(data, PROT, p)
             out.append({
                 "type": "direct_target", "len": 2, "score": 3.0 + _spec(deg),
+                "drug": drug_n, "disease": dis_n, "genes": [pn], "pathway": None,
                 "text": f"{drug_n} --targets--> {pn} <--associated-- {dis_n}",
             })
 
@@ -123,10 +124,12 @@ def mechanism_paths(
             deg = idx["prot_dis_deg"].get(p2, 1)
             if deg > prot_dis_cap:
                 continue
+            p2n = _name(data, PROT, p2)
             out.append({
                 "type": "ppi", "len": 3, "score": 2.0 + _spec(deg),
+                "drug": drug_n, "disease": dis_n, "genes": [p1n, p2n], "pathway": None,
                 "text": (f"{drug_n} --targets--> {p1n} --interacts--> "
-                         f"{_name(data, PROT, p2)} <--associated-- {dis_n}"),
+                         f"{p2n} <--associated-- {dis_n}"),
             })
 
     # 3) shared pathway: drug target and a disease protein lie in one pathway.
@@ -140,11 +143,12 @@ def mechanism_paths(
             if not members:
                 continue
             p2 = min(members, key=lambda q: idx["prot_dis_deg"].get(q, 1))
+            pwn, p2n = _name(data, PATHWAY, pw), _name(data, PROT, p2)
             out.append({
                 "type": "shared_pathway", "len": 4, "score": 1.0 + _spec(pw_sz),
+                "drug": drug_n, "disease": dis_n, "genes": [p1n, p2n], "pathway": pwn,
                 "text": (f"{drug_n} --targets--> {p1n} --in pathway--> "
-                         f"{_name(data, PATHWAY, pw)} <--in pathway-- "
-                         f"{_name(data, PROT, p2)} <--associated-- {dis_n}"),
+                         f"{pwn} <--in pathway-- {p2n} <--associated-- {dis_n}"),
             })
 
     out.sort(key=lambda d: -d["score"])
@@ -166,3 +170,12 @@ def classify_support(paths: List[Dict]) -> str:
     if any(p["type"] == "shared_pathway" for p in paths):
         return "pathway-level mechanism"
     return "no mechanistic path found"
+
+
+def mechanism_score(paths: List[Dict]) -> float:
+    """Single graph-only mechanism strength for a (drug, disease) pair.
+
+    Used to test the falsifiable claim that true indications carry stronger
+    mechanistic structure than random pairs. Higher = more/closer mechanism.
+    """
+    return max((p["score"] for p in paths), default=0.0)

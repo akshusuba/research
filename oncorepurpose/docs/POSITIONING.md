@@ -46,10 +46,13 @@ Our narrower, defensible contributions:
    literature, to reject coincidental hub paths (e.g. albumin bridges) and keep
    real mechanisms.
 
-4. **Evaluation, not just a demo.** A falsifiable claim tested against known
-   indications and curated mechanisms (DrugMechDB where covered): do verified
-   mechanism paths separate true indications from random pairs better than the
-   link score alone? Many LLM+KG repurposing demos skip this.
+4. **Evaluation, not just a demo.** A falsifiable claim, tested: do mechanism
+   paths separate true indications from random drug–cancer pairs? Over 400 vs 400
+   oncology pairs the graph mechanism signal separates them at **AUROC 0.878**
+   (direct-target rate 34% vs 0.25%), and the literature verifier grades true
+   pairs *supported/weak* and random pairs *no-path/unknown*. Agreement with
+   curated DrugMechDB mechanisms is left as future work (needs a UniProt→HGNC
+   map). Many LLM+KG repurposing demos report no such evaluation.
 
 5. **Focused oncology scope** with a concrete, ranked, evidence-backed candidate
    shortlist as the deliverable.
