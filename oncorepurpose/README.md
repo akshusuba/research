@@ -1,72 +1,95 @@
-# OncoRepurpose-GNN
+# OncoEvidence — Mechanism-Guided AI Evidence Triage for Cancer Drug Repurposing
 
-Honest, deliverable-first **graph neural network drug repurposing for cancer** on
-the PrimeKG biomedical knowledge graph.
+> **Core question.** For cancer drug repurposing, can a biomedical knowledge graph
+> plus a citation-grounded LLM agent prioritize candidates by *both* predicted
+> therapeutic relevance *and* mechanistic plausibility — and when does the graph
+> add value over a strong tabular baseline?
 
-The project predicts `drug --indication--> cancer` links, rigorously establishes
-**when graph topology beats a tuned tabular baseline**, and ships an **agentic LLM
-evidence-report** layer that turns top predictions into citation-grounded,
-LLM-judged candidate dossiers.
+OncoEvidence is an oncology-focused **evidence-triage pipeline** built on the
+PrimeKG biomedical knowledge graph. It ranks drug–cancer repurposing candidates,
+extracts the multi-hop **mechanism-of-action paths** that justify each one, and
+uses an LLM to grade whether those paths are supported by the literature. The
+project is deliberately honest about where graph learning helps and where a tuned
+tabular model is already enough.
 
-## Why this design (the honest core)
+## Specific aims
 
-A graph model is only worth its complexity when the prediction genuinely depends
-on topology that node features cannot encode. We test that head-on:
+1. **Candidate generation.** Rank `drug --indication--> cancer` pairs with
+   PrimeKG models (heterogeneous GNN, DistMult KGE) against a **tuned XGBoost**
+   on the *same* node features, and report honestly where the graph helps.
+2. **Mechanism extraction.** For top candidates, extract multi-hop
+   `drug → target protein → (PPI / pathway) → cancer gene → cancer` paths,
+   prioritizing genuine mechanism relations over phenotype/symptom coincidence.
+3. **LLM evidence verification.** Retrieve literature and have an LLM grade each
+   proposed path as **supported / weak / contradicted / unknown**, with quoted
+   evidence (an evidence reviewer, not a hypothesis generator).
+4. **Evaluation.** Test against known indications and curated mechanism resources
+   (e.g. DrugMechDB, where covered). Falsifiable claim: *LLM-verified mechanism
+   paths separate true indications from random drug–cancer pairs better than the
+   link score alone, and the verifier keeps real MOA paths while rejecting
+   coincidental phenotype/hub bridges.*
 
-- **Shared features.** The same SentenceTransformer node features feed *both* the
-  GNN and the XGBoost baseline, so any gap is attributable to graph structure.
-- **Leakage-safe splits.** Transductive (random edges) vs **inductive cold-disease**
-  (whole cancer diseases held out, TxGNN-style) vs **inductive cold-drug**.
-- **Memorization control.** A DistMult KGE has no embedding for unseen nodes and is
-  expected to collapse in the inductive regimes.
-- **Topology ablation.** Shuffling / removing the message-passing graph must erase
-  the GNN's advantage if the win is genuinely topological.
+## Finding 1 — the link task alone does **not** need the graph
 
-If a tuned XGBoost matched the GNN, that would be reported as the finding. On
-PrimeKG repurposing the GNN has a real mechanism to win: it can traverse multi-hop
-`drug -> protein -> ... -> disease` paths that a tabular model cannot.
+With a properly **tuned** XGBoost on shared SentenceTransformer features, the GNN
+no longer wins anywhere (corrected run, 5 seeds; `results/oncorepurpose.json`).
+The earlier "GNN wins" was an artifact of an untuned baseline plus a
+message-passing leak, both fixed.
 
-> **Correction notice (results being refreshed).** An audit found three issues in
-> the first run, now fixed in code: (1) a **message-passing leak** — non-target
-> drug-disease therapeutic edges (`contraindication`, `off_label_use`, and the
-> reverse `indication`) between the same pairs were left in the graph, inflating
-> the GNN; (2) the XGBoost baseline was described as tuned but ran **untuned**
-> (now Optuna-tuned by default); (3) pooled **Hits@K/MRR were not meaningful** and
-> are dropped from the headline. With the leak closed, the transductive GNN
-> already falls from 0.991 to ~0.975, so the corrected GNN-vs-XGBoost gap is
-> expected to shrink (likely a tie in the cold-disease regime — consistent with
-> the honest caveat below). Canonical corrected numbers will live in
-> `results/oncorepurpose_fixed.json`. **The table below is the pre-fix run and is
-> superseded.** This project is maintained as a backup; the primary project is
-> `../spatialgnn`, where the GNN wins decisively on real data.
-
-## Results (PRE-FIX, superseded: 5 seeds, SentenceTransformer features; full data in `results/oncorepurpose.json`)
-
-Test AUROC (mean +/- std over 5 seeds):
-
-| Regime | GNN (ours) | XGBoost | MLP | KGE |
+| Regime | GNN | tuned XGBoost | MLP | KGE |
 |---|---|---|---|---|
-| Transductive | 0.991+/-0.001 | 0.989+/-0.002 | 0.973+/-0.002 | 0.907+/-0.008 |
-| Inductive (cold-disease, oncology) | 0.971+/-0.004 | 0.965+/-0.011 | 0.927+/-0.023 | 0.452+/-0.032 |
-| Inductive (cold-drug) | 0.964+/-0.005 | 0.958+/-0.006 | 0.930+/-0.011 | 0.482+/-0.031 |
+| Transductive | 0.977 | **0.988** | 0.973 | 0.907 |
+| Inductive (cold-disease, oncology) | 0.882 | **0.963** | 0.930 | 0.452 |
+| Inductive (cold-drug) | 0.956 | **0.958** | 0.931 | 0.482 |
 
-Topology ablation (GNN, cold-disease AUROC): intact 0.974 -> shuffle 0.936 ->
-empty 0.773. Relation ablation: removing drug-protein edges hurts most
-(0.974 -> 0.966).
+Test AUROC. The honest reading: for *link ranking* with rich text features, a
+strong tabular model is as good or better. A drug/disease name embedding lets
+XGBoost take a "semantic similarity" shortcut without any graph reasoning. This
+is what motivates the mechanism-aware reframing below.
 
-Honest reading of the canonical run:
-- The **GNN is the best model in every regime**, significantly above MLP and KGE.
-- The **DistMult KGE memorizer collapses to ~chance (0.45-0.48) on unseen nodes**,
-  while the feature GNN stays ~0.97 -- the clearest demonstration that the task
-  needs content + structure, not memorized node identity.
-- The **topology ablation** (empty graph 0.773 vs intact 0.974) shows the GNN's
-  performance is genuinely driven by graph structure.
-- **XGBoost on the same features is a strong baseline** (as the literature warns):
-  the GNN beats it significantly in transductive (p=0.018) and cold-drug (p=0.011)
-  but only narrowly and non-significantly in cold-disease (p=0.15). We report this
-  transparently rather than overclaiming -- the graph's marginal value over a
-  well-tuned tabular model is real but modest, while its value over a memorization
-  baseline is decisive.
+## Finding 2 — but the graph carries real mechanism a tabular model cannot
+
+XGBoost can score a pair; it **cannot** produce a traceable mechanism. The graph
+can. On true oncology indications, the multi-hop extractor recovers textbook
+direct-target mechanisms (`oncorepurpose/interpret/mechanism_paths.py`):
+
+```
+Quizartinib  --targets--> FLT3  <--associated-- myeloid leukemia          (FLT3 inhibitor)
+Tamibarotene --targets--> RARA  <--associated-- acute promyelocytic leukemia (RARA driver)
+Etoposide    --targets--> TOP2A --interacts--> RB1 <--associated-- small cell lung carcinoma
+Trifluridine --targets--> TYMS  <--associated-- colorectal cancer         (thymidylate synthase)
+```
+
+In a quick check, **true indications reliably yield specific direct-target
+paths, while random drug–cancer pairs mostly yield no mechanistic path** (the few
+that do go through promiscuous hubs like albumin — exactly the coincidental links
+the LLM verifier is meant to reject). So the graph's value is **mechanism and
+explanation**, not the link score — and that is the GNN's real job here.
+
+Reproduce: `PYTHONPATH=. python scripts/mechanism_demo.py`.
+
+## Positioning (honest novelty)
+
+This project does **not** claim to invent KG-based or LLM-based drug repurposing.
+Close prior work exists and is treated as reference:
+
+- **TxGNN** (Zitnik lab, *Nature Medicine* 2024) — KG GNN for zero-shot
+  repurposing with multi-hop explanations across 17,080 diseases.
+- **KGML-xDTD** — drug-treatment prediction plus KG path-based mechanism
+  descriptions.
+- **DrugKLM** — biomedical KGs combined with LLM mechanistic reasoning for
+  therapeutic prioritization.
+- **Decagon** (Stanford) — GNNs for relational drug-pair (polypharmacy) tasks,
+  where the graph clearly beats tabular models.
+
+> Prior work has used biomedical knowledge graphs and GNNs for drug repurposing,
+> and newer work is beginning to fuse KGs with LLM reasoning. OncoEvidence builds
+> and **evaluates** an oncology-specific, citation-grounded evidence-triage
+> pipeline that (a) tests honestly when graph structure is actually necessary, and
+> (b) checks whether proposed mechanism paths are supported by retrieved
+> literature. We *combine and evaluate*; we do not claim to be first.
+
+See [docs/POSITIONING.md](docs/POSITIONING.md) for detail.
 
 ## Layout
 
@@ -77,12 +100,15 @@ oncorepurpose/
   features.py            shared SentenceTransformer node features (+ hashing fallback)
   models.py              HeteroGNN, FeatureMLP, DistMultKGE, EdgeMLPDecoder
   data/                  download.py, build_graph.py (kg.csv -> HeteroData)
-  baselines/             xgboost_baseline.py (tuned tabular control)
+  baselines/             xgboost_baseline.py (Optuna-tuned tabular control)
   evaluation/            splits.py, metrics.py, statistical_tests.py, trainer.py
-  interpret/             paths.py (candidate ranking + multi-hop KG rationales)
-  agent/                 llm.py, evidence_report.py (RAG + LLM-as-judge)
+  interpret/
+    paths.py             2-hop bridge rationales + candidate ranking
+    mechanism_paths.py   multi-hop MOA path extractor (direct-target / PPI / pathway)
+  agent/                 llm.py, evidence_report.py (literature + LLM-as-judge)
 scripts/
-  run_experiment.py      canonical 4-model x 3-regime + ablations
+  run_experiment.py      4-model x 3-regime comparison + ablations
+  mechanism_demo.py      multi-hop mechanism paths for oncology pairs
   generate_report.py     deliverable: vetted oncology repurposing shortlist
 ```
 
@@ -92,21 +118,22 @@ scripts/
 pip install -r requirements.txt
 python -m oncorepurpose.data.download          # PrimeKG kg.csv (~980 MB)
 python -m oncorepurpose.data.build_graph       # -> data/primekg_hetero.pt
-python scripts/run_experiment.py               # 5 seeds + ablations
-ONCO_LLM_API_KEY=sk-... python scripts/generate_report.py \
+PYTHONPATH=. python scripts/run_experiment.py  # 5 seeds + ablations (corrected)
+PYTHONPATH=. python scripts/mechanism_demo.py  # mechanism paths
+ONCO_LLM_API_KEY=sk-... PYTHONPATH=. python scripts/generate_report.py \
     --diseases glioblastoma "pancreatic cancer" --top-k 5
 ```
 
 Set `ONCO_LLM_API_KEY` (and optionally `ONCO_LLM_BASE_URL`, `ONCO_LLM_MODEL`) to
 enable the LLM evidence dossiers + LLM-as-judge; without it the report still
-includes model scores, KG rationales, and retrieved literature.
+includes model scores, mechanism paths, and retrieved literature.
 
-## Positioning vs prior work
+## Status / roadmap
 
-See [docs/POSITIONING.md](docs/POSITIONING.md). In short: TxGNN (Zitnik, Nature
-Medicine 2024) is the KG-repurposing incumbent and is treated as a reference. Our
-contribution is the **rigorous "is the graph necessary?" analysis** (tuned XGBoost
-baseline + topology ablation), the **agentic evidence-report deliverable**, and a
-**focused oncology scope** -- not a new architecture.
+- [x] Corrected, leakage-safe benchmark (tuned XGBoost); honest negative result on the link task.
+- [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
+- [ ] Upgrade LLM verifier to read **abstracts/passages** (true citation grounding), not titles.
+- [ ] Stronger hub down-weighting (e.g. albumin-type promiscuous bridges).
+- [ ] Quantitative evaluation vs DrugMechDB + true/random separation (the falsifiable claim).
 
 *All predictions are hypothesis-generating and not medical advice.*

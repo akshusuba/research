@@ -1,0 +1,127 @@
+  [features] loaded cached features (dim=384)
+PrimeKG graph:
+  node gene_protein: 27610 feat=384
+  node drug: 7957 feat=384
+  node effect_phenotype: 15311 feat=384
+  node disease: 17080 feat=384 oncology=3170
+  node biological_process: 28642 feat=384
+  node molecular_function: 11169 feat=384
+  node cellular_component: 4176 feat=384
+  node exposure: 818 feat=384
+  node pathway: 2516 feat=384
+  node anatomy: 14033 feat=384
+  totals: 129,312 nodes, 8,100,498 edges, 50 edge types
+  target [indication]: ('drug', 'indication', 'disease') = 9388 edges
+  target [contraindication]: ('drug', 'contraindication', 'disease') = 30675 edges
+Target: ('drug', 'indication', 'disease') | device: cuda | seeds: [0, 1, 2, 42, 123]
+
+============================================================
+REGIME: transductive
+============================================================
+  seed 0 GNN      auroc=0.9776 auprc=0.9718
+  seed 0 XGBoost  auroc=0.9894 auprc=0.9891
+  seed 0 MLP      auroc=0.9757 auprc=0.9690
+  seed 0 KGE      auroc=0.9070 auprc=0.9445
+  seed 1 GNN      auroc=0.9784 auprc=0.9727
+  seed 1 XGBoost  auroc=0.9877 auprc=0.9877
+  seed 1 MLP      auroc=0.9709 auprc=0.9663
+  seed 1 KGE      auroc=0.9046 auprc=0.9422
+  seed 2 GNN      auroc=0.9818 auprc=0.9800
+  seed 2 XGBoost  auroc=0.9882 auprc=0.9866
+  seed 2 MLP      auroc=0.9721 auprc=0.9631
+  seed 2 KGE      auroc=0.9010 auprc=0.9391
+  seed 42 GNN      auroc=0.9739 auprc=0.9649
+  seed 42 XGBoost  auroc=0.9910 auprc=0.9899
+  seed 42 MLP      auroc=0.9751 auprc=0.9667
+  seed 42 KGE      auroc=0.9229 auprc=0.9529
+  seed 123 GNN      auroc=0.9724 auprc=0.9718
+  seed 123 XGBoost  auroc=0.9854 auprc=0.9850
+  seed 123 MLP      auroc=0.9707 auprc=0.9649
+  seed 123 KGE      auroc=0.9012 auprc=0.9400
+
+============================================================
+REGIME: inductive_cold_dst
+============================================================
+  seed 0 GNN      auroc=0.9324 auprc=0.9080
+  seed 0 XGBoost  auroc=0.9608 auprc=0.9579
+  seed 0 MLP      auroc=0.9438 auprc=0.9263
+  seed 0 KGE      auroc=0.4195 auprc=0.4944
+  seed 1 GNN      auroc=0.8447 auprc=0.8120
+  seed 1 XGBoost  auroc=0.9583 auprc=0.9449
+  seed 1 MLP      auroc=0.9348 auprc=0.8818
+  seed 1 KGE      auroc=0.4832 auprc=0.5299
+  seed 2 GNN      auroc=0.9164 auprc=0.8419
+  seed 2 XGBoost  auroc=0.9646 auprc=0.9538
+  seed 2 MLP      auroc=0.9566 auprc=0.9223
+  seed 2 KGE      auroc=0.4252 auprc=0.4994
+  seed 42 GNN      auroc=0.9139 auprc=0.8305
+  seed 42 XGBoost  auroc=0.9550 auprc=0.9364
+  seed 42 MLP      auroc=0.9190 auprc=0.8206
+  seed 42 KGE      auroc=0.4350 auprc=0.4807
+  seed 123 GNN      auroc=0.8015 auprc=0.7463
+  seed 123 XGBoost  auroc=0.9753 auprc=0.9747
+  seed 123 MLP      auroc=0.8972 auprc=0.8920
+  seed 123 KGE      auroc=0.4991 auprc=0.5260
+
+============================================================
+REGIME: inductive_cold_src
+============================================================
+  seed 0 GNN      auroc=0.9646 auprc=0.9490
+  seed 0 XGBoost  auroc=0.9704 auprc=0.9697
+  seed 0 MLP      auroc=0.9479 auprc=0.9345
+  seed 0 KGE      auroc=0.5138 auprc=0.5979
+  seed 1 GNN      auroc=0.9536 auprc=0.9413
+  seed 1 XGBoost  auroc=0.9548 auprc=0.9558
+  seed 1 MLP      auroc=0.9206 auprc=0.9066
+  seed 1 KGE      auroc=0.4381 auprc=0.5339
+  seed 2 GNN      auroc=0.9604 auprc=0.9559
+  seed 2 XGBoost  auroc=0.9562 auprc=0.9543
+  seed 2 MLP      auroc=0.9255 auprc=0.9118
+  seed 2 KGE      auroc=0.5049 auprc=0.6069
+  seed 42 GNN      auroc=0.9484 auprc=0.9333
+  seed 42 XGBoost  auroc=0.9582 auprc=0.9577
+  seed 42 MLP      auroc=0.9367 auprc=0.9253
+  seed 42 KGE      auroc=0.5011 auprc=0.5848
+  seed 123 GNN      auroc=0.9505 auprc=0.9362
+  seed 123 XGBoost  auroc=0.9479 auprc=0.9481
+  seed 123 MLP      auroc=0.9255 auprc=0.9069
+  seed 123 KGE      auroc=0.4499 auprc=0.5688
+
+============================================================
+ABLATIONS (regime: inductive_cold_dst)
+============================================================
+  topology[intact] auroc=0.8988
+  topology[shuffle] auroc=0.8786
+  topology[empty] auroc=0.7766
+  relation[drop_drug_protein] auroc=0.9344
+  relation[drop_disease_protein] auroc=0.9204
+  relation[drop_pathway] auroc=0.9327
+Saved figures to /home/elrarun/code/research/oncorepurpose/figures
+
+| Regime | Model | AUROC | AUPRC | F1 |
+|---|---|---|---|---|
+| Transductive | GNN | 0.977±0.003 | 0.972±0.005 | 0.937±0.005 |
+| Transductive | XGBoost | 0.988±0.002 | 0.988±0.002 | 0.952±0.003 |
+| Transductive | MLP | 0.973±0.002 | 0.966±0.002 | 0.930±0.003 |
+| Transductive | KGE | 0.907±0.008 | 0.944±0.005 | 0.887±0.009 |
+| Inductive (cold-disease, oncology) | GNN | 0.882±0.050 | 0.828±0.052 | 0.843±0.040 |
+| Inductive (cold-disease, oncology) | XGBoost | 0.963±0.007 | 0.954±0.013 | 0.919±0.007 |
+| Inductive (cold-disease, oncology) | MLP | 0.930±0.021 | 0.889±0.038 | 0.894±0.032 |
+| Inductive (cold-disease, oncology) | KGE | 0.452±0.032 | 0.506±0.019 | 0.667±0.000 |
+| Inductive (cold-drug) | GNN | 0.956±0.006 | 0.943±0.008 | 0.933±0.008 |
+| Inductive (cold-drug) | XGBoost | 0.958±0.007 | 0.957±0.007 | 0.906±0.010 |
+| Inductive (cold-drug) | MLP | 0.931±0.010 | 0.917±0.011 | 0.875±0.013 |
+| Inductive (cold-drug) | KGE | 0.482±0.031 | 0.578±0.026 | 0.667±0.000 |
+
+Paired tests (GNN > baseline, AUROC):
+  [transductive] GNN_vs_XGBoost: d=-0.012 p=0.9985
+  [transductive] GNN_vs_MLP: d=+0.004 p=0.0617
+  [transductive] GNN_vs_KGE: d=+0.069 p=0.0001
+  [inductive_cold_dst] GNN_vs_XGBoost: d=-0.081 p=0.9789
+  [inductive_cold_dst] GNN_vs_MLP: d=-0.049 p=0.9681
+  [inductive_cold_dst] GNN_vs_KGE: d=+0.429 p=0.0002
+  [inductive_cold_src] GNN_vs_XGBoost: d=-0.002 p=0.7553
+  [inductive_cold_src] GNN_vs_MLP: d=+0.024 p=0.0029
+  [inductive_cold_src] GNN_vs_KGE: d=+0.474 p=0.0000
+
+Saved results to results/oncorepurpose.json
