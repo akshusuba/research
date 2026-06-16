@@ -88,10 +88,22 @@ give you.
 
 **Evidence verification (Aim 3).** The verifier (`agent/verify.py`) retrieves
 Europe PMC *abstracts* (not just titles) and grades each path
-**supported / weak / contradicted / unknown** — via an LLM when `ONCO_LLM_API_KEY`
-is set, and via a runnable lexical-grounding fallback otherwise. On a small
-offline (lexical) sample the grades already trend correctly: true pairs return
-mostly *supported/weak*, random pairs mostly *no-path/unknown*.
+**supported / weak / contradicted / unknown** — via an LLM (OpenRouter
+`gpt-4o-mini`) when `ONCO_LLM_API_KEY` is set, and a lexical-grounding fallback
+otherwise. Run over 50 true vs 50 random pairs
+(`scripts/verify_llm_eval.py`, `results/verify_llm_eval.json`):
+
+- **Random pairs:** 47/50 have *no mechanistic path*; the LLM marks only 1/50 *supported*.
+- **True pairs:** LLM marks 8 *supported*, 11 *weak*, 22 *unknown*, 9 *no-path*.
+- The LLM is **stricter than lexical grounding** (they agree on only ~34% of graded
+  paths): it demotes many lexical *supported* calls to *weak/unknown* — exactly its
+  job, rejecting co-mention coincidences. Each *supported* grade carries a verbatim
+  quote (e.g. Quizartinib→FLT3: *"a potent next generation FLT3 inhibitor ... for
+  FLT3-ITD+ AML"*).
+- **Honest limitation:** the modest *supported* rate is retrieval-bound — a
+  `drug AND gene` query does not always surface the canonical mechanism paper, and a
+  few LLM-*supported* cases rest on tangential (pharmacogenetic) abstracts. Better
+  retrieval (canonical MOA papers / full text) is the next lever.
 
 **Honest caveat (DrugMechDB).** Curated-mechanism agreement is not yet reported:
 DrugMechDB labels proteins with UniProt accessions / free-text names (`BCR/ABL`,
@@ -169,8 +181,9 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
 - [x] Verifier reads Europe PMC **abstracts** (not titles); LLM grade + lexical fallback.
 - [x] Quantitative true-vs-random separation (AUROC 0.878); the falsifiable claim holds.
+- [x] LLM verifier run (OpenRouter `gpt-4o-mini`): stricter than lexical (34% agreement), separates true vs random.
+- [ ] Improve retrieval (canonical MOA papers / full text) to lift the *supported* rate.
 - [ ] DrugMechDB agreement: add a UniProt→HGNC map so curated-mechanism overlap is meaningful.
-- [ ] Run the LLM verifier at scale (needs `ONCO_LLM_API_KEY`) and compare LLM vs lexical grades.
 - [ ] Stronger hub down-weighting (e.g. albumin-type promiscuous bridges).
 
 *All predictions are hypothesis-generating and not medical advice.*

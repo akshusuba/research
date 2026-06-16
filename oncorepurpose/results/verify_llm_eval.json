@@ -1,0 +1,871 @@
+{
+  "model": "openai/gpt-4o-mini",
+  "n_per_group": 50,
+  "llm_dist": {
+    "true": {
+      "no-path": 9,
+      "weak": 11,
+      "unknown": 22,
+      "supported": 8
+    },
+    "random": {
+      "no-path": 47,
+      "supported": 1,
+      "unknown": 2
+    }
+  },
+  "lexical_dist": {
+    "true": {
+      "no-path": 9,
+      "supported": 26,
+      "weak": 11,
+      "unknown": 4
+    },
+    "random": {
+      "no-path": 47,
+      "supported": 2,
+      "unknown": 1
+    }
+  },
+  "llm_vs_lexical_agreement": 0.3409090909090909,
+  "supported_rate": {
+    "true": 0.16,
+    "random": 0.02
+  },
+  "true_rows": [
+    {
+      "drug": "Niraparib",
+      "disease": "primary peritoneal serous/papillary carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Oteracil",
+      "disease": "gastric neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Methotrexate",
+      "disease": "non-Hodgkin lymphoma",
+      "path": "Methotrexate --targets--> FPGS <--associated-- non-Hodgkin lymphoma",
+      "type": "direct_target",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "The FPGS rs10106 G allele was significantly associated with enhanced MTX efficacy in the dominant model."
+    },
+    {
+      "drug": "Topotecan",
+      "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+      "path": "Topotecan --targets--> TOP1 --interacts--> RBL2 <--associated-- malignant Sertoli-Leydig cell tumor of ovary",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Topotecan (TPT), a topoisomerase I (TOP1) inhibitor, is widely used for advanced or recurrent disease; however, its efficacy is compromised by tyrosyl-DNA phosphodiesterase 1 (TDP1)-mediated DNA repair."
+    },
+    {
+      "drug": "Vincristine",
+      "disease": "ALK-positive large B-cell lymphoma",
+      "path": "Vincristine --targets--> ABCG2 <--associated-- ALK-positive large B-cell lymphoma",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Hydrocortisone",
+      "disease": "lymphoma, non-Hodgkin, familial",
+      "path": "Hydrocortisone --targets--> NR3C1 --interacts--> CREBBP <--associated-- lymphoma, non-Hodgkin, familial",
+      "type": "ppi",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Generalized glucocorticoid (GC) resistance...results from impaired GC receptor signaling due to variants in the NR3C1 gene."
+    },
+    {
+      "drug": "Vincristine",
+      "disease": "acute lymphoblastic leukemia (disease)",
+      "path": "Vincristine --targets--> ABCB1 <--associated-- acute lymphoblastic leukemia (disease)",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "the high-risk ABCB1 genotype (TT at rs1045642), 13 of 25 (52%) developed at least one episode of grade 1-3 neuropathy"
+    },
+    {
+      "drug": "Cisplatin",
+      "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+      "path": "Cisplatin --targets--> ATP7B <--associated-- malignant Sertoli-Leydig cell tumor of ovary",
+      "type": "direct_target",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "the role of epigenetic dysregulation, and implicate emerging pathways like cuproptosis in WD pathogenesis."
+    },
+    {
+      "drug": "Decitabine",
+      "disease": "acute myeloid leukemia with NPM1 somatic mutations",
+      "path": "Decitabine --targets--> DNMT3A <--associated-- acute myeloid leukemia with NPM1 somatic mutations",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Melphalan",
+      "disease": "yolk sac tumor",
+      "path": "Melphalan --targets--> SLC7A5 --interacts--> ESR1 <--associated-- yolk sac tumor",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Mechlorethamine",
+      "disease": "B-cell neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Thiotepa",
+      "disease": "malignant germ cell tumor of ovary",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Diazoxide",
+      "disease": "islet cell adenomatosis",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Hydrocortisone",
+      "disease": "precursor T-cell acute lymphoblastic leukemia",
+      "path": "Hydrocortisone --targets--> NR3C1 --interacts--> SET <--associated-- precursor T-cell acute lymphoblastic leukemia",
+      "type": "ppi",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "impaired GC receptor signaling due to variants in the NR3C1 gene."
+    },
+    {
+      "drug": "Bevacizumab",
+      "disease": "undifferentiated carcinoma of the corpus uteri",
+      "path": "Bevacizumab --targets--> C1QB <--associated-- undifferentiated carcinoma of the corpus uteri",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Belotecan",
+      "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Erlotinib",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "path": "Erlotinib --targets--> ABCB1 <--associated-- non-small cell lung carcinoma (disease)",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "ABCB1 and ABCC10 polymorphisms predict sensitivity to first- and third-generation EGFR-TKIs in EGFR-mutant NSCLC."
+    },
+    {
+      "drug": "Carboplatin",
+      "disease": "immature ovarian teratoma",
+      "path": "Carboplatin --targets--> ATP7B <--associated-- immature ovarian teratoma",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Desoximetasone",
+      "disease": "primary cutaneous T-cell lymphoma",
+      "path": "Desoximetasone --targets--> NR3C1 --interacts--> NFKB2 <--associated-- primary cutaneous T-cell lymphoma",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Dexamethasone",
+      "disease": "Burkitt lymphoma",
+      "path": "Dexamethasone --targets--> CYP2E1 <--associated-- Burkitt lymphoma",
+      "type": "direct_target",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "CYP2E1 is involved in the oxidative metabolism of many xenobiotics, including AT drugs, and is known to produce reactive oxygen species (ROS) during the metabolism process."
+    },
+    {
+      "drug": "Brigatinib",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "path": "Brigatinib --targets--> ALK <--associated-- non-small cell lung carcinoma (disease)",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Brigatinib is an ALK tyrosine kinase inhibitor approved for the treatment of adults with ALK+ non-small cell lung cancer."
+    },
+    {
+      "drug": "Lonidamine",
+      "disease": "lung neoplasm",
+      "path": "Lonidamine --targets--> CFTR --interacts--> PPP2R1B <--associated-- lung neoplasm",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "H2-GMZ treatment also decreased levels of the cystic fibrosis transmembrane conductance regulator Cl- channel protein."
+    },
+    {
+      "drug": "Oteracil",
+      "disease": "diffuse gastric adenocarcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Carmustine",
+      "disease": "classic Hodgkin lymphoma, lymphocyte-rich type",
+      "path": "Carmustine --targets--> GSR --in pathway--> Detoxification of Reactive Oxygen Species <--in pathway-- GSTP1 <--associated-- classic Hodgkin lymphoma, lymphocyte-rich type",
+      "type": "shared_pathway",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Tretamine",
+      "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Panobinostat",
+      "disease": "plasma cell myeloma",
+      "path": "Panobinostat --targets--> HDAC2 --interacts--> CBX7 <--associated-- plasma cell myeloma",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "the relationship between particular isoforms, such as HDAC3, HDAC5, HDAC7 and HDAC11, and tumor progression"
+    },
+    {
+      "drug": "Pemetrexed",
+      "disease": "malignant mesothelioma (disease)",
+      "path": "Pemetrexed --targets--> ATIC --interacts--> TXN <--associated-- malignant mesothelioma (disease)",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "unknown",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Vincristine",
+      "disease": "T-cell/histiocyte rich large B cell lymphoma",
+      "path": "Vincristine --targets--> ABCG2 <--associated-- T-cell/histiocyte rich large B cell lymphoma",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Vinblastine",
+      "disease": "Hodgkins lymphoma",
+      "path": "Vinblastine --targets--> TUBG1 --interacts--> SOCS1 <--associated-- Hodgkins lymphoma",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Bleomycin",
+      "disease": "primary cutaneous diffuse large B-cell lymphoma, Leg type",
+      "path": "Bleomycin --targets--> LIG3 --interacts--> CDK1 <--associated-- primary cutaneous diffuse large B-cell lymphoma, Leg type",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "unknown",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Carmustine",
+      "disease": "diffuse astrocytoma",
+      "path": "Carmustine --targets--> GSR --in pathway--> Detoxification of Reactive Oxygen Species <--in pathway-- SOD2 <--associated-- diffuse astrocytoma",
+      "type": "shared_pathway",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Hydroxyurea",
+      "disease": "primary non-gestational choriocarcinoma of ovary",
+      "path": "Hydroxyurea --targets--> RRM1 --interacts--> PPP1CC <--associated-- primary non-gestational choriocarcinoma of ovary",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "DHA exposure reduced ribonucleotide reductase (RRM1/2) expression"
+    },
+    {
+      "drug": "Apalutamide",
+      "disease": "prostate cancer",
+      "path": "Apalutamide --targets--> CYP3A4 <--associated-- prostate cancer",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Apa is known to induce several drug-metabolizing enzymes including cytochrome P450 3A4 (CYP3A4), raising concerns about drug-drug interactions."
+    },
+    {
+      "drug": "Prednisone",
+      "disease": "acute lymphoblastic/lymphocytic leukemia",
+      "path": "Prednisone --targets--> NR3C1 --interacts--> SET <--associated-- acute lymphoblastic/lymphocytic leukemia",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Bevacizumab",
+      "disease": "primary peritoneal serous/papillary carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Glasdegib",
+      "disease": "acute myeloid leukemia with inv3(p21;q26.2) or t(3;3)(p21;q26.2)",
+      "path": "Glasdegib --targets--> SLC47A1 --interacts--> FXYD6 <--associated-- acute myeloid leukemia with inv3(p21;q26.2) or t(3;3)(p21;q26.2)",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "unknown",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Hydroxyurea",
+      "disease": "theca steroid-producing cell malignant tumor of ovary, not further specified",
+      "path": "Hydroxyurea --targets--> RRM1 --interacts--> PPP1CC <--associated-- theca steroid-producing cell malignant tumor of ovary, not further specified",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "DHA exposure reduced ribonucleotide reductase (RRM1/2) expression"
+    },
+    {
+      "drug": "Panobinostat",
+      "disease": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "path": "Panobinostat --targets--> HDAC1 --interacts--> NFKB2 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Pharmacologic inhibition of HDAC1 with panobinostat recapitulated the tumor-suppressive effects observed with MIG-6 overexpression."
+    },
+    {
+      "drug": "Levothyroxine",
+      "disease": "familial papillary thyroid carcinoma with renal papillary neoplasia",
+      "path": "Levothyroxine --targets--> THRB --interacts--> NRAS <--associated-- familial papillary thyroid carcinoma with renal papillary neoplasia",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Histamine",
+      "disease": "unclassified acute myeloid leukemia",
+      "path": "Histamine --targets--> HNMT --interacts--> EP300 <--associated-- unclassified acute myeloid leukemia",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Bleomycin",
+      "disease": "lymphoma, non-Hodgkin, familial",
+      "path": "Bleomycin --targets--> LIG3 --interacts--> NBN <--associated-- lymphoma, non-Hodgkin, familial",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "unknown",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Idarubicin",
+      "disease": "acute myeloblastic leukemia without maturation",
+      "path": "Idarubicin --targets--> TOP2A --interacts--> CEBPD <--associated-- acute myeloblastic leukemia without maturation",
+      "type": "ppi",
+      "llm": "weak",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "suggesting an additional therapeutic mechanism of anthracycline drugs targeting the 3D genome."
+    },
+    {
+      "drug": "Methotrexate",
+      "disease": "bone osteosarcoma",
+      "path": "Methotrexate --targets--> CYP3A4 <--associated-- bone osteosarcoma",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "differentiated thyroid carcinoma",
+      "path": "Liothyronine --targets--> THRB --interacts--> NRAS <--associated-- differentiated thyroid carcinoma",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Dexamethasone",
+      "disease": "diffuse large B-cell lymphoma of the central nervous system",
+      "path": "Dexamethasone --targets--> ABCG2 <--associated-- diffuse large B-cell lymphoma of the central nervous system",
+      "type": "direct_target",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Imatinib",
+      "disease": "gastrointestinal stromal tumor",
+      "path": "Imatinib --targets--> PDGFRA <--associated-- gastrointestinal stromal tumor",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "the FIP1L1::PDGFRA fusion is one of the most clinically relevant due to its exquisite sensitivity to imatinib."
+    },
+    {
+      "drug": "Ivosidenib",
+      "disease": "acute myeloblastic leukemia without maturation",
+      "path": "Ivosidenib --targets--> IDH1 <--associated-- acute myeloblastic leukemia without maturation",
+      "type": "direct_target",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Ivosidenib is the first approved oral, targeted, small-molecule inhibitor of the isocitrate dehydrogenase 1 (IDH1) mutation seen in AML."
+    },
+    {
+      "drug": "Sorafenib",
+      "disease": "fibrolamellar hepatocellular carcinoma",
+      "path": "Sorafenib --targets--> CYP2C8 <--associated-- fibrolamellar hepatocellular carcinoma",
+      "type": "direct_target",
+      "llm": "weak",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": "CYP2C8 was obtained. Except for PLA2G6, the other genes were correlated with the survival of patients with liver cancer"
+    },
+    {
+      "drug": "Doxorubicin",
+      "disease": "acute myeloblastic leukemia with maturation",
+      "path": "Doxorubicin --targets--> NOS2 --interacts--> S100A8 <--associated-- acute myeloblastic leukemia with maturation",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Melphalan",
+      "disease": "primary non-gestational choriocarcinoma of ovary",
+      "path": "Melphalan --targets--> SLC7A5 --interacts--> ESR1 <--associated-- primary non-gestational choriocarcinoma of ovary",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "weak",
+      "source": "llm",
+      "evidence": ""
+    }
+  ],
+  "random_rows": [
+    {
+      "drug": "N-Hydroxy-4-(Methyl{[5-(2-Pyridinyl)-2-Thienyl]Sulfonyl}Amino)Benzamide",
+      "disease": "mediastinal neural neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Cefepime",
+      "disease": "high-grade neuroendocrine carcinoma of the corpus uteri",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "(3Z)-6-(4-HYDROXY-3-METHOXYPHENYL)-3-(1H-PYRROL-2-YLMETHYLENE)-1,3-DIHYDRO-2H-INDOL-2-ONE",
+      "disease": "minor vestibular glands adenoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "1-Benzyl-3-(4-Methoxy-Benzenesulfonyl)-6-Oxo-Hexahydro-Pyrimidine-4-Carboxylic Acid Hydroxyamide",
+      "disease": "cholangiolocellular carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Dequalinium",
+      "disease": "neuroepithelial neoplasm",
+      "path": "Dequalinium --targets--> XIAP --in pathway--> Regulation of PTEN localization <--in pathway-- PTEN <--associated-- neuroepithelial neoplasm",
+      "type": "shared_pathway",
+      "llm": "supported",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": "Dequalinium chloride is an inhibitor of XIAP and can also act as a mitochondrial targeting agent."
+    },
+    {
+      "drug": "Salmeterol",
+      "disease": "cholangiolocellular carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Mebeverine",
+      "disease": "adnexal spiradenoma/cylindroma of a sweat gland",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Bosutinib",
+      "disease": "clear cell-sugar-tumor of the lung",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Ranolazine",
+      "disease": "thymic neuroendocrine tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Norelgestromin",
+      "disease": "blastoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Zileuton",
+      "disease": "cerebellar pilocytic astrocytoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Cisplatin",
+      "disease": "uterine corpus neuroendocrine neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Papaverine",
+      "disease": "chronic leukemia",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Vinylglycine",
+      "disease": "primary central nervous system lymphoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Diethyl ether",
+      "disease": "gastric neuroendocrine tumor, well differentiated, low or intermediate grade",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "N-(1-ISOPROPYLPIPERIDIN-4-YL)-1-(3-METHOXYBENZYL)-1H-INDOLE-2-CARBOXAMIDE",
+      "disease": "colloid carcinoma of the pancreas",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Cinchophen",
+      "disease": "skin carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Thymidine",
+      "disease": "breast phyllodes tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "8,9,10-trihydroxy-7-hydroxymethyl-3-methyl-6-oxa-1,3-diaza-spiro[4.5]decane-2,4-dione",
+      "disease": "lymph node palisaded myofibroblastoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Cimicoxib",
+      "disease": "hereditary thrombocytopenia and hematological cancer predisposition syndrome associated with RUNX1",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Concanamycin A",
+      "disease": "adult malignant hemangiopericytoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Cinchophen",
+      "disease": "endometrial cancer",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Alfentanil",
+      "disease": "vaginal squamous tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "CTS-21166",
+      "disease": "buccal mucosa neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Tedisamil",
+      "disease": "ovarian small cell carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Hexylresorcinol",
+      "disease": "metachronous kidney Wilms' tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Bouteloua gracilis pollen",
+      "disease": "neoplasm of retromolar area",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "AP-22408",
+      "disease": "mediastinal yolk sac tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Flavin mononucleotide",
+      "disease": "fallopian tube serous adenocarcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "7-Hydroxy-2-Oxo-Chromene-3-Carboxylic Acid Ethyl Ester",
+      "disease": "malignant hemangioma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Sequifenadine",
+      "disease": "colorectal Kaposi sarcoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Fluorometholone",
+      "disease": "malignant syringoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Dorsomorphin",
+      "disease": "alveolar soft part sarcoma (disease)",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Tiazofurine",
+      "disease": "upper tract urothelial carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Gantacurium",
+      "disease": "Waldeyer's ring cancer",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Sparfloxacin",
+      "disease": "cystic partially differentiated nephroblastoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Calcium lactate",
+      "disease": "gestational trophoblastic neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "6-hydroxy-1,6-dihydro purine nucleoside",
+      "disease": "breast fibroadenoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Nepafenac",
+      "disease": "Epstein-Barr virus-associated gastric carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "4-Iodopyrazole",
+      "disease": "neoplasm of endocardium",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "(1R)-2-amino-1-[3-(trifluoromethyl)phenyl]ethanol",
+      "disease": "appendix cancer",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "CR002",
+      "disease": "conventional malignant hemangiopericytoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Vandetanib",
+      "disease": "acute myeloid leukemia with CEBPA somatic mutations",
+      "path": "Vandetanib --targets--> RET --interacts--> CBLC <--associated-- acute myeloid leukemia with CEBPA somatic mutations",
+      "type": "ppi",
+      "llm": "unknown",
+      "lexical": "supported",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "Nonacog beta pegol",
+      "disease": "sigmoid neoplasm",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Staurosporine",
+      "disease": "esophagus verrucous carcinoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Bufylline",
+      "disease": "lymphoma, non-Hodgkin, familial",
+      "path": "Bufylline --targets--> CYP1A2 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- lymphoma, non-Hodgkin, familial",
+      "type": "shared_pathway",
+      "llm": "unknown",
+      "lexical": "unknown",
+      "source": "llm",
+      "evidence": ""
+    },
+    {
+      "drug": "AL5424",
+      "disease": "acute myeloid leukemia and myelodysplastic syndromes related to topoisomerase type 2 inhibitor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Obeticholic acid",
+      "disease": "well-differentiated liposarcoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Dinitrochlorobenzene",
+      "disease": "small intestine leiomyosarcoma",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    },
+    {
+      "drug": "Evinacumab",
+      "disease": "pleural solitary fibrous tumor",
+      "llm": "no-path",
+      "lexical": "no-path",
+      "path": null
+    }
+  ]
+}

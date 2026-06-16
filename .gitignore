@@ -40,3 +40,6 @@ spatial_prognosis/data/
 # Secrets / local env
 .env
 *.env
+
+# LLM response cache (regenerable; may contain prompts/responses)
+**/llm_cache/
