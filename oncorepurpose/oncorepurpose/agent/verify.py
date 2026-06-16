@@ -20,8 +20,8 @@ import json
 import re
 from typing import Dict, List, Optional
 
-from oncorepurpose.agent.evidence_report import search_literature
 from oncorepurpose.agent.llm import chat, llm_available
+from oncorepurpose.agent.retrieval import retrieve_for_mechanism
 
 GRADES = ("supported", "weak", "contradicted", "unknown")
 _CUES = ("inhibit", "inhibitor", "target", "targets", "treatment", "treat",
@@ -113,13 +113,16 @@ def llm_grade(path: Dict, abstracts: List[Dict]) -> Optional[Dict]:
 def verify_mechanism(path: Dict, n_lit: int = 5, use_llm: bool = True) -> Dict:
     """Retrieve abstracts for the path and grade mechanistic support.
 
-    Query couples the drug with its primary bridge gene so retrieval targets the
-    *mechanism*, not just the indication.
+    Retrieval merges several complementary Europe PMC queries (exact-phrase
+    drug+gene, a mechanism-cued variant, optional second bridge gene, and an
+    indication query) so the canonical MOA abstract is surfaced more reliably
+    than the previous single ``drug AND gene`` query.
     """
     drug = _drug_token(path.get("drug", ""))
     genes = path.get("genes", [])
-    query = f'{drug} AND {genes[0]}' if genes else drug
-    abstracts = search_literature(query, page_size=n_lit, with_abstract=True)
+    disease = path.get("disease")
+    abstracts = retrieve_for_mechanism(drug, genes, disease=disease, n=n_lit)
+    query = (f'{drug} AND {genes[0]}' if genes else drug) + " [+mechanism/indication variants]"
     lex = lexical_grade(path, abstracts)
     out = {
         "path": path["text"], "type": path.get("type"),

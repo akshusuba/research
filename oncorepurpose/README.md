@@ -94,22 +94,25 @@ otherwise. Run over 50 true vs 50 random pairs
 (`scripts/verify_llm_eval.py`, `results/verify_llm_eval.json`):
 
 - **Random pairs:** 47/50 have *no mechanistic path*; the LLM marks only 1/50 *supported*.
-- **True pairs:** LLM marks 8 *supported*, 11 *weak*, 22 *unknown*, 9 *no-path*.
-- The LLM is **stricter than lexical grounding** (they agree on only ~34% of graded
-  paths): it demotes many lexical *supported* calls to *weak/unknown* — exactly its
-  job, rejecting co-mention coincidences. Each *supported* grade carries a verbatim
-  quote (e.g. Quizartinib→FLT3: *"a potent next generation FLT3 inhibitor ... for
-  FLT3-ITD+ AML"*).
-- **Honest limitation:** the modest *supported* rate is retrieval-bound — a
-  `drug AND gene` query does not always surface the canonical mechanism paper, and a
-  few LLM-*supported* cases rest on tangential (pharmacogenetic) abstracts. Better
-  retrieval (canonical MOA papers / full text) is the next lever.
+- **True pairs:** LLM marks **14** *supported*, 13 *weak*, 14 *unknown*, 9 *no-path* —
+  up from 8 supported / 22 unknown after retrieval was improved (a multi-query Europe
+  PMC merge biased toward MOA statements; gene-mention rate in retrieved abstracts
+  rose **80%→93%** on a 30-pair check).
+- The LLM is **stricter than lexical grounding** (they agree on only ~39% of graded
+  paths): lexical calls 35/50 true *supported*, the LLM only 14 — it demotes
+  co-mention coincidences (and pharmacogenetic-but-not-MOA abstracts) to *weak/unknown*,
+  which is its job. Each *supported* grade carries a verbatim quote (e.g. Quizartinib→FLT3:
+  *"a potent next generation FLT3 inhibitor ... for FLT3-ITD+ AML"*).
+- **Remaining limitation:** a few LLM-*supported* cases still rest on tangential
+  (pharmacogenetic) abstracts; full-text grounding would tighten this further.
 
-**Honest caveat (DrugMechDB).** Curated-mechanism agreement is not yet reported:
-DrugMechDB labels proteins with UniProt accessions / free-text names (`BCR/ABL`,
-`c-Kit`) while PrimeKG uses HGNC symbols, so a UniProt→HGNC map is needed first
-(flagged as future work; the code fetches and parses DrugMechDB but does not
-overclaim agreement).
+**Curated-mechanism agreement (DrugMechDB).** Mapping DrugMechDB's UniProt
+accessions to HGNC symbols (via mygene.info, cached in `data/uniprot2symbol.json`)
+makes the comparison meaningful. On the 263 true pairs whose drug DrugMechDB
+covers, our extracted bridge genes overlap the curated MOA genes for **207 pairs
+(agreement 0.787)** — e.g. Methotrexate→{ATIC, TYMS}, Topotecan→{TOP1},
+Decitabine→{DNMT1, DNMT3A}. So the paths we extract align with an independent,
+expert-curated mechanism resource.
 
 ## Positioning (honest novelty)
 
@@ -148,9 +151,11 @@ oncorepurpose/
   interpret/
     paths.py             2-hop bridge rationales + candidate ranking
     mechanism_paths.py   multi-hop MOA path extractor (direct-target / PPI / pathway)
+    uniprot_map.py       UniProt accession -> HGNC symbol (mygene.info, cached)
   agent/
     llm.py               provider-agnostic chat client (cached)
     evidence_report.py   Europe PMC retrieval (abstracts) + LLM-as-judge dossier
+    retrieval.py         multi-query Europe PMC MOA retrieval (merge + rank)
     verify.py            mechanism verifier: LLM grade + lexical-grounding fallback
 scripts/
   run_experiment.py      4-model x 3-regime comparison + ablations
@@ -181,9 +186,10 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
 - [x] Verifier reads Europe PMC **abstracts** (not titles); LLM grade + lexical fallback.
 - [x] Quantitative true-vs-random separation (AUROC 0.878); the falsifiable claim holds.
-- [x] LLM verifier run (OpenRouter `gpt-4o-mini`): stricter than lexical (34% agreement), separates true vs random.
-- [ ] Improve retrieval (canonical MOA papers / full text) to lift the *supported* rate.
-- [ ] DrugMechDB agreement: add a UniProt→HGNC map so curated-mechanism overlap is meaningful.
+- [x] LLM verifier run (OpenRouter `gpt-4o-mini`); stricter than lexical, separates true vs random.
+- [x] Improved multi-query MOA retrieval: gene-mention 80%→93%; LLM *supported* 8→14 / 50.
+- [x] DrugMechDB agreement via UniProt→HGNC map (mygene.info): **0.787** on covered pairs.
+- [ ] Full-text grounding to further reduce tangential *supported* calls.
 - [ ] Stronger hub down-weighting (e.g. albumin-type promiscuous bridges).
 
 *All predictions are hypothesis-generating and not medical advice.*

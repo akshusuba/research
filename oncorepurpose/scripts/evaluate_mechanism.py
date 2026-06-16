@@ -19,6 +19,7 @@ Run:
 import json
 import os
 import random
+import re
 import sys
 from collections import Counter, defaultdict
 
@@ -99,10 +100,78 @@ def grounding_sample(data, idx, true_pairs, neg_pairs, k=6):
     return out
 
 
+_HGNC_SYMBOL_RE = re.compile(r"^[A-Z0-9][A-Z0-9-]{0,9}$")
+
+
+def _looks_like_symbol(name: str) -> bool:
+    """Heuristic: an all-caps token without spaces/slashes is plausibly an HGNC symbol."""
+    name = name.strip().upper()
+    if not name or " " in name or "/" in name or "," in name:
+        return False
+    return bool(_HGNC_SYMBOL_RE.match(name)) and any(c.isalpha() for c in name)
+
+
+def _build_drugmechdb_symbol_map(entries):
+    """drug name (lower) -> set(HGNC symbols), resolving UniProt accessions.
+
+    DrugMechDB protein nodes carry UniProt accessions in ``id`` (e.g.
+    ``UniProt:P00519``) and free-text names in ``name`` (e.g. ``BCR/ABL``). We
+    map the accessions to HGNC symbols via mygene.info and additionally keep any
+    node names that already look like valid symbols.
+    """
+    from oncorepurpose.interpret.uniprot_map import uniprot_to_symbol
+
+    drug2accs = defaultdict(set)
+    drug2names = defaultdict(set)
+    all_accs = set()
+    for e in entries:
+        g = e.get("graph", {})
+        drug = str(g.get("drug", "")).strip().lower()
+        if not drug:
+            continue
+        for n in e.get("nodes", []):
+            if str(n.get("label", "")).lower() not in ("protein", "gene"):
+                continue
+            nid = str(n.get("id", "")).strip()
+            if nid.lower().startswith("uniprot:"):
+                acc = nid.split(":", 1)[1].strip()
+                if acc:
+                    drug2accs[drug].add(acc)
+                    all_accs.add(acc)
+            nm = str(n.get("name", "")).strip()
+            if nm and _looks_like_symbol(nm):
+                drug2names[drug].add(nm.upper())
+
+    acc2sym = uniprot_to_symbol(all_accs) if all_accs else {}
+    n_mapped = sum(1 for a in all_accs if acc2sym.get(_clean_acc(a)))
+
+    drug2symbols = defaultdict(set)
+    for drug, accs in drug2accs.items():
+        for acc in accs:
+            sym = acc2sym.get(_clean_acc(acc))
+            if sym:
+                drug2symbols[drug].add(sym.upper())
+    for drug, names in drug2names.items():
+        drug2symbols[drug].update(names)
+
+    return drug2symbols, len(all_accs), n_mapped
+
+
+def _clean_acc(acc):
+    acc = str(acc).strip()
+    if acc.lower().startswith("uniprot:"):
+        acc = acc.split(":", 1)[1]
+    return acc.split("-", 1)[0].strip().upper()
+
+
 def drugmechdb_agreement(data, idx, true_pairs):
-    """Best-effort: overlap of extracted bridge genes with DrugMechDB MOA genes."""
+    """Overlap of extracted bridge gene symbols with DrugMechDB MOA genes.
+
+    DrugMechDB protein nodes are UniProt accessions; we map them to HGNC symbols
+    (mygene.info, cached at data/uniprot2symbol.json) so they share PrimeKG's
+    vocabulary, then compute symbol overlap per covered true pair.
+    """
     import requests
-    import re as _re
     urls = [
         "https://raw.githubusercontent.com/SuLab/DrugMechDB/main/indication_paths.yaml",
         "https://raw.githubusercontent.com/SuLab/DrugMechDB/master/indication_paths.yaml",
@@ -124,46 +193,39 @@ def drugmechdb_agreement(data, idx, true_pairs):
     except Exception as exc:
         return {"available": False, "reason": f"parse failed: {exc}"}
 
-    # Map drug name -> set of protein/gene node names appearing in its MOA paths.
-    drug2genes = defaultdict(set)
-    for e in entries:
-        g = e.get("graph", {})
-        drug = str(g.get("drug", "")).strip().lower()
-        if not drug:
-            continue
-        for n in e.get("nodes", []):
-            if str(n.get("label", "")).lower() in ("protein", "gene"):
-                nm = str(n.get("name", "")).strip()
-                if nm:
-                    drug2genes[drug].add(nm.upper())
+    try:
+        drug2symbols, n_accs, n_mapped = _build_drugmechdb_symbol_map(entries)
+    except Exception as exc:
+        return {"available": False, "reason": f"UniProt->HGNC mapping failed: {exc}"}
+    if not drug2symbols:
+        return {"available": False, "reason": "no DrugMechDB symbols resolved"}
 
     rxnames = list(data[DRUG_TYPE].node_names)
-    covered, name_overlap = 0, 0
+    covered, agreement = 0, 0
     examples = []
     for dr, ds in true_pairs:
         dn = str(rxnames[dr]).strip().lower()
-        if dn not in drug2genes:
+        db_syms = drug2symbols.get(dn)
+        if not db_syms:
             continue
         covered += 1
         paths = mechanism_paths(data, idx, dr, ds, max_paths=8)
         ours = {g.upper() for p in paths for g in p.get("genes", [])}
-        overlap = ours & drug2genes[dn]
+        overlap = ours & db_syms
         if overlap:
-            name_overlap += 1
+            agreement += 1
             if len(examples) < 8:
-                examples.append({"drug": rxnames[dr], "overlap": sorted(overlap)})
-    # DrugMechDB proteins are UniProt accessions / free-text names (e.g. 'BCR/ABL',
-    # 'c-Kit', 'topoisomerases II, IV'); PrimeKG uses HGNC symbols (BCR, ABL1, KIT,
-    # TOP2A). Direct name overlap is therefore unreliable and understates agreement,
-    # so we do NOT report a headline agreement rate -- a UniProt->HGNC map is needed.
-    return {"available": True, "n_db_drugs": len(drug2genes),
+                examples.append({
+                    "drug": rxnames[dr],
+                    "overlap_symbols": sorted(overlap),
+                    "drugmechdb_symbols": sorted(db_syms),
+                })
+    rate = (agreement / covered) if covered else None
+    return {"available": True, "n_db_drugs": len(drug2symbols),
+            "n_uniprot_accessions": n_accs, "n_accessions_mapped": n_mapped,
             "covered_true_pairs": covered,
-            "name_overlap_pairs": name_overlap,
-            "agreement_rate": None,
-            "note": ("DrugMechDB uses UniProt accessions / free-text protein names; "
-                     "PrimeKG uses HGNC symbols. Cross-vocabulary mapping (UniProt -> "
-                     "HGNC) is required for a meaningful agreement metric; flagged as "
-                     "future work and not reported here."),
+            "agreement_pairs": agreement,
+            "agreement_rate": rate,
             "examples": examples}
 
 
@@ -189,12 +251,18 @@ def main():
         gc = Counter(x["grade"] for x in ground[label])
         print(f"  {label:6s}: {dict(gc)}")
 
-    print("\nDrugMechDB agreement (best-effort):")
+    print("\nDrugMechDB agreement (UniProt->HGNC mapped):")
     dmdb = drugmechdb_agreement(data, idx, true_pairs)
     if dmdb.get("available"):
+        rate = dmdb["agreement_rate"]
+        rate_s = f"{rate:.3f}" if rate is not None else "n/a"
+        print(f"  UniProt accessions mapped: {dmdb['n_accessions_mapped']}/"
+              f"{dmdb['n_uniprot_accessions']}")
         print(f"  covered true pairs: {dmdb['covered_true_pairs']} | "
-              f"name-overlap pairs: {dmdb['name_overlap_pairs']} "
-              f"(agreement not reported: UniProt<->HGNC mapping needed)")
+              f"agreement pairs: {dmdb['agreement_pairs']} | "
+              f"agreement rate: {rate_s}")
+        for ex in dmdb["examples"][:3]:
+            print(f"    {ex['drug']}: overlap={ex['overlap_symbols']}")
     else:
         print(f"  skipped: {dmdb.get('reason')}")
 

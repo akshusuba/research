@@ -4,9 +4,9 @@
   "llm_dist": {
     "true": {
       "no-path": 9,
-      "weak": 11,
-      "unknown": 22,
-      "supported": 8
+      "supported": 14,
+      "weak": 13,
+      "unknown": 14
     },
     "random": {
       "no-path": 47,
@@ -17,9 +17,9 @@
   "lexical_dist": {
     "true": {
       "no-path": 9,
-      "supported": 26,
-      "weak": 11,
-      "unknown": 4
+      "supported": 35,
+      "weak": 5,
+      "unknown": 1
     },
     "random": {
       "no-path": 47,
@@ -27,9 +27,9 @@
       "unknown": 1
     }
   },
-  "llm_vs_lexical_agreement": 0.3409090909090909,
+  "llm_vs_lexical_agreement": 0.38636363636363635,
   "supported_rate": {
-    "true": 0.16,
+    "true": 0.28,
     "random": 0.02
   },
   "true_rows": [
@@ -52,10 +52,10 @@
       "disease": "non-Hodgkin lymphoma",
       "path": "Methotrexate --targets--> FPGS <--associated-- non-Hodgkin lymphoma",
       "type": "direct_target",
-      "llm": "weak",
+      "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "The FPGS rs10106 G allele was significantly associated with enhanced MTX efficacy in the dominant model."
+      "evidence": "we identified rs1544105, a non-coding SNP in the folylpoly-\u03b3-glutamate synthetase (FPGS) gene, as closely associated with MTX efficacy."
     },
     {
       "drug": "Topotecan",
@@ -82,10 +82,10 @@
       "disease": "lymphoma, non-Hodgkin, familial",
       "path": "Hydrocortisone --targets--> NR3C1 --interacts--> CREBBP <--associated-- lymphoma, non-Hodgkin, familial",
       "type": "ppi",
-      "llm": "supported",
+      "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "Generalized glucocorticoid (GC) resistance...results from impaired GC receptor signaling due to variants in the NR3C1 gene."
+      "evidence": "Systematic analysis reveals that maternal psychosocial stress significantly correlates with NR3C1 hypermethylation, acting as a biological mediator for neonatal cortisol dysregulati"
     },
     {
       "drug": "Vincristine",
@@ -95,7 +95,7 @@
       "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "the high-risk ABCB1 genotype (TT at rs1045642), 13 of 25 (52%) developed at least one episode of grade 1-3 neuropathy"
+      "evidence": "25 of 75 patients were homozygous for the risk allele (TT at rs1045642) of ABCB1 genotype."
     },
     {
       "drug": "Cisplatin",
@@ -105,27 +105,27 @@
       "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "the role of epigenetic dysregulation, and implicate emerging pathways like cuproptosis in WD pathogenesis."
+      "evidence": "ATP7B expression correlates with endocytosis- and epithelial-mesenchymal transition (EMT)-related gene sets and with elevated levels of EV-associated proteins."
     },
     {
       "drug": "Decitabine",
       "disease": "acute myeloid leukemia with NPM1 somatic mutations",
       "path": "Decitabine --targets--> DNMT3A <--associated-- acute myeloid leukemia with NPM1 somatic mutations",
       "type": "direct_target",
-      "llm": "unknown",
-      "lexical": "weak",
+      "llm": "supported",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "DNMT3A gene mutations are associated with poor prognosis in AML patients."
     },
     {
       "drug": "Melphalan",
       "disease": "yolk sac tumor",
       "path": "Melphalan --targets--> SLC7A5 --interacts--> ESR1 <--associated-- yolk sac tumor",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "weak",
+      "llm": "supported",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "melphalan poses steric hindrance, explaining its inhibitory activity."
     },
     {
       "drug": "Mechlorethamine",
@@ -153,10 +153,10 @@
       "disease": "precursor T-cell acute lymphoblastic leukemia",
       "path": "Hydrocortisone --targets--> NR3C1 --interacts--> SET <--associated-- precursor T-cell acute lymphoblastic leukemia",
       "type": "ppi",
-      "llm": "supported",
+      "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "impaired GC receptor signaling due to variants in the NR3C1 gene."
+      "evidence": "Systematic analysis reveals that maternal psychosocial stress significantly correlates with NR3C1 hypermethylation, acting as a biological mediator for neonatal cortisol dysregulati"
     },
     {
       "drug": "Bevacizumab",
@@ -164,7 +164,7 @@
       "path": "Bevacizumab --targets--> C1QB <--associated-- undifferentiated carcinoma of the corpus uteri",
       "type": "direct_target",
       "llm": "unknown",
-      "lexical": "weak",
+      "lexical": "supported",
       "source": "llm",
       "evidence": ""
     },
@@ -190,10 +190,10 @@
       "disease": "immature ovarian teratoma",
       "path": "Carboplatin --targets--> ATP7B <--associated-- immature ovarian teratoma",
       "type": "direct_target",
-      "llm": "unknown",
+      "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "Recent studies suggest that the copper efflux transporters ATP7A and ATP7B play an important role in platinum resistance."
     },
     {
       "drug": "Desoximetasone",
@@ -210,10 +210,10 @@
       "disease": "Burkitt lymphoma",
       "path": "Dexamethasone --targets--> CYP2E1 <--associated-- Burkitt lymphoma",
       "type": "direct_target",
-      "llm": "weak",
-      "lexical": "supported",
+      "llm": "unknown",
+      "lexical": "weak",
       "source": "llm",
-      "evidence": "CYP2E1 is involved in the oxidative metabolism of many xenobiotics, including AT drugs, and is known to produce reactive oxygen species (ROS) during the metabolism process."
+      "evidence": ""
     },
     {
       "drug": "Brigatinib",
@@ -233,7 +233,7 @@
       "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "H2-GMZ treatment also decreased levels of the cystic fibrosis transmembrane conductance regulator Cl- channel protein."
+      "evidence": "H2-GMZ treatment also decreased the levels of the CFTR Cl \u2212 channel."
     },
     {
       "drug": "Oteracil",
@@ -264,20 +264,20 @@
       "disease": "plasma cell myeloma",
       "path": "Panobinostat --targets--> HDAC2 --interacts--> CBX7 <--associated-- plasma cell myeloma",
       "type": "ppi",
-      "llm": "weak",
+      "llm": "unknown",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "the relationship between particular isoforms, such as HDAC3, HDAC5, HDAC7 and HDAC11, and tumor progression"
+      "evidence": ""
     },
     {
       "drug": "Pemetrexed",
       "disease": "malignant mesothelioma (disease)",
       "path": "Pemetrexed --targets--> ATIC --interacts--> TXN <--associated-- malignant mesothelioma (disease)",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "unknown",
+      "llm": "weak",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "Genetic polymorphism in ATIC is associated with effectiveness and toxicity of pemetrexed in non-small-cell lung cancer."
     },
     {
       "drug": "Vincristine",
@@ -304,10 +304,10 @@
       "disease": "primary cutaneous diffuse large B-cell lymphoma, Leg type",
       "path": "Bleomycin --targets--> LIG3 --interacts--> CDK1 <--associated-- primary cutaneous diffuse large B-cell lymphoma, Leg type",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "unknown",
+      "llm": "weak",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "bleomycin also increased the fraction of OsXRCC1 associated with chromatin."
     },
     {
       "drug": "Carmustine",
@@ -327,7 +327,7 @@
       "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "DHA exposure reduced ribonucleotide reductase (RRM1/2) expression"
+      "evidence": "RRM1 expression levels were inversely correlated with DAC incorporation rates detected by LC-MS/MS."
     },
     {
       "drug": "Apalutamide",
@@ -337,17 +337,17 @@
       "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "Apa is known to induce several drug-metabolizing enzymes including cytochrome P450 3A4 (CYP3A4), raising concerns about drug-drug interactions."
+      "evidence": "Apalutamide...is known to induce several drug-metabolizing enzymes including cytochrome P450 3A4 (CYP3A4)..."
     },
     {
       "drug": "Prednisone",
       "disease": "acute lymphoblastic/lymphocytic leukemia",
       "path": "Prednisone --targets--> NR3C1 --interacts--> SET <--associated-- acute lymphoblastic/lymphocytic leukemia",
       "type": "ppi",
-      "llm": "unknown",
+      "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "Abnormal NR3C1 transcription and/or translation is strongly associated with GC resistance"
     },
     {
       "drug": "Bevacizumab",
@@ -374,7 +374,7 @@
       "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "DHA exposure reduced ribonucleotide reductase (RRM1/2) expression"
+      "evidence": "RRM1 expression levels were inversely correlated with DAC incorporation rates detected by LC-MS/MS."
     },
     {
       "drug": "Panobinostat",
@@ -411,10 +411,10 @@
       "disease": "lymphoma, non-Hodgkin, familial",
       "path": "Bleomycin --targets--> LIG3 --interacts--> NBN <--associated-- lymphoma, non-Hodgkin, familial",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "unknown",
+      "llm": "weak",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "Bleomycin also increased the fraction of OsXRCC1 associated with chromatin."
     },
     {
       "drug": "Idarubicin",
@@ -424,7 +424,7 @@
       "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "suggesting an additional therapeutic mechanism of anthracycline drugs targeting the 3D genome."
+      "evidence": "AML patients treated with anthracycline drugs exhibited changes in chromatin structures near possible looping anchors."
     },
     {
       "drug": "Methotrexate",
@@ -441,20 +441,20 @@
       "disease": "differentiated thyroid carcinoma",
       "path": "Liothyronine --targets--> THRB --interacts--> NRAS <--associated-- differentiated thyroid carcinoma",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "weak",
+      "llm": "supported",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "Every-other-day high-dose liothyronine (L-T3) therapy improved her symptoms and increased her REE, without thyrotoxicosis."
     },
     {
       "drug": "Dexamethasone",
       "disease": "diffuse large B-cell lymphoma of the central nervous system",
       "path": "Dexamethasone --targets--> ABCG2 <--associated-- diffuse large B-cell lymphoma of the central nervous system",
       "type": "direct_target",
-      "llm": "unknown",
+      "llm": "weak",
       "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "ABCG2 [known as breast cancer resistance protein (BCRP)]... are overexpressed in brain tumors, including common gliomas."
     },
     {
       "drug": "Imatinib",
@@ -474,17 +474,17 @@
       "llm": "supported",
       "lexical": "supported",
       "source": "llm",
-      "evidence": "Ivosidenib is the first approved oral, targeted, small-molecule inhibitor of the isocitrate dehydrogenase 1 (IDH1) mutation seen in AML."
+      "evidence": "Ivosidenib is a first-in-class, oral, targeted small-molecule inhibitor of mutated isocitrate dehydrogenase (mIDH1) approved for use with azacitidine, following the AGILE trial."
     },
     {
       "drug": "Sorafenib",
       "disease": "fibrolamellar hepatocellular carcinoma",
       "path": "Sorafenib --targets--> CYP2C8 <--associated-- fibrolamellar hepatocellular carcinoma",
       "type": "direct_target",
-      "llm": "weak",
-      "lexical": "weak",
+      "llm": "supported",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": "CYP2C8 was obtained. Except for PLA2G6, the other genes were correlated with the survival of patients with liver cancer"
+      "evidence": "CYP2C8 Suppress Proliferation, Migration, Invasion and Sorafenib Resistance of Hepatocellular Carcinoma via PI3K/Akt/p27kip1 Axis."
     },
     {
       "drug": "Doxorubicin",
@@ -492,7 +492,7 @@
       "path": "Doxorubicin --targets--> NOS2 --interacts--> S100A8 <--associated-- acute myeloblastic leukemia with maturation",
       "type": "ppi",
       "llm": "unknown",
-      "lexical": "weak",
+      "lexical": "supported",
       "source": "llm",
       "evidence": ""
     },
@@ -501,10 +501,10 @@
       "disease": "primary non-gestational choriocarcinoma of ovary",
       "path": "Melphalan --targets--> SLC7A5 --interacts--> ESR1 <--associated-- primary non-gestational choriocarcinoma of ovary",
       "type": "ppi",
-      "llm": "unknown",
-      "lexical": "weak",
+      "llm": "supported",
+      "lexical": "supported",
       "source": "llm",
-      "evidence": ""
+      "evidence": "melphalan poses steric hindrance, explaining its inhibitory activity."
     }
   ],
   "random_rows": [

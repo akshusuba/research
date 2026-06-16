@@ -27,25 +27,25 @@
       {
         "drug": "Methotrexate",
         "grade": "supported",
-        "source": "lexical",
+        "source": "llm",
         "n_abstracts": 4
       },
       {
         "drug": "Topotecan",
-        "grade": "supported",
-        "source": "lexical",
+        "grade": "weak",
+        "source": "llm",
         "n_abstracts": 4
       },
       {
         "drug": "Vincristine",
-        "grade": "weak",
-        "source": "lexical",
-        "n_abstracts": 3
+        "grade": "unknown",
+        "source": "llm",
+        "n_abstracts": 4
       },
       {
         "drug": "Hydrocortisone",
-        "grade": "supported",
-        "source": "lexical",
+        "grade": "weak",
+        "source": "llm",
         "n_abstracts": 4
       }
     ],
@@ -69,7 +69,7 @@
       {
         "drug": "Dequalinium",
         "grade": "supported",
-        "source": "lexical",
+        "source": "llm",
         "n_abstracts": 4
       },
       {
@@ -80,11 +80,102 @@
   },
   "drugmechdb": {
     "available": true,
-    "n_db_drugs": 1219,
-    "covered_true_pairs": 264,
-    "name_overlap_pairs": 0,
-    "agreement_rate": null,
-    "note": "DrugMechDB uses UniProt accessions / free-text protein names; PrimeKG uses HGNC symbols. Cross-vocabulary mapping (UniProt -> HGNC) is required for a meaningful agreement metric; flagged as future work and not reported here.",
-    "examples": []
+    "n_db_drugs": 1071,
+    "n_uniprot_accessions": 775,
+    "n_accessions_mapped": 526,
+    "covered_true_pairs": 263,
+    "agreement_pairs": 207,
+    "agreement_rate": 0.7870722433460076,
+    "examples": [
+      {
+        "drug": "Methotrexate",
+        "overlap_symbols": [
+          "ATIC",
+          "TYMS"
+        ],
+        "drugmechdb_symbols": [
+          "ADA",
+          "ATIC",
+          "DHFR",
+          "TYMS"
+        ]
+      },
+      {
+        "drug": "Topotecan",
+        "overlap_symbols": [
+          "TOP1"
+        ],
+        "drugmechdb_symbols": [
+          "TOP1"
+        ]
+      },
+      {
+        "drug": "Vincristine",
+        "overlap_symbols": [
+          "TUBB"
+        ],
+        "drugmechdb_symbols": [
+          "TUBB"
+        ]
+      },
+      {
+        "drug": "Hydrocortisone",
+        "overlap_symbols": [
+          "NR3C1"
+        ],
+        "drugmechdb_symbols": [
+          "ANXA1",
+          "CYP27B1",
+          "NR3C1",
+          "PLA2G4A",
+          "PTGS1",
+          "PTGS2"
+        ]
+      },
+      {
+        "drug": "Vincristine",
+        "overlap_symbols": [
+          "TUBB"
+        ],
+        "drugmechdb_symbols": [
+          "TUBB"
+        ]
+      },
+      {
+        "drug": "Decitabine",
+        "overlap_symbols": [
+          "DNMT1",
+          "DNMT3A"
+        ],
+        "drugmechdb_symbols": [
+          "DNMT1",
+          "DNMT3A"
+        ]
+      },
+      {
+        "drug": "Hydrocortisone",
+        "overlap_symbols": [
+          "ANXA1",
+          "NR3C1"
+        ],
+        "drugmechdb_symbols": [
+          "ANXA1",
+          "CYP27B1",
+          "NR3C1",
+          "PLA2G4A",
+          "PTGS1",
+          "PTGS2"
+        ]
+      },
+      {
+        "drug": "Erlotinib",
+        "overlap_symbols": [
+          "EGFR"
+        ],
+        "drugmechdb_symbols": [
+          "EGFR"
+        ]
+      }
+    ]
   }
 }

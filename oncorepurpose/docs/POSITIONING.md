@@ -49,10 +49,11 @@ Our narrower, defensible contributions:
 4. **Evaluation, not just a demo.** A falsifiable claim, tested: do mechanism
    paths separate true indications from random drug–cancer pairs? Over 400 vs 400
    oncology pairs the graph mechanism signal separates them at **AUROC 0.878**
-   (direct-target rate 34% vs 0.25%), and the literature verifier grades true
-   pairs *supported/weak* and random pairs *no-path/unknown*. Agreement with
-   curated DrugMechDB mechanisms is left as future work (needs a UniProt→HGNC
-   map). Many LLM+KG repurposing demos report no such evaluation.
+   (direct-target rate 34% vs 0.25%), and the LLM verifier grades true pairs
+   *supported/weak* and random pairs *no-path/unknown* (14/50 vs 1/50 *supported*).
+   The extracted paths also agree with **expert-curated DrugMechDB mechanisms at
+   0.787** on covered pairs (after a UniProt→HGNC mapping). Many LLM+KG repurposing
+   demos report no such evaluation.
 
 5. **Focused oncology scope** with a concrete, ranked, evidence-backed candidate
    shortlist as the deliverable.
