@@ -209,7 +209,10 @@ def drugmechdb_agreement(data, idx, true_pairs):
         if not db_syms:
             continue
         covered += 1
-        paths = mechanism_paths(data, idx, dr, ds, max_paths=8)
+        # Use a generous path budget here: agreement asks whether our extractor can
+        # recover the curated MOA gene at all, so it should not be sensitive to the
+        # display-ranking (top-k) of paths.
+        paths = mechanism_paths(data, idx, dr, ds, max_paths=25)
         ours = {g.upper() for p in paths for g in p.get("genes", [])}
         overlap = ours & db_syms
         if overlap:

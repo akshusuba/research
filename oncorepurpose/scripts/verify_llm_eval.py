@@ -63,8 +63,61 @@ def run_group(data, idx, pairs, rxnames, dnames):
             "type": v["type"], "llm": (v["llm"] or {}).get("grade", "n/a"),
             "lexical": v["lexical"]["grade"], "source": v["source"],
             "evidence": (v["llm"] or {}).get("evidence", ""),
+            "genes": [g.upper() for g in paths[0].get("genes", [])],
         })
     return rows
+
+
+def build_dmdb_map():
+    """drug name (lower) -> set of curated HGNC MOA symbols, from DrugMechDB."""
+    import re as _re
+
+    import requests
+    import yaml
+
+    from oncorepurpose.interpret.uniprot_map import uniprot_to_symbol
+    raw = None
+    for u in ("https://raw.githubusercontent.com/SuLab/DrugMechDB/main/indication_paths.yaml",
+              "https://raw.githubusercontent.com/SuLab/DrugMechDB/master/indication_paths.yaml"):
+        try:
+            r = requests.get(u, timeout=45)
+            if r.ok and len(r.text) > 1000:
+                raw = r.text
+                break
+        except Exception:
+            continue
+    if raw is None:
+        return {}
+    entries = yaml.safe_load(raw)
+    accs, drug_accs = set(), {}
+    for e in entries:
+        drug = str(e.get("graph", {}).get("drug", "")).strip().lower()
+        if not drug:
+            continue
+        for n in e.get("nodes", []):
+            nid = str(n.get("id", ""))
+            if nid.startswith("UniProt:"):
+                a = nid.split(":", 1)[1]
+                accs.add(a)
+                drug_accs.setdefault(drug, set()).add(a)
+    mp = uniprot_to_symbol(list(accs))
+    out = {}
+    for drug, a_set in drug_accs.items():
+        syms = {mp[a].upper() for a in a_set if mp.get(a)}
+        if syms:
+            out[drug] = syms
+    return out
+
+
+def dmdb_precision(rows, dmdb, key):
+    """Of pairs graded 'supported' whose drug DrugMechDB covers, fraction whose
+    extracted path gene is in the curated MOA set."""
+    covered = [r for r in rows
+               if r.get("genes") and r["drug"].lower() in dmdb and r[key] == "supported"]
+    if not covered:
+        return None, 0
+    hit = sum(1 for r in covered if set(r["genes"]) & dmdb[r["drug"].lower()])
+    return hit / len(covered), len(covered)
 
 
 def dist(rows, key):
@@ -102,6 +155,14 @@ def main():
     print(f"LLM 'supported': true {supported_true}/{len(true_rows)} | "
           f"random {supported_rand}/{len(neg_rows)}")
 
+    # Precision of 'supported' against curated DrugMechDB mechanisms.
+    dmdb = build_dmdb_map()
+    p_llm, n_llm = dmdb_precision(true_rows, dmdb, "llm")
+    p_lex, n_lex = dmdb_precision(true_rows, dmdb, "lexical")
+    print(f"\nDrugMechDB precision of 'supported' (true, covered pairs):")
+    print(f"  LLM     : {p_llm} (n={n_llm})")
+    print(f"  lexical : {p_lex} (n={n_lex})")
+
     print("\nExample LLM-supported true indications:")
     for r in true_rows:
         if r["llm"] == "supported":
@@ -117,6 +178,8 @@ def main():
         "llm_vs_lexical_agreement": agreement,
         "supported_rate": {"true": supported_true / len(true_rows),
                            "random": supported_rand / len(neg_rows)},
+        "dmdb_precision_supported": {"llm": p_llm, "llm_n": n_llm,
+                                     "lexical": p_lex, "lexical_n": n_lex},
         "true_rows": true_rows, "random_rows": neg_rows,
     }
     with open(os.path.join(RESULTS_DIR, "verify_llm_eval.json"), "w") as f:

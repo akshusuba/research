@@ -61,10 +61,10 @@ Trifluridine --targets--> TYMS  <--associated-- colorectal cancer         (thymi
 ```
 
 In a quick check, **true indications reliably yield specific direct-target
-paths, while random drug–cancer pairs mostly yield no mechanistic path** (the few
-that do go through promiscuous hubs like albumin — exactly the coincidental links
-the LLM verifier is meant to reject). So the graph's value is **mechanism and
-explanation**, not the link score — and that is the GNN's real job here.
+paths, while random drug–cancer pairs mostly yield no mechanistic path**. (Spurious
+links through promiscuous carrier hubs like albumin are now filtered out by the
+extractor — see *Hub down-weighting* below.) So the graph's value is **mechanism
+and explanation**, not the link score — and that is the GNN's real job here.
 
 Reproduce: `PYTHONPATH=. python scripts/mechanism_demo.py`.
 
@@ -76,11 +76,11 @@ The falsifiable claim (Aim 4), tested LLM-free on the graph mechanism signal ove
 
 | Metric | True indications | Random pairs |
 |---|---|---|
-| Mean mechanism score | **2.08** | 0.18 |
+| Mean mechanism score | **1.95** | 0.17 |
 | Direct-target rate | **34.0%** | 0.25% |
 | Any mechanistic path | **81.3%** | 8.8% |
 
-**Separation AUROC (true vs random): 0.878.** True indications are ~136× more
+**Separation AUROC (true vs random): 0.879.** True indications are ~136× more
 likely to have a direct drug-target → cancer-gene link, and a random pair almost
 never does (figure: `figures/mechanism_eval.png`). So the mechanism signal the
 graph provides is real and discriminative — the thing XGBoost's link score cannot
@@ -94,25 +94,33 @@ otherwise. Run over 50 true vs 50 random pairs
 (`scripts/verify_llm_eval.py`, `results/verify_llm_eval.json`):
 
 - **Random pairs:** 47/50 have *no mechanistic path*; the LLM marks only 1/50 *supported*.
-- **True pairs:** LLM marks **14** *supported*, 13 *weak*, 14 *unknown*, 9 *no-path* —
-  up from 8 supported / 22 unknown after retrieval was improved (a multi-query Europe
-  PMC merge biased toward MOA statements; gene-mention rate in retrieved abstracts
-  rose **80%→93%** on a 30-pair check).
-- The LLM is **stricter than lexical grounding** (they agree on only ~39% of graded
-  paths): lexical calls 35/50 true *supported*, the LLM only 14 — it demotes
-  co-mention coincidences (and pharmacogenetic-but-not-MOA abstracts) to *weak/unknown*,
-  which is its job. Each *supported* grade carries a verbatim quote (e.g. Quizartinib→FLT3:
-  *"a potent next generation FLT3 inhibitor ... for FLT3-ITD+ AML"*).
-- **Remaining limitation:** a few LLM-*supported* cases still rest on tangential
-  (pharmacogenetic) abstracts; full-text grounding would tighten this further.
+- **True pairs:** LLM marks **11** *supported*, **29** *weak*, 1 *unknown*, 9 *no-path*.
+  A stricter rubric (an explicit drug→target MOA statement is required; a SNP/genotype/
+  prognosis association is graded *weak*, not *supported*) plus sentence-level grounding
+  (only drug+gene co-mention sentences are fed to the model) collapsed *unknown* from 14→1
+  and pushed tangential evidence to *weak*.
+- **The LLM "supported" calls are now far more precise than the lexical fallback.**
+  Of the *supported* true pairs DrugMechDB covers, **LLM = 0.857 (6/7)** have the path
+  gene in the curated MOA set, vs **lexical = 0.591 (13/22)**. The LLM is the conservative,
+  trustworthy reviewer; lexical co-mention over-calls *supported*. Examples are mechanistic:
+  Topotecan→TOP1 (*"a topoisomerase I (TOP1) inhibitor"*), Brigatinib→ALK (*"an ALK tyrosine
+  kinase inhibitor"*), Cisplatin→ATP7B (*"downregulates ATP7B … efflux of … cisplatin"*).
+- **Remaining limitation:** open-access full text was fetched where available but the
+  PMC OA subset covered ~none of these papers, so abstract-level grounding still dominates.
 
 **Curated-mechanism agreement (DrugMechDB).** Mapping DrugMechDB's UniProt
 accessions to HGNC symbols (via mygene.info, cached in `data/uniprot2symbol.json`)
 makes the comparison meaningful. On the 263 true pairs whose drug DrugMechDB
-covers, our extracted bridge genes overlap the curated MOA genes for **207 pairs
-(agreement 0.787)** — e.g. Methotrexate→{ATIC, TYMS}, Topotecan→{TOP1},
+covers, our extracted bridge genes overlap the curated MOA genes for **211 pairs
+(agreement 0.802)** — e.g. Methotrexate→{ATIC, DHFR, TYMS}, Topotecan→{TOP1},
 Decitabine→{DNMT1, DNMT3A}. So the paths we extract align with an independent,
 expert-curated mechanism resource.
+
+**Hub down-weighting (Aim 2 hardening).** Pure plasma carriers (albumin, A2M, …)
+are hard-excluded from paths, and every bridge is softly down-weighted by an
+IDF-style promiscuity penalty (`1/log(drug-degree)`). This removes spurious carrier
+bridges (e.g. `Sulfamerazine→ALB→…→AML`) while *improving* both headline metrics
+(separation AUROC 0.878→0.879, DrugMechDB agreement 0.787→0.802).
 
 ## Positioning (honest novelty)
 
@@ -156,7 +164,8 @@ oncorepurpose/
     llm.py               provider-agnostic chat client (cached)
     evidence_report.py   Europe PMC retrieval (abstracts) + LLM-as-judge dossier
     retrieval.py         multi-query Europe PMC MOA retrieval (merge + rank)
-    verify.py            mechanism verifier: LLM grade + lexical-grounding fallback
+    fulltext.py          open-access full-text fetch (Europe PMC OA subset)
+    verify.py            verifier: strict MOA rubric, sentence grounding, LLM + lexical
 scripts/
   run_experiment.py      4-model x 3-regime comparison + ablations
   mechanism_demo.py      multi-hop mechanism paths for oncology pairs
@@ -188,8 +197,10 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Quantitative true-vs-random separation (AUROC 0.878); the falsifiable claim holds.
 - [x] LLM verifier run (OpenRouter `gpt-4o-mini`); stricter than lexical, separates true vs random.
 - [x] Improved multi-query MOA retrieval: gene-mention 80%→93%; LLM *supported* 8→14 / 50.
-- [x] DrugMechDB agreement via UniProt→HGNC map (mygene.info): **0.787** on covered pairs.
-- [ ] Full-text grounding to further reduce tangential *supported* calls.
-- [ ] Stronger hub down-weighting (e.g. albumin-type promiscuous bridges).
+- [x] DrugMechDB agreement via UniProt→HGNC map (mygene.info): **0.802** on covered pairs.
+- [x] Stricter MOA rubric + sentence grounding: LLM-*supported* precision **0.857** vs lexical 0.591.
+- [x] Hub down-weighting (carrier exclusion + IDF promiscuity penalty): removes albumin bridges, AUROC 0.878→0.879.
+- [x] Open-access full-text fetch wired in (PMC OA subset is sparse, so abstracts still dominate).
+- [ ] Broaden full-text coverage (non-OA sources) and scale the LLM verifier run.
 
 *All predictions are hypothesis-generating and not medical advice.*

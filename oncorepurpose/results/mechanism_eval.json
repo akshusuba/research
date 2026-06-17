@@ -1,10 +1,10 @@
 {
   "n_true": 400,
   "n_random": 400,
-  "separation_auroc": 0.87763125,
+  "separation_auroc": 0.879259375,
   "mean_score": {
-    "true": 2.084371037269928,
-    "random": 0.1804946398203082
+    "true": 1.954999359942403,
+    "random": 0.1647793004413275
   },
   "direct_target_rate": {
     "true": 0.34,
@@ -26,19 +26,19 @@
       },
       {
         "drug": "Methotrexate",
-        "grade": "supported",
-        "source": "llm",
-        "n_abstracts": 4
-      },
-      {
-        "drug": "Topotecan",
         "grade": "weak",
         "source": "llm",
         "n_abstracts": 4
       },
       {
+        "drug": "Topotecan",
+        "grade": "supported",
+        "source": "llm",
+        "n_abstracts": 4
+      },
+      {
         "drug": "Vincristine",
-        "grade": "unknown",
+        "grade": "weak",
         "source": "llm",
         "n_abstracts": 4
       },
@@ -84,13 +84,14 @@
     "n_uniprot_accessions": 775,
     "n_accessions_mapped": 526,
     "covered_true_pairs": 263,
-    "agreement_pairs": 207,
-    "agreement_rate": 0.7870722433460076,
+    "agreement_pairs": 211,
+    "agreement_rate": 0.8022813688212928,
     "examples": [
       {
         "drug": "Methotrexate",
         "overlap_symbols": [
           "ATIC",
+          "DHFR",
           "TYMS"
         ],
         "drugmechdb_symbols": [
@@ -121,6 +122,7 @@
       {
         "drug": "Hydrocortisone",
         "overlap_symbols": [
+          "ANXA1",
           "NR3C1"
         ],
         "drugmechdb_symbols": [
@@ -168,12 +170,12 @@
         ]
       },
       {
-        "drug": "Erlotinib",
+        "drug": "Bevacizumab",
         "overlap_symbols": [
-          "EGFR"
+          "VEGFA"
         ],
         "drugmechdb_symbols": [
-          "EGFR"
+          "VEGFA"
         ]
       }
     ]
