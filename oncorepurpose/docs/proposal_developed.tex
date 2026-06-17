@@ -412,8 +412,8 @@ baseline dominates (Recall@10 $0.80$), because the curated bridge gene is usuall
 just the drug's direct target; the GNN adds nothing there. But in the
 \emph{mechanism-blinded} setting, with the direct drug$\to$target edge removed, the
 target-lookup and the degree prior collapse to $\sim 0$, while the joint GNN still
-recovers the bridge gene (Recall@10 $0.25 \pm 0.02$, MRR $0.21$, 3 seeds) from
-indirect structure. Crucially, a link-only GNN scored through the \emph{identical}
+recovers the bridge gene (Recall@10 $0.25 \pm 0.02$, per-seed $0.23$--$0.26$,
+MRR $0.21$, 3 seeds, $n\approx186$--$260$) from indirect structure. Crucially, a link-only GNN scored through the \emph{identical}
 mechanism head (same architecture and scorer, trained without the auxiliary loss)
 also recovers nothing (Recall@10 $0.00$), so the capability is attributable to the
 auxiliary objective, not to the architecture or a favorable scorer.
@@ -435,8 +435,11 @@ gene is the drug's direct target, so a trivial lookup wins. When that direct edg
 is hidden, only the joint GNN recovers the gene via indirect structure, a small
 ($\sim$0.25 R@10) but genuine graph-only signal. The link-only GNN uses the same
 head and scorer, differing only in the auxiliary loss. Caveats: DrugMechDB supervision
-is drug-level (the drug's MOA genes), not pair-specific, and the magnitude is
-modest; this is a real but narrow advantage, not a blockbuster.}
+is drug-level (the drug's MOA genes), not pair-specific; even blinded, the bridge gene
+may remain reachable through retained PPI/pathway edges, so this reflects recovery of
+\emph{known} mechanism via indirect paths, not de novo discovery; and $n\approx200$
+covered held-out pairs is modest, so it is a preliminary signal to scale. A real but
+narrow advantage, not a blockbuster.}
 \label{tab:mechrec}
 \end{table}
 
