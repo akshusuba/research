@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 % ---------------------------------------------------------------------------
-%  OncoRepurpose-GNN -- SRI Research Proposal
+%  OncoEvidence -- SRI / OpenBio Research Proposal (basic plan for mentor)
 %  Compile with:  tectonic docs/proposal.tex
 % ---------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem}
 \usepackage{graphicx}
-\usepackage[colorlinks=true,linkcolor=sriblue,citecolor=sriblue,urlcolor=sriaccent]{hyperref}
+\usepackage{float}
 
 % ----- Palette -------------------------------------------------------------
 \definecolor{sriblue}{HTML}{1F4E79}
@@ -26,12 +26,12 @@
 \definecolor{srilight}{HTML}{EAF1F8}
 \definecolor{sriamber}{HTML}{F6BD16}
 \definecolor{srirow}{HTML}{F2F6FB}
-\definecolor{srired}{HTML}{C0392B}
 \definecolor{nDrug}{HTML}{E8684A}
 \definecolor{nDis}{HTML}{5B8FF9}
 \definecolor{nGene}{HTML}{2E8B57}
 \definecolor{nPath}{HTML}{F6BD16}
-\definecolor{nPhen}{HTML}{9B59B6}
+
+\usepackage[colorlinks=true,linkcolor=sriblue,citecolor=sriblue,urlcolor=sriaccent]{hyperref}
 
 \usepackage{titlesec}
 \titleformat{\section}{\large\bfseries\color{sriblue}}{\thesection}{0.6em}{}
@@ -39,8 +39,6 @@
 \titlespacing*{\section}{0pt}{1.4ex}{0.8ex}
 
 \newtcolorbox{problembox}{colback=srilight,colframe=sriblue,boxrule=0.9pt,
-  arc=2pt,left=6pt,right=6pt,top=5pt,bottom=5pt}
-\newtcolorbox{gapbox}{colback=sriaccent!8,colframe=sriaccent,boxrule=0.9pt,
   arc=2pt,left=6pt,right=6pt,top=5pt,bottom=5pt}
 \newtcolorbox{aimbox}[1]{colback=srigreen!7,colframe=srigreen,boxrule=0.8pt,
   arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,title={#1},
@@ -52,316 +50,207 @@
 \begin{document}
 
 \begin{center}
-  {\LARGE\bfseries\color{sriblue} Finding New Cancer Uses for Existing Drugs}\\[3pt]
-  {\large\bfseries\color{sriblue!80!black} A heterogeneous graph neural network for drug repurposing on a\\ biomedical knowledge graph -- and an honest test of when the graph helps}\\[10pt]
+  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided AI Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
+  {\large\bfseries\color{sriblue!80!black} A knowledge-graph and language-model pipeline that prioritizes\\ repurposing candidates by mechanistic plausibility and literature evidence}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
-  {\small Student Research Institute (SRI) -- Summer 2026 Cohort \\
+  {\small Student Research Institute (SRI), Summer 2026 Cohort \\
   Harvard Undergraduate OpenBio Laboratory}\\[2pt]
   {\small\itshape Research Proposal for Mentor Review \quad\textbar\quad \today}
 \end{center}
 
 \vspace{2pt}
 \begin{problembox}
-\textbf{The problem.} Bringing a new cancer drug to patients takes more than a
-decade and often fails. \emph{Drug repurposing} -- finding a new therapeutic use
-for an already-approved drug -- is far faster and cheaper, and is especially
-valuable for cancers with few options. But the space of (drug, cancer) pairs is
-enormous and most candidates are dead ends. The key fact is that whether a drug
-might treat a cancer is rarely written in the drug's own properties; it lives in
-a \emph{web of relationships} -- the drug's protein targets, the pathways those
-proteins sit in, and the molecular processes the cancer disrupts. This project
-builds a model that reasons over that web to rank promising repurposing
-candidates, and -- critically -- tests honestly whether the graph structure is
-truly necessary or whether a simple feature-based model does just as well.
+\textbf{The problem.} Drug repurposing looks for new uses of existing drugs, for
+example asking whether an approved drug could treat a cancer it was not designed
+for. Computational methods can rank thousands of drug-disease pairs, but a high
+score is not enough: a researcher still needs to know \emph{why} a drug might work
+(its mechanism) and whether the literature supports it. This project builds a
+pipeline that, for cancer repurposing, ranks candidates, extracts the biological
+mechanism path that would explain each one, and checks that mechanism against
+published evidence.
 \end{problembox}
+
+\begin{aimbox}{Proposed study}
+I will build an oncology-focused evidence-triage pipeline on the PrimeKG
+biomedical knowledge graph. It will (1) rank drug-cancer candidates and compare a
+graph model against a strong tabular baseline to test honestly when the graph
+helps, (2) extract multi-hop \emph{drug $\rightarrow$ target protein $\rightarrow$
+cancer gene $\rightarrow$ cancer} mechanism paths for the top candidates, and
+(3) use a language model to read the literature and grade whether each mechanism
+is supported. I will evaluate the system against known indications and a curated
+mechanism database. The deliverable is a ranked, evidence-backed shortlist of
+repurposing candidates with transparent mechanistic rationales.
+\end{aimbox}
+
+\vspace{4pt}
+\noindent\textit{Why this project.} I am drawn to drug repurposing because it can
+bring existing, already-safe drugs to new cancer patients faster than designing a
+drug from scratch. What interests me technically is the gap between a prediction
+and an explanation: a model can output a score, but a clinician or scientist needs
+a reason. I want to build a system that produces the reason and then checks it
+against the evidence.
 
 % ===========================================================================
 \section{Background and Significance}
 
-Approved drugs have known safety profiles, so a credible repurposing hypothesis
-can reach patients years faster than a new molecule. The clinical precedent is
-strong: thalidomide for multiple myeloma, metformin in oncology trials, and
-kinase inhibitors crossing between cancer types. The challenge is
-\emph{prioritization} -- which of millions of (drug, cancer) pairs deserve
-costly experimental follow-up.
+Cancer drug repurposing matters because developing a new drug takes many years and
+large cost, while thousands of approved drugs already have known safety profiles.
+If one of them acts on a protein or pathway that also drives a cancer, it may be a
+fast route to a new treatment. Biomedical knowledge graphs such as PrimeKG collect
+millions of relationships among drugs, proteins, genes, pathways, and diseases, so
+the information needed to reason about such mechanisms is, in principle, already
+encoded as paths through the graph.
 
-Whether a drug can treat a disease is fundamentally a \emph{relational} property:
-
-\begin{table}[h]
-\centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.62\linewidth}}
-\toprule
-\rowcolor{sriblue}\color{white}\textbf{Why it matters} & \color{white}\textbf{Consequence}\\
-\midrule
-\rowcolor{srirow} Drug action is mediated by targets \& pathways & The signal is in multi-hop links (drug $\to$ protein $\to$ pathway $\to$ disease), not a drug's own descriptors.\\
-Knowledge is fragmented & Integrating drugs, genes, pathways, phenotypes, and diseases into one graph exposes routes invisible to single-table analysis.\\
-\rowcolor{srirow} Most cancers have unexploited options & A ranked, evidence-backed shortlist focuses scarce experimental effort.\\
-\bottomrule
-\end{tabular}
-\caption{Drug repurposing is a graph-reasoning problem: the evidence for a
-(drug, cancer) link is distributed across the biomedical network.}
-\label{tab:significance}
-\end{table}
+The challenge is trust. A model that only outputs a drug-disease score is hard to
+act on, because the reviewer cannot see the reasoning and cannot tell a real
+mechanism from a coincidence. Recent work has shown that graph models can predict
+repurposing links and even suggest paths, and that language models can reason over
+biomedical text. What is still under-explored is an honest, evaluated combination:
+a system that produces a mechanism and then verifies it against the literature,
+and that reports clearly when the graph is actually necessary.
 
 % ===========================================================================
-\section{The Unmet Need}
+\section{Central Question and Specific Aims}
 
-\begin{gapbox}
-\textbf{Gap 1 -- Scale.} The (drug $\times$ cancer) hypothesis space is too large
-to screen experimentally; computational prioritization is essential.\\[3pt]
-\textbf{Gap 2 -- Single-table models miss multi-hop biology.} A model that sees
-only a drug's and a disease's own features cannot traverse the
-drug$\to$target$\to$pathway$\to$disease chains that explain therapeutic action.\\[3pt]
-\textbf{Gap 3 -- Predictions are not actionable on their own.} A bare ranked list
-without mechanistic rationale or literature support is hard for a researcher to
-trust or triage.
-\end{gapbox}
+\begin{problembox}
+\textbf{Core question.} For cancer drug repurposing, can a biomedical knowledge
+graph combined with a literature-grounded language-model agent prioritize
+candidates by both predicted therapeutic relevance and mechanistic plausibility,
+and when does the graph add value over a strong tabular baseline?
+\end{problembox}
 
-\noindent We exploit a simple observation: \textbf{a (drug, disease) link is a
-property of the two nodes' positions in the biomedical network}. The information
-absent from a drug's descriptors is present in the graph \emph{around} it
-(Fig.~\ref{fig:mechanism}). A model that propagates over the network can
-represent ``this drug targets a protein in a pathway this cancer dysregulates'';
-a feature-only model must guess.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=0.95,every node/.style={transform shape},
-  >={Stealth[length=2.2mm]},
-  drug/.style={circle,fill=nDrug,text=white,minimum size=15pt,inner sep=1pt,font=\scriptsize\bfseries},
-  dis/.style={circle,fill=nDis,text=white,minimum size=15pt,inner sep=1pt,font=\scriptsize\bfseries},
-  gene/.style={circle,fill=nGene,text=white,minimum size=15pt,inner sep=1pt,font=\scriptsize\bfseries},
-  path/.style={circle,fill=nPath,text=black,minimum size=15pt,inner sep=1pt,font=\scriptsize\bfseries}]
-  \node[drug] (D) at (0,0) {Drug};
-  \node[gene] (G1) at (2.1,0.7) {Tgt};
-  \node[path] (P) at (4.2,0) {Path};
-  \node[gene] (G2) at (2.1,-0.7) {Tgt};
-  \node[dis] (X) at (6.3,0) {Cancer};
-  \draw[->,thick] (D)--(G1) node[midway,above,font=\tiny]{targets};
-  \draw[->,thick] (D)--(G2);
-  \draw[->,thick] (G1)--(P) node[midway,above,font=\tiny]{in};
-  \draw[->,thick] (G2)--(P);
-  \draw[->,thick] (P)--(X) node[midway,above,font=\tiny]{dysregulated in};
-  \draw[->,thick,densely dashed,sriaccent] (D) to[bend right=32] node[midway,below,font=\tiny\itshape,sriaccent]{predicted: treats?} (X);
-\end{tikzpicture}
-\caption{A repurposing hypothesis is a multi-hop path. The dashed link
-(does this drug treat this cancer?) is supported by a chain through shared
-targets and pathways -- structure a feature-only model cannot see.}
-\label{fig:mechanism}
-\end{figure}
-
-% ===========================================================================
-\section{Research Aims}
-
-\begin{aimbox}{Aims}
-\textbf{Aim 1.} Build a heterogeneous graph neural network that predicts
-\emph{drug $\to$ cancer} therapeutic links on a large biomedical knowledge graph
-and ranks novel repurposing candidates.\\
-\textbf{Aim 2.} Test \emph{honestly} whether graph structure is necessary --
-benchmark against a tuned tabular model on identical features, under
-leakage-safe inductive splits, with a topology-removal ablation.\\
-\textbf{Aim 3.} Make predictions actionable: attach multi-hop mechanistic
-rationales and an automated, literature-grounded evidence report for the top
-candidates.
+\begin{aimbox}{Specific Aims}
+\textbf{Aim 1 (Candidate generation).} Rank drug-cancer pairs with PrimeKG models
+(a heterogeneous graph neural network and a knowledge-graph embedding) and a tuned
+XGBoost baseline on the same features, and report honestly where the graph helps.\\
+\textbf{Aim 2 (Mechanism extraction).} For top candidates, extract multi-hop
+\emph{drug $\rightarrow$ target $\rightarrow$ pathway/cancer-gene $\rightarrow$
+cancer} paths, prioritizing real mechanism relations over phenotype coincidence.\\
+\textbf{Aim 3 (Evidence verification).} Retrieve literature and have a language
+model grade each path as supported, weak, contradicted, or unknown, with a quoted
+piece of evidence.\\
+\textbf{Aim 4 (Evaluation).} Test the system against known indications and a
+curated mechanism resource (DrugMechDB), measuring whether mechanism paths
+separate true indications from random pairs and whether verified mechanisms agree
+with curated ones.
 \end{aimbox}
 
-\noindent\textbf{Guiding questions.} (Q1) Can therapeutic links be predicted
-from a biomedical knowledge graph? (Q2) Does message passing beat a strong
-feature-only model, and \emph{in which regime} (familiar vs.\ unseen diseases/
-drugs)? (Q3) Are the top predictions mechanistically and bibliographically
-defensible?
-
 % ===========================================================================
-\section{Data}
+\section{Datasets}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering\small
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.26\linewidth} >{\raggedright\arraybackslash}p{0.42\linewidth} >{\raggedright\arraybackslash}p{0.24\linewidth}}
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{Resource} & \color{white}\textbf{Content} & \color{white}\textbf{Role}\\
 \midrule
-\rowcolor{srirow} PrimeKG & $\sim$129k nodes (drugs, diseases, genes/proteins, pathways, phenotypes, \ldots), $\sim$8M edges incl.\ indication / contraindication & Primary knowledge graph\\
-Oncology subset & $\sim$3{,}000 neoplasm diseases flagged for focused evaluation & Cancer-specific targets\\
-\rowcolor{srirow} Europe PMC / PubMed & open literature search API & Evidence retrieval for the report layer\\
+\rowcolor{srirow} PrimeKG & biomedical knowledge graph: drugs, proteins, genes, pathways, diseases ($\sim$129k nodes, $\sim$8M edges) & Candidate ranking + mechanism paths\\
+Europe PMC & open biomedical literature API (titles, abstracts, open-access full text) & Evidence retrieval for verification\\
+\rowcolor{srirow} DrugMechDB & expert-curated drug mechanism-of-action paths & Ground truth for mechanism evaluation\\
 \bottomrule
 \end{tabular}
-\caption{All inputs are public. PrimeKG is purpose-built for precision-medicine
-AI, with rich drug--disease therapeutic edges other graphs lack.}
+\caption{All resources are public. PrimeKG supplies the graph; Europe PMC supplies
+the evidence; DrugMechDB supplies curated mechanisms to evaluate against.}
 \label{tab:data}
 \end{table}
 
 % ===========================================================================
 \section{Proposed Methodology}
 
-We represent PrimeKG as a typed graph and pose repurposing as \textbf{link
-prediction} on the \emph{drug $\xrightarrow{\text{indication}}$ disease} relation.
-Every node is given the \emph{same} content feature -- a sentence-transformer
-embedding of its name/description -- so the comparison against non-graph models
-isolates the value of structure, not features.
+\textbf{Knowledge graph and candidate ranking.} I will represent PrimeKG as a
+heterogeneous graph and frame repurposing as link prediction on the
+\emph{drug $\rightarrow$ indication $\rightarrow$ disease} edges: hide some known
+treatment links and score drug-disease pairs that are not currently connected. I
+will give the graph model and the tabular baseline the \emph{same} node features
+(text embeddings of names and descriptions), so any difference measures the value
+of graph structure rather than the features.
 
-\subsection{Proposed model: a heterogeneous GNN}
-A heterogeneous GraphSAGE encoder produces a node embedding by pooling
-type-specific messages over $L$ hops,
-\begin{equation}
-h_v^{(l)} = \sigma\!\Big( \textstyle\sum_{r\in\mathcal{R}} W_r^{(l)}
-\operatorname*{AGG}_{u\in\NN_r(v)} h_u^{(l-1)} \Big),
-\qquad
-\hat{p}(d\!\to\!x) = \sigma\!\big( \phi(h_d, h_x) \big),
-\label{eq:gnn}
-\end{equation}
-and a decoder $\phi$ scores a (drug $d$, disease $x$) pair from their embeddings.
-Because $h_d$ and $h_x$ are built from multi-hop neighbourhoods, the model can
-encode the drug$\to$target$\to$pathway$\to$disease evidence of
-Fig.~\ref{fig:mechanism}.
+\textbf{Mechanism extraction.} For top-ranked candidates I will search the graph
+for short, specific paths connecting a drug to a cancer through its target protein,
+protein interactions, and shared pathways, while down-weighting generic hub
+proteins (such as common drug carriers) so the paths stay mechanistic.
 
-\begin{figure}[h]
+\textbf{Evidence verification.} For each mechanism path I will retrieve relevant
+abstracts from Europe PMC and ask a language model to decide whether the text
+supports that specific mechanism, requiring it to quote the supporting sentence and
+to treat a mere statistical association as weak rather than supporting evidence.
+
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
   node distance=6mm and 8mm,
-  box/.style={rounded corners,draw=sriblue,fill=srilight,thick,minimum height=0.9cm,align=center,font=\footnotesize,inner sep=3pt},
-  red/.style={rounded corners,draw=sriaccent,fill=sriaccent!10,thick,minimum height=0.9cm,align=center,font=\footnotesize,inner sep=3pt},
-  gray/.style={rounded corners,draw=srigray,fill=gray!8,thick,minimum height=0.9cm,align=center,font=\footnotesize,inner sep=3pt},
+  box/.style={rounded corners,draw=sriblue,fill=srilight,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
+  acc/.style={rounded corners,draw=sriaccent,fill=sriaccent!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
+  grn/.style={rounded corners,draw=srigreen,fill=srigreen!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
   >={Stealth[length=2.2mm]}]
-  \node[box] (g) {PrimeKG\\(typed graph)};
-  \node[red,right=of g] (enc) {HeteroGNN\\encoder};
-  \node[box,right=of enc] (z) {Drug + disease\\embeddings};
-  \node[red,right=of z] (dec) {Link\\decoder};
-  \node[box,right=of dec] (s) {P(drug treats\\cancer)};
-  \draw[->,thick] (g)--(enc); \draw[->,thick] (enc)--(z);
-  \draw[->,thick] (z)--(dec); \draw[->,thick] (dec)--(s);
-  \node[gray,below=12mm of enc] (mlp) {Baselines:\\XGBoost / MLP};
-  \node[box,below=12mm of z] (xf) {Node\\features};
-  \draw[->,thick,densely dashed,srigray] (xf)--(mlp);
-  \draw[->,thick,densely dashed,srigray] (mlp.east) -- ++(0.7,0) |- (dec.south west);
-  \node[srigray,font=\scriptsize\itshape,below=1pt of mlp] {baselines never see the graph};
+  \node[box] (kg) {PrimeKG\\graph};
+  \node[acc,right=of kg] (rank) {Candidate\\ranking};
+  \node[box,right=of rank] (mech) {Mechanism\\path};
+  \node[grn,right=of mech] (llm) {LLM evidence\\verifier};
+  \node[box,right=of llm] (out) {Ranked\\dossier};
+  \draw[->,thick] (kg)--(rank); \draw[->,thick] (rank)--(mech);
+  \draw[->,thick] (mech)--(llm); \draw[->,thick] (llm)--(out);
+  \node[srigray,font=\scriptsize\itshape,below=2mm of mech] {literature (Europe PMC) feeds the verifier};
 \end{tikzpicture}
-\caption{Pipeline. The GNN (orange) pools each node's KG neighbourhood; the
-non-graph baselines (gray) score a pair from its two feature vectors alone.}
+\caption{Planned pipeline: rank candidates on the graph, extract a mechanism path
+for each, verify the path against the literature, and output an evidence-backed
+shortlist.}
 \label{fig:pipeline}
 \end{figure}
 
-\subsection{Baselines and rigorous evaluation}
-\begin{table}[h]
-\centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.40\linewidth}}
-\toprule
-\rowcolor{sriblue}\color{white}\textbf{Model} & \color{white}\textbf{Uses graph?} & \color{white}\textbf{Purpose}\\
-\midrule
-\rowcolor{srirow} \textbf{HeteroGNN (proposed)} & yes (multi-hop) & repurposing that uses network biology\\
-XGBoost & no & strong tabular baseline on pair features\\
-\rowcolor{srirow} MLP & no & structure-blind neural control\\
-DistMult (KGE) & memorized node embeddings & isolates memorization vs.\ generalization\\
-\bottomrule
-\end{tabular}
-\caption{Every model receives the same node features; only the GNN sees the
-graph. The KGE has no representation for unseen nodes by design.}
-\label{tab:models}
-\end{table}
-
-\noindent\textbf{Leakage-safe splits.} (i) \emph{Transductive} -- random
-held-out links; all nodes seen. (ii) \emph{Inductive cold-disease} -- whole
-cancers held out (all their drug links removed from training), the
-disease-discovery regime. (iii) \emph{Inductive cold-drug} -- whole drugs held
-out. In every regime we remove each held-out therapeutic link from the
-message-passing graph in \emph{both} directions (knowledge graphs often store
-\texttt{indication} bidirectionally, and leaving the reverse edge would let the
-GNN -- but not the baselines -- see the answer); negatives are sampled so they
-never collide with any known positive.
-
-\noindent\textbf{Hard negatives, not random.} Random (drug, disease) negatives
-are trivially separable from true indications by node identity alone, inflating
-every model's score. We instead use \emph{class/area-matched} negatives (same
-drug class or same cancer family) and full per-disease candidate ranking, so the
-metrics reflect genuine prioritization difficulty.
-
-\noindent\textbf{Metrics.} AUROC and AUPRC, plus \emph{per-query} ranking
-metrics (Hits@$K$ and MRR computed by ranking each true link against its matched
-candidate negatives, not over a pooled set), as mean$\pm$std over 5 seeds, with
-paired significance tests of the GNN vs.\ each baseline. The tabular baseline is
-hyperparameter-tuned so the comparison is against a genuinely strong model.
-
 % ===========================================================================
-\section{Rigor: Ablations, Interpretation, and an Evidence Report}
+\section{Planned Evaluation}
 
-\subsection{Is the graph really doing the work? (falsification)}
-We run the identical GNN on the intact graph, a degree-preserving \emph{shuffled}
-graph, and an \emph{empty} graph. If the advantage is genuinely topological,
-destroying structure must collapse the GNN toward the feature-only baseline. A
-\emph{relation ablation} (removing drug--protein, disease--protein, or pathway
-edges) then identifies which biological links carry the signal.
+I will not rely on a single accuracy number. The plan is to test the system from
+several angles (Table~\ref{tab:eval}), with an emphasis on whether the mechanisms
+are real, not just whether the scores are high.
 
-\subsection{From predictions to an actionable shortlist}
-For the top candidates we (i) extract short multi-hop KG paths as mechanistic
-rationale -- \emph{down-weighting hub intermediates} (e.g.\ generic phenotypes
-like ``fatigue'') so rationales are specific rather than popularity-driven,
-(ii) retrieve supporting/contradicting literature (Europe PMC), and (iii) use a
-large language model to draft a structured \emph{evidence dossier} and an
-\emph{LLM-as-judge} plausibility score that triages the list. To guard against
-the common failure where a model simply ranks globally popular drugs, we verify
-that the shortlist is \emph{disease-specific} (top candidates differ across
-cancers) and report a quantitative hit-rate against a held-out time-split of
-known indications. The output is a ranked, citation-grounded set of cancer
-repurposing hypotheses.
-
-% ===========================================================================
-\section{Alignment with Strong-Research Criteria}
-
-\begin{table}[h]
+\begin{table}[H]
 \centering\small
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.62\linewidth}}
 \toprule
-\rowcolor{sriblue}\color{white}\textbf{Criterion} & \color{white}\textbf{Commitment}\\
+\rowcolor{sriblue}\color{white}\textbf{Question} & \color{white}\textbf{How I will test it}\\
 \midrule
-\rowcolor{srirow} Real, sizable public data & PrimeKG: $\sim$129k nodes, $\sim$8M edges.\\
-Clear medical motivation & Faster, cheaper cancer therapy via repurposing.\\
-\rowcolor{srirow} Rigorous evaluation & Tuned XGBoost + MLP + KGE baselines; leak-free inductive splits; hard negatives; per-query ranking metrics; 5 seeds; significance tests.\\
-Interpretability $\rightarrow$ discovery & Multi-hop rationales; literature-grounded evidence dossiers.\\
-\rowcolor{srirow} Ablations & Topology removal; relation ablation.\\
-Translational impact & A ranked, vetted oncology repurposing shortlist.\\
+\rowcolor{srirow} Is the graph necessary for ranking? & Graph model vs tuned XGBoost on the same features, under leakage-safe splits.\\
+Do mechanism paths mean anything? & Do true indications carry stronger mechanism paths than random drug-cancer pairs?\\
+\rowcolor{srirow} Are the mechanisms real? & Agreement of extracted paths with curated DrugMechDB mechanisms.\\
+Is the evidence verification trustworthy? & Among ``supported'' calls, how many are confirmed by curated mechanisms.\\
 \bottomrule
 \end{tabular}
-\caption{The project is structured around the elements of strong research.}
-\label{tab:formula}
+\caption{Planned evaluation. The goal is an honest picture of where the system
+works, including reporting any place where a simple baseline is already enough.}
+\label{tab:eval}
 \end{table}
 
 % ===========================================================================
-\section{Expected Outcomes}
+\section{Relationship to Prior Work}
 
-A proposal states targets, not measured results.
-
-\begin{table}[h]
-\centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.26\linewidth} >{\raggedright\arraybackslash}p{0.66\linewidth}}
-\toprule
-\rowcolor{sriblue}\color{white}\textbf{Outcome} & \color{white}\textbf{Target}\\
-\midrule
-\rowcolor{srirow} Accurate repurposing & High AUROC/AUPRC on held-out therapeutic links.\\
-Value of structure & GNN $\geq$ strong baselines; advantage clearest for unseen diseases/drugs, where memorization (KGE) collapses toward chance.\\
-\rowcolor{srirow} Causal check & Topology-removal ablation collapses the GNN to the feature baseline.\\
-Actionable output & A ranked, mechanism- and literature-backed cancer repurposing shortlist.\\
-\rowcolor{srirow} Honesty clause & A strong tabular baseline is expected to be competitive; any narrowing of the gap is reported as-is, not overclaimed.\\
-\bottomrule
-\end{tabular}
-\caption{Success is an accurate, rigorously-evaluated, interpretable repurposing
-method and a vetted candidate shortlist.}
-\label{tab:success}
-\end{table}
+This project does not claim to invent knowledge-graph or language-model drug
+repurposing; close prior work exists and I treat it as reference. TxGNN (Nature
+Medicine, 2024) is a graph model for zero-shot repurposing with multi-hop
+explanations; KGML-xDTD predicts treatment links with mechanism paths; DrugKLM
+combines knowledge graphs with language-model reasoning; and Decagon showed graph
+models excel on relational drug-pair tasks. My contribution is narrower and honest:
+an oncology-specific, literature-grounded evidence-triage pipeline that tests when
+the graph is actually necessary and evaluates whether the proposed mechanisms are
+supported by retrieved literature and curated databases. I combine and evaluate; I
+do not claim to be first.
 
 % ===========================================================================
 \section{Eight-Week Timeline}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering\small
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.14\linewidth} >{\raggedright\arraybackslash}p{0.78\linewidth}}
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{Weeks} & \color{white}\textbf{Milestones}\\
 \midrule
-\rowcolor{srirow} 1--2 & Build PrimeKG $\to$ PyG pipeline; shared node features; oncology subset.\\
-3--4 & Implement HeteroGNN + baselines (XGBoost, MLP, KGE); shared trainer.\\
-\rowcolor{srirow} 5 & Transductive + inductive (cold-disease/cold-drug) experiments, 5 seeds, significance tests.\\
-6 & Ablations: topology removal, relation ablation.\\
-\rowcolor{srirow} 7 & Interpretability + agentic evidence report; candidate shortlist.\\
-8 & Figures, tables, manuscript; reproducibility package.\\
+\rowcolor{srirow} 1--2 & Build the PrimeKG pipeline; set up leakage-safe splits and shared features.\\
+3--4 & Candidate ranking (graph model, knowledge-graph embedding) and the tuned XGBoost baseline.\\
+\rowcolor{srirow} 5 & Mechanism-path extraction with hub down-weighting; sanity-check on known drugs.\\
+6 & Literature retrieval and the language-model verifier (supported/weak/contradicted/unknown).\\
+\rowcolor{srirow} 7 & Evaluation: separation test, DrugMechDB agreement, verifier precision.\\
+8 & Deliverable shortlist, figures, and a written report.\\
 \bottomrule
 \end{tabular}
 \caption{Schedule for the eight-week SRI cohort.}
@@ -371,27 +260,25 @@ method and a vetted candidate shortlist.}
 % ===========================================================================
 \section{Reproducibility and Ethics}
 
-Implementation uses open tools (PyTorch Geometric for the model; PrimeKG and
-Europe PMC for data). All code, configs, seeds, and a data manifest will be
-released; large artifacts are regenerated from public sources rather than
-committed. No human subjects are involved; all inputs are public and
-de-identified. Predictions are research-only and hypothesis-generating and do
-not constitute clinical guidance.
+I will use open tools (PyTorch Geometric, scikit-learn, XGBoost) and public data
+(PrimeKG, Europe PMC, DrugMechDB), and will release code, configurations, and
+random seeds. All predictions are research-only and hypothesis-generating; they are
+not medical advice and would require experimental and clinical validation before any
+use.
 
 % ===========================================================================
-\section*{Selected References}
+\begin{thebibliography}{9}
 \small
-\begin{enumerate}[leftmargin=1.4em,itemsep=0pt]
-\item Huang, Chandak, et al. \textit{A foundation model for clinician-centered
-drug repurposing (TxGNN)}. Nature Medicine, 2024.
-\item Chandak, Huang, Zitnik. \textit{Building a knowledge graph to enable
-precision medicine (PrimeKG)}. Scientific Data, 2023.
-\item Zitnik, Agrawal, Leskovec. \textit{Modeling polypharmacy side effects with
-graph convolutional networks (Decagon)}. Bioinformatics, 2018.
-\item Hamilton, Ying, Leskovec. \textit{Inductive Representation Learning on
-Large Graphs (GraphSAGE)}. NeurIPS, 2017.
-\item Yang, Trajanoski, et al. \textit{Drug repurposing: progress, challenges
-and recommendations}. (review).
-\end{enumerate}
+\bibitem{txgnn} Huang K, Chandak P, et al. \textit{A foundation model for
+clinician-centered drug repurposing (TxGNN)}. Nature Medicine, 2024.
+\bibitem{primekg} Chandak P, Huang K, Zitnik M. \textit{Building a knowledge graph
+to enable precision medicine (PrimeKG)}. Scientific Data, 2023.
+\bibitem{kgmlxdtd} \textit{KGML-xDTD: a knowledge graph-based framework for drug
+treatment prediction and mechanism description}. 2023.
+\bibitem{decagon} Zitnik M, Agrawal M, Leskovec J. \textit{Modeling polypharmacy
+side effects with graph convolutional networks (Decagon)}. Bioinformatics, 2018.
+\bibitem{drugmechdb} Mayers M, et al. \textit{DrugMechDB: a curated database of
+drug mechanism paths}. 2022.
+\end{thebibliography}
 
 \end{document}
