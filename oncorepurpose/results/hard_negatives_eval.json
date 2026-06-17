@@ -1,0 +1,43 @@
+{
+  "n_true": 400,
+  "seed": 0,
+  "max_paths": 25,
+  "negative_types": {
+    "random": {
+      "n_neg": 400,
+      "auroc": 0.8871562500000001,
+      "neg_mean_score": 0.12308541618989528,
+      "neg_any_path_rate": 0.065
+    },
+    "degree_matched": {
+      "n_neg": 400,
+      "auroc": 0.742521875,
+      "neg_mean_score": 0.9970677015996461,
+      "neg_any_path_rate": 0.5
+    },
+    "oncology_drug": {
+      "n_neg": 400,
+      "auroc": 0.8696687499999999,
+      "neg_mean_score": 0.2110973924323465,
+      "neg_any_path_rate": 0.1125
+    },
+    "shared_target": {
+      "n_neg": 368,
+      "auroc": 0.6093036684782609,
+      "neg_mean_score": 1.6370486116921839,
+      "neg_any_path_rate": 0.7907608695652174
+    }
+  },
+  "ablations": {
+    "full": {
+      "auroc": 0.8871562500000001
+    },
+    "template_only": {
+      "auroc": 0.8838812500000001
+    },
+    "no_direct_target": {
+      "auroc": 0.8872843750000001
+    }
+  },
+  "interpretation": "Baseline random AUROC=0.887. Hardest negative = shared_target (AUROC=0.609). Indirect-only mechanism (no_direct_target) AUROC=0.887; template-only AUROC=0.884. The 0.879 separation holds up if harder negatives stay well above 0.5 and the no_direct_target ablation remains clearly above chance; it is degree-/direct-target-driven to the extent those values collapse toward 0.5."
+}

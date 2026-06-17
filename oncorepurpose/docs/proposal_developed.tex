@@ -54,8 +54,8 @@
 \begin{document}
 
 \begin{center}
-  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided AI Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
-  {\large\bfseries\color{sriblue!80!black} Mechanism-grounded AI triage that beats keyword evidence screening on\\ precision and matches expert manual curation at scale}\\[10pt]
+  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
+  {\large\bfseries\color{sriblue!80!black} Knowledge-graph mechanism extraction and literature verification\\ that beats keyword screening on precision and reproduces expert curation at scale}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
   {\small Student Research Institute (SRI), Summer 2026 Cohort \\
   Harvard Undergraduate OpenBio Laboratory}\\[2pt]
@@ -75,14 +75,19 @@ language model to verify that mechanism against published abstracts.
 
 \begin{winbox}
 \textbf{Thesis.} The contribution is a \emph{methodology comparison}, not a single
-model. \emph{Mechanism-grounded AI triage} (knowledge-graph mechanism extraction
-plus a literature-grounded language model) is measured against the two status-quo
-ways to vet repurposing candidates: a manual / expert-curated process, and naive
-automated screening.
+model. \emph{Mechanism-grounded evidence triage} (knowledge-graph mechanism
+extraction plus a literature-grounded language model) is measured against the two
+status-quo ways to vet repurposing candidates: a manual / expert-curated process,
+and naive automated screening. We separate \emph{ranking} (where a tuned tabular
+model already wins) from \emph{mechanistic justification} (where the graph is
+essential), which is the honest, defensible contribution.
 \begin{itemize}[leftmargin=1.3em,itemsep=1pt,topsep=2pt]
-\item \textbf{Beats keyword screening.} The language-model verifier identifies real
-mechanisms with \textbf{0.857 precision}, versus \textbf{0.591} for keyword /
-co-occurrence screening of the same abstracts.
+\item \textbf{More precise than keyword screening.} In a \emph{small pilot} the
+language-model verifier made fewer but more precise ``supported'' calls than
+keyword / co-occurrence screening: \textbf{6/7} of its DrugMechDB-covered supported
+calls were curated-confirmed, versus \textbf{13/22} for keyword matching. The sample
+is small (wide confidence intervals), so we report this as a promising signal, not a
+final number.
 \item \textbf{Matches expert manual curation, automatically.} The extracted
 mechanisms agree with the expert-curated DrugMechDB at \textbf{0.802}, reproducing
 by pipeline what is normally hand-curated, across hundreds of pairs.
@@ -106,28 +111,43 @@ about such mechanisms exists as paths through the graph. The open problem is
 real mechanism from a coincidence. OncoEvidence addresses this by making the
 mechanism explicit and checking it against the literature and a curated database.
 
+\textbf{Novelty, stated carefully.} Knowledge-graph repurposing with explanations is
+not new: TxGNN is a graph foundation model with multi-hop rationales, and KGML-xDTD
+predicts treatment links with KG-based mechanism paths. We do not claim ``a knowledge
+graph plus a language model for repurposing'' as novel. Our narrower, defensible
+claim is methodological: we quantify \emph{when} graph structure adds value beyond a
+strong tabular ranker, show that its value is mechanism extraction rather than better
+ranking, and then \emph{audit} those mechanisms against curated MOA paths and
+sentence-level literature evidence to produce conservative, evidence-backed oncology
+dossiers.
+
 % ===========================================================================
 \section{Central Question and Specific Aims}
 
 \begin{problembox}
-\textbf{Core question.} For cancer drug repurposing, can a biomedical knowledge
-graph combined with a literature-grounded language-model agent prioritize
-candidates by both predicted therapeutic relevance and mechanistic plausibility,
-and when does the graph add value over a strong tabular baseline?
+\textbf{Core question.} For cancer drug repurposing, can we \emph{separate ranking
+from justification}, using a strong non-graph ranker to prioritize candidates while
+using a biomedical knowledge graph and a literature-grounded language model to
+extract, audit, and score the mechanistic evidence behind each one, and what does
+the graph add once a tuned tabular ranker is already in place?
 \end{problembox}
 
 \begin{aimbox}{Specific Aims}
-\textbf{Aim 1 (Candidate generation).} Rank drug-cancer pairs with a heterogeneous
-graph network and a knowledge-graph embedding, against a tuned XGBoost baseline on
-identical features; report honestly where the graph helps.\\
-\textbf{Aim 2 (Mechanism extraction).} Extract multi-hop
+\textbf{Aim 1 (Candidate generation with calibrated baselines).} Use a tuned
+XGBoost as the \emph{primary} ranker, and treat the graph network and a
+knowledge-graph embedding as ablations, quantifying whether graph message passing
+improves ranking under leakage-safe transductive and inductive splits.\\
+\textbf{Aim 2 (Mechanism extraction, the graph's real role).} The graph is not
+the best ranker; it is the \emph{mechanism engine}. Extract multi-hop
 \emph{drug $\rightarrow$ target $\rightarrow$ pathway/cancer-gene $\rightarrow$
 cancer} paths, down-weighting promiscuous hubs.\\
 \textbf{Aim 3 (Evidence verification).} A language model grades each path
 supported / weak / contradicted / unknown over retrieved abstracts, with a verbatim
-quote.\\
-\textbf{Aim 4 (Evaluation).} Separation of true vs random pairs, agreement with
-curated DrugMechDB mechanisms, and verifier precision.
+quote, treating a statistical association as weak rather than supporting.\\
+\textbf{Aim 4 (Evaluation, with hard controls).} Separate true indications from
+\emph{degree-matched and same-area hard negatives} (not only random pairs), measure
+agreement with curated DrugMechDB mechanisms, and report verifier precision with
+confidence intervals and leakage controls.
 \end{aimbox}
 
 % ===========================================================================
@@ -139,14 +159,17 @@ curated DrugMechDB mechanisms, and verifier precision.
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{Resource} & \color{white}\textbf{Content} & \color{white}\textbf{Role}\\
 \midrule
-\rowcolor{srirow} PrimeKG & 129{,}312 nodes, 8.1M edges, 50 relation types; 7{,}957 drugs, 17{,}080 diseases (3{,}170 oncology), 9{,}388 indication edges & Ranking + mechanism paths\\
+\rowcolor{srirow} PrimeKG (processed) & 129{,}312 nodes; $\sim$8.1M \emph{directed} edges over 50 directed relation types in our processed graph; 7{,}957 drugs, 17{,}080 diseases (3{,}170 oncology), 9{,}388 indications & Ranking + mechanism paths\\
 Europe PMC & abstracts and open-access full text via REST & Evidence retrieval\\
 \rowcolor{srirow} DrugMechDB & curated drug mechanism-of-action paths (UniProt-keyed) & Mechanism ground truth\\
 \bottomrule
 \end{tabular}
 \caption{Public resources used. PrimeKG supplies the graph; Europe PMC the
 evidence; DrugMechDB the curated mechanisms (mapped UniProt $\rightarrow$ HGNC via
-mygene.info).}
+mygene.info). Note: the published PrimeKG release reports 129{,}375 nodes and
+4{,}050{,}249 \emph{undirected} relationships (10 node types, 30 edge types); our
+pipeline materializes directed reciprocal edges, which roughly doubles the edge
+count and relation-type count cited above.}
 \label{tab:data}
 \end{table}
 
@@ -315,12 +338,13 @@ methotrexate's canonical target, recovered by the extractor.}
 \label{tab:dmdb}
 \end{table}
 
-\subsection{Finding 4: the language model verifies precisely}
-Run over 50 true vs 50 random pairs, the verifier marks far fewer ``supported''
-than a keyword baseline, but those calls are much more trustworthy
-(Table~\ref{tab:verify}). A stricter rubric (an explicit drug-to-target statement
-is required; a genetic or statistical association is graded weak) plus
-sentence-level grounding collapsed ``unknown'' from 14 to 1.
+\subsection{Finding 4: the language model is a conservative, precise reviewer}
+Over 50 true vs 50 random pairs, the verifier marks far fewer ``supported'' than a
+keyword baseline, but those calls are more trustworthy (Table~\ref{tab:verify}). A
+stricter rubric (an explicit drug-to-target statement is required; a genetic or
+statistical association is graded weak) plus sentence-level grounding collapsed
+``unknown'' from 14 to 1. We report the raw counts, because the precision
+denominators are small.
 
 \begin{table}[H]
 \centering\small
@@ -330,13 +354,15 @@ sentence-level grounding collapsed ``unknown'' from 14 to 1.
 \midrule
 \rowcolor{srirow} True pairs graded ``supported'' & 11 / 50 & 34 / 50\\
 Random pairs graded ``supported'' & 1 / 50 & 2 / 50\\
-\rowcolor{srirow} \textbf{Precision of ``supported'' vs DrugMechDB} & \textbf{0.857} (6/7) & 0.591 (13/22)\\
+\rowcolor{srirow} \textbf{``Supported'' confirmed by DrugMechDB} & \textbf{6 / 7} & 13 / 22\\
 \bottomrule
 \end{tabular}
-\caption{The language model is the conservative, precise reviewer: of its
-``supported'' calls that DrugMechDB covers, $86\%$ are confirmed, against $59\%$
-for keyword matching. Each verdict carries a verbatim quote, e.g. Topotecan / TOP1:
-\emph{``a topoisomerase I (TOP1) inhibitor''}.}
+\caption{The language model is the conservative reviewer: of its ``supported''
+calls that DrugMechDB covers, 6/7 are confirmed, against 13/22 for keyword matching.
+The denominators are small (Wilson 95\% CI roughly $0.49$--$0.97$ for 6/7 and
+$0.39$--$0.77$ for 13/22), so this is a pilot signal, not a settled number, and the
+planned summer work scales it. Each verdict carries a verbatim quote, e.g.
+Topotecan / TOP1: \emph{``a topoisomerase I (TOP1) inhibitor''}.}
 \label{tab:verify}
 \end{table}
 
@@ -345,8 +371,9 @@ for keyword matching. Each verdict carries a verbatim quote, e.g. Topotecan / TO
 
 The contribution is best read as a comparison of three ways to vet cancer
 repurposing candidates. Against \emph{keyword / co-occurrence screening}, the
-language-model verifier is far more precise (0.857 vs 0.591), because it reads
-whether the text actually states a mechanism rather than whether the words merely
+language-model verifier is more precise in the pilot (6/7 confirmed vs 13/22;
+denominators small), because it reads whether the text actually states a mechanism
+rather than whether the words merely
 co-occur (a keyword screen grades a pharmacogenetic association as ``supported'';
 the language model correctly downgrades it to weak). Against the \emph{manual
 curation} process, the pipeline reproduces expert DrugMechDB mechanisms at 0.802

@@ -50,7 +50,7 @@
 \begin{document}
 
 \begin{center}
-  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided AI Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
+  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
   {\large\bfseries\color{sriblue!80!black} A knowledge-graph and language-model pipeline that prioritizes\\ repurposing candidates by mechanistic plausibility and literature evidence}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
   {\small Student Research Institute (SRI), Summer 2026 Cohort \\
@@ -113,17 +113,20 @@ and that reports clearly when the graph is actually necessary.
 \section{Central Question and Specific Aims}
 
 \begin{problembox}
-\textbf{Core question.} For cancer drug repurposing, can a biomedical knowledge
-graph combined with a literature-grounded language-model agent prioritize
-candidates by both predicted therapeutic relevance and mechanistic plausibility,
-and when does the graph add value over a strong tabular baseline?
+\textbf{Core question.} For cancer drug repurposing, can we separate \emph{ranking}
+from \emph{justification}, using a strong non-graph ranker to prioritize candidates
+while using a biomedical knowledge graph and a literature-grounded language model to
+extract, audit, and score the mechanism behind each one, and what does the graph add
+once a tuned tabular ranker is already in place?
 \end{problembox}
 
 \begin{aimbox}{Specific Aims}
-\textbf{Aim 1 (Candidate generation).} Rank drug-cancer pairs with PrimeKG models
-(a heterogeneous graph neural network and a knowledge-graph embedding) and a tuned
-XGBoost baseline on the same features, and report honestly where the graph helps.\\
-\textbf{Aim 2 (Mechanism extraction).} For top candidates, extract multi-hop
+\textbf{Aim 1 (Candidate generation with calibrated baselines).} Use a tuned
+XGBoost as the primary ranker, and treat a heterogeneous graph network and a
+knowledge-graph embedding as ablations, measuring whether graph message passing
+improves ranking under leakage-safe transductive and inductive splits.\\
+\textbf{Aim 2 (Mechanism extraction, the graph's real role).} The graph is the
+mechanism engine, not the ranker. For top candidates, extract multi-hop
 \emph{drug $\rightarrow$ target $\rightarrow$ pathway/cancer-gene $\rightarrow$
 cancer} paths, prioritizing real mechanism relations over phenotype coincidence.\\
 \textbf{Aim 3 (Evidence verification).} Retrieve literature and have a language
@@ -212,9 +215,9 @@ are real, not just whether the scores are high.
 \rowcolor{sriblue}\color{white}\textbf{Question} & \color{white}\textbf{How I will test it}\\
 \midrule
 \rowcolor{srirow} Is the graph necessary for ranking? & Graph model vs tuned XGBoost on the same features, under leakage-safe splits.\\
-Do mechanism paths mean anything? & Do true indications carry stronger mechanism paths than random drug-cancer pairs?\\
-\rowcolor{srirow} Are the mechanisms real? & Agreement of extracted paths with curated DrugMechDB mechanisms.\\
-Is the evidence verification trustworthy? & Among ``supported'' calls, how many are confirmed by curated mechanisms.\\
+Do mechanism paths mean anything? & Do true indications carry stronger mechanism paths than \emph{degree-matched and same-area hard negatives} (not just random pairs)?\\
+\rowcolor{srirow} Are the mechanisms real? & Agreement of extracted paths with curated DrugMechDB mechanisms (gene- and path-level).\\
+Is the evidence verification trustworthy? & Precision of ``supported'' calls vs curated mechanisms, with confidence intervals and leakage controls.\\
 \bottomrule
 \end{tabular}
 \caption{Planned evaluation. The goal is an honest picture of where the system

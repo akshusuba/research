@@ -1,0 +1,103 @@
+{
+  "timestamp": "2026-06-17T07:33:09.405085",
+  "regime": "inductive_cold_dst",
+  "restrict_oncology": true,
+  "target_edge_type": [
+    "drug",
+    "indication",
+    "disease"
+  ],
+  "seeds": [
+    0
+  ],
+  "config": {
+    "seeds": [
+      0
+    ],
+    "hidden": 64,
+    "layers": 2,
+    "dropout": 0.3,
+    "gnn_epochs": 10,
+    "mlp_epochs": 40,
+    "patience": 6,
+    "xgb_estimators": 200,
+    "xgb_tune": true,
+    "xgb_trials": 2,
+    "random_dim": 64
+  },
+  "feature_dims": {
+    "text": 384,
+    "structural": 23,
+    "random": 64
+  },
+  "auroc_grid_mean": {
+    "text": {
+      "GNN": 0.873084338136784,
+      "XGBoost": 0.949536537812197,
+      "MLP": 0.6871929767234148
+    },
+    "structural": {
+      "GNN": 0.8686675598252895,
+      "XGBoost": 0.8476674400113279,
+      "MLP": 0.8239170451698634
+    },
+    "random": {
+      "GNN": 0.8028515722859415,
+      "XGBoost": 0.46336415819799803,
+      "MLP": 0.8202245967170974
+    }
+  },
+  "per_seed_auroc": {
+    "text": {
+      "GNN": {
+        "0": 0.873084338136784
+      },
+      "XGBoost": {
+        "0": 0.949536537812197
+      },
+      "MLP": {
+        "0": 0.6871929767234148
+      }
+    },
+    "structural": {
+      "GNN": {
+        "0": 0.8686675598252895
+      },
+      "XGBoost": {
+        "0": 0.8476674400113279
+      },
+      "MLP": {
+        "0": 0.8239170451698634
+      }
+    },
+    "random": {
+      "GNN": {
+        "0": 0.8028515722859415
+      },
+      "XGBoost": {
+        "0": 0.46336415819799803
+      },
+      "MLP": {
+        "0": 0.8202245967170974
+      }
+    }
+  },
+  "split_info": {
+    "0": {
+      "regime": "inductive_cold_dst",
+      "held_side_type": "disease",
+      "restrict_oncology": true,
+      "n_test_nodes": 53,
+      "n_val_nodes": 26,
+      "train_pos": 8951,
+      "val_pos": 134,
+      "test_pos": 303
+    }
+  },
+  "structural_features": "log1p(total_degree) + log1p(per-relation incident counts) for top-12 global non-therapeutic relations (z-scored) + one-hot(node_type); drug<->disease therapeutic edges excluded to avoid target leakage; identical construction/dimensionality across node types.",
+  "random_features_note": "Fixed random vector per node (dim=64); REFERENCE ONLY -- not a fair comparison (XGBoost has no signal -> ~chance).",
+  "key_question": "Under STRUCTURAL (non-semantic) features in cold-disease, does GNN AUROC exceed XGBoost AUROC?",
+  "gnn_beats_xgboost_structural": true,
+  "structural_margin_gnn_minus_xgb": 0.02100011981396166,
+  "interpretation": "Under STRUCTURAL (non-semantic) features in the cold-disease (oncology) regime, GNN AUROC=0.8687 vs XGBoost AUROC=0.8477 (margin +0.0210). GNN BEATS tuned XGBoost under structural features."
+}
