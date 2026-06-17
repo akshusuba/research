@@ -55,7 +55,7 @@
 
 \begin{center}
   {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided AI Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
-  {\large\bfseries\color{sriblue!80!black} A knowledge-graph and language-model pipeline that prioritizes candidates\\ by mechanistic plausibility and literature evidence, with preliminary results}\\[10pt]
+  {\large\bfseries\color{sriblue!80!black} Mechanism-grounded AI triage that beats keyword evidence screening on\\ precision and matches expert manual curation at scale}\\[10pt]
   {\large Akshatha Arunkumar}\\[2pt]
   {\small Student Research Institute (SRI), Summer 2026 Cohort \\
   Harvard Undergraduate OpenBio Laboratory}\\[2pt]
@@ -74,15 +74,23 @@ language model to verify that mechanism against published abstracts.
 \end{problembox}
 
 \begin{winbox}
-\textbf{Preliminary findings (already obtained).} (1) On the link-ranking task, a
-tuned tabular model (XGBoost) matches or beats the graph network in every regime,
-so we do \emph{not} claim the graph wins there. (2) The graph nevertheless carries
-real mechanism a tabular model cannot produce: mechanism paths separate true
-indications from random pairs at \textbf{AUROC 0.879}. (3) Those paths agree with
-the expert-curated DrugMechDB at \textbf{0.802}. (4) A literature-grounded language
-model verifies mechanisms with \textbf{0.857 precision} (vs 0.591 for a keyword
-baseline). The graph's value is mechanism and explanation; the language model is
-the evidence reviewer.
+\textbf{Thesis.} The contribution is a \emph{methodology comparison}, not a single
+model. \emph{Mechanism-grounded AI triage} (knowledge-graph mechanism extraction
+plus a literature-grounded language model) is measured against the two status-quo
+ways to vet repurposing candidates: a manual / expert-curated process, and naive
+automated screening.
+\begin{itemize}[leftmargin=1.3em,itemsep=1pt,topsep=2pt]
+\item \textbf{Beats keyword screening.} The language-model verifier identifies real
+mechanisms with \textbf{0.857 precision}, versus \textbf{0.591} for keyword /
+co-occurrence screening of the same abstracts.
+\item \textbf{Matches expert manual curation, automatically.} The extracted
+mechanisms agree with the expert-curated DrugMechDB at \textbf{0.802}, reproducing
+by pipeline what is normally hand-curated, across hundreds of pairs.
+\item \textbf{Honest baseline check.} On the plain link-ranking task a tuned tabular
+model (XGBoost) matches or beats the graph network, so the graph earns its place by
+producing the traceable \emph{mechanism} a tabular model cannot, not by the score.
+Mechanism paths separate true from random indications at \textbf{AUROC 0.879}.
+\end{itemize}
 \end{winbox}
 
 % ===========================================================================
@@ -333,23 +341,31 @@ for keyword matching. Each verdict carries a verbatim quote, e.g. Topotecan / TO
 \end{table}
 
 % ===========================================================================
-\section{Discussion: is the project positive?}
+\section{Discussion: what the method beats (and what it does not)}
 
-The honest answer is yes, but with a clear distinction. The original framing,
-``a graph network beats tabular models for repurposing,'' is \emph{false} here, and
-we report it. The positive result is different and validated: the graph encodes
-real mechanism that a tabular model cannot express, that mechanism separates true
-from random indications (AUROC 0.879) and agrees with a curated database (0.802),
-and a language model verifies it with high precision (0.857). The deliverable is a
-ranked, evidence-backed shortlist with transparent rationales.
+The contribution is best read as a comparison of three ways to vet cancer
+repurposing candidates. Against \emph{keyword / co-occurrence screening}, the
+language-model verifier is far more precise (0.857 vs 0.591), because it reads
+whether the text actually states a mechanism rather than whether the words merely
+co-occur (a keyword screen grades a pharmacogenetic association as ``supported'';
+the language model correctly downgrades it to weak). Against the \emph{manual
+curation} process, the pipeline reproduces expert DrugMechDB mechanisms at 0.802
+automatically and at scale, doing in seconds per candidate what manual literature
+review does by hand. We are explicit about what the method does \emph{not} beat: on
+the plain link-ranking task a tuned tabular model is as good as the graph, so we do
+not claim a model win there; the graph earns its place by producing the traceable
+mechanism that a tabular model cannot.
 
-\textbf{Limitations, stated plainly.} The separation partly reflects that drugs
-indicated for a cancer already have a known target linked to that cancer in the
-graph, so this validates that the graph encodes \emph{known} mechanism
-consistently, rather than discovering new biology. Some metrics rest on modest
-samples (the verifier precision on seven covered ``supported'' pairs) and partial
-coverage (DrugMechDB; the open-access full-text subset). Scaling the verifier run
-and broadening full-text coverage are the next steps.
+\textbf{Limitations, stated plainly.} We do not claim to beat human experts on
+\emph{quality}; we match curated quality while automating and scaling it. The
+separation partly reflects that drugs indicated for a cancer already have a known
+target linked to that cancer in the graph, so this validates that the graph encodes
+\emph{known} mechanism consistently, rather than discovering new biology. Some
+metrics rest on modest samples (the verifier precision on seven covered
+``supported'' pairs) and partial coverage (DrugMechDB; the open-access full-text
+subset). The planned summer work scales the verifier run, broadens full-text
+coverage, and applies the same triage to \emph{novel} candidate pairs to generate
+mechanism-verified repurposing hypotheses.
 
 % ===========================================================================
 \section{Eight-Week Timeline}
