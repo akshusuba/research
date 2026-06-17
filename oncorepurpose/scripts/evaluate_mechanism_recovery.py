@@ -110,15 +110,21 @@ def eval_systems(joint, linkonly, base, test_pairs, idx, num_genes, device, rng)
     deg_t = torch.tensor(deg)
 
     agg = {s: {"rec": defaultdict(list), "mrr": []} for s in
-           ["joint_gnn", "linkonly_affinity", "target_lookup", "degree_prior"]}
+           ["joint_gnn", "linkonly_gnn", "linkonly_affinity_proxy", "target_lookup", "degree_prior"]}
     for di, ci, genes in test_pairs:
         tg = set(genes)
-        # joint GNN
+        # joint GNN -- trained mechanism head
         r, m = rank_metrics(gnn_scores(joint, z_joint, di, ci, num_genes, device), tg)
         _acc(agg["joint_gnn"], r, m)
-        # link-only embedding affinity
+        # link-only GNN -- SAME score_mechanism head/path as the joint model, but its
+        # head is at init (train_gnn never applies the mechanism loss). Apples-to-apples:
+        # the only difference from joint_gnn is the auxiliary objective.
+        r, m = rank_metrics(gnn_scores(linkonly, z_link, di, ci, num_genes, device), tg)
+        _acc(agg["linkonly_gnn"], r, m)
+        # supplementary, clearly labeled: an untrained embedding-similarity proxy (NOT
+        # the link-only GNN's own head) -- kept only for transparency.
         r, m = rank_metrics(affinity_scores(z_link, di, ci), tg)
-        _acc(agg["linkonly_affinity"], r, m)
+        _acc(agg["linkonly_affinity_proxy"], r, m)
         # trivial target-lookup: drug's targets first (random order within), others after
         tgt = d2p.get(di, set())
         s = torch.rand(num_genes) * 0.5
@@ -198,25 +204,30 @@ def main():
                       f"R@20={m['recall'][20]:.3f} MRR={m['mrr']:.3f}")
         seeds_out.append(r)
 
-    def avg(cond, sysn, field, k=None):
+    def stat(cond, sysn, k=None):
         vals = [(so[cond][sysn]["recall"][k] if k else so[cond][sysn]["mrr"]) for so in seeds_out]
-        return float(np.mean(vals)) if vals else None
+        if not vals:
+            return None
+        return {"mean": float(np.mean(vals)), "std": float(np.std(vals)),
+                "values": [round(float(v), 3) for v in vals]}
 
+    systems = ["joint_gnn", "linkonly_gnn", "linkonly_affinity_proxy", "target_lookup", "degree_prior"]
     summary = {"seeds": args.seeds, "epochs": args.epochs, "lam": args.lam,
-               "n_test_pairs": [so["n_test_pairs"] for so in seeds_out],
-               "systems": ["joint_gnn", "linkonly_affinity", "target_lookup", "degree_prior"]}
+               "n_test_pairs": [so["n_test_pairs"] for so in seeds_out], "systems": systems}
     for cond in ("unblinded", "blinded"):
-        summary[cond] = {s: {"recall": {k: avg(cond, s, "rec", k) for k in KS},
-                             "mrr": avg(cond, s, "mrr")}
-                         for s in summary["systems"]}
-    j = summary["unblinded"]["joint_gnn"]["recall"][10]
-    t = summary["unblinded"]["target_lookup"]["recall"][10]
-    jb = summary["blinded"]["joint_gnn"]["recall"][10]
-    tb = summary["blinded"]["target_lookup"]["recall"][10]
+        summary[cond] = {s: {"recall": {k: stat(cond, s, k) for k in KS},
+                             "mrr": stat(cond, s)} for s in systems}
+
+    def m(cond, s, k=10):
+        v = summary[cond][s]["recall"][k]
+        return v["mean"] if v else None
     summary["interpretation"] = (
-        f"Unblinded R@10: joint_gnn={j}, target_lookup={t}. Blinded R@10: joint_gnn={jb}, "
-        f"target_lookup={tb}. The joint GNN adds value only if it beats the trivial "
-        f"target-lookup, especially blinded (where the direct drug-target edge is removed).")
+        f"Same-head apples-to-apples comparison. Unblinded R@10: joint_gnn={m('unblinded','joint_gnn'):.3f}, "
+        f"linkonly_gnn={m('unblinded','linkonly_gnn'):.3f}, target_lookup={m('unblinded','target_lookup'):.3f}. "
+        f"Blinded R@10: joint_gnn={m('blinded','joint_gnn'):.3f}, linkonly_gnn={m('blinded','linkonly_gnn'):.3f}, "
+        f"target_lookup={m('blinded','target_lookup'):.3f}. linkonly_gnn uses the SAME score_mechanism head as "
+        f"joint_gnn but trained without the auxiliary loss, so if it stays ~0 the capability is attributable to "
+        f"the auxiliary objective, not the architecture or scorer.")
     out = os.path.join(RESULTS_DIR, "mechanism_recovery_eval.json")
     with open(out, "w") as f:
         json.dump(summary, f, indent=2)
