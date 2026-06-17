@@ -401,6 +401,42 @@ structural-GNN $0.84$) shows the achievable AUROC here reflects a drug-side
 identity prior, not message passing. We therefore do \emph{not} claim a cold-start
 GNN ranking win; the graph's value stays in mechanism extraction and verification.
 
+\subsection{The graph's one genuine edge: blinded mechanism recovery}
+We trained the GNN jointly (link BCE plus a contrastive loss that ranks the
+curated DrugMechDB bridge gene above degree-matched decoys, using the same
+encoder), and asked it to \emph{name the bridge gene} for held-out cold-disease
+pairs (3 seeds, $n\approx186$--$260$). This is an axis a tabular model cannot
+touch: XGBoost never embeds a third (gene) node. Two readings, both honest
+(Table~\ref{tab:mechrec}). \emph{Unblinded}, a trivial ``the drug's own targets''
+baseline dominates (Recall@10 $0.80$), because the curated bridge gene is usually
+just the drug's direct target; the GNN adds nothing there. But in the
+\emph{mechanism-blinded} setting, with the direct drug$\to$target edge removed, the
+target-lookup, the link-only embeddings, and a degree prior all collapse to
+$\sim 0$, while the joint GNN still recovers the bridge gene (Recall@10 $0.21$,
+MRR $0.19$) from indirect structure. The auxiliary objective is what creates this
+(link-only affinity $=0$).
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\linewidth} cc c}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Bridge-gene recovery} & \color{white}\textbf{Unblinded R@10} & \color{white}\textbf{Blinded R@10} & \color{white}\textbf{Blinded MRR}\\
+\midrule
+\rowcolor{srirow} Joint GNN (link + mechanism) & 0.29 & \textbf{0.21} & \textbf{0.19}\\
+Trivial target-lookup & \textbf{0.80} & 0.00 & 0.00\\
+\rowcolor{srirow} Link-only GNN (embedding affinity) & 0.00 & 0.00 & 0.00\\
+Degree prior & 0.02 & 0.02 & 0.02\\
+\bottomrule
+\end{tabular}
+\caption{Mechanism recovery on held-out cold-disease pairs. Unblinded, the bridge
+gene is the drug's direct target, so a trivial lookup wins. When that direct edge
+is hidden, only the joint GNN recovers the gene via indirect structure, a small
+($\sim$0.21 R@10) but genuine graph-only signal. Caveats: DrugMechDB supervision
+is drug-level (the drug's MOA genes), not pair-specific, and the magnitude is
+modest; this is a real but narrow advantage, not a blockbuster.}
+\label{tab:mechrec}
+\end{table}
+
 % ===========================================================================
 \section{Discussion: what the method beats (and what it does not)}
 

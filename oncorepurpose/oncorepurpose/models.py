@@ -36,8 +36,30 @@ class EdgeMLPDecoder(nn.Module):
         return self.net(torch.cat([z_src, z_dst], dim=-1)).squeeze(-1)
 
 
+class MechanismHead(nn.Module):
+    """Scores whether gene g is the bridge explaining (drug d -> disease c).
+
+    Operates on the SAME GNN node embeddings used for link prediction, so any gain
+    on mechanism recovery is attributable to graph structure, not extra features.
+    Tabular models (XGBoost) have no analogue: they never embed a third node.
+    """
+
+    def __init__(self, hidden: int):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(3 * hidden, hidden), nn.ReLU(), nn.Linear(hidden, 1)
+        )
+
+    def forward(self, z_drug: torch.Tensor, z_gene: torch.Tensor, z_dis: torch.Tensor) -> torch.Tensor:
+        return self.net(torch.cat([z_drug, z_gene, z_dis], dim=-1)).squeeze(-1)
+
+
 class HeteroGNN(nn.Module):
-    """Feature-based heterogeneous GraphSAGE encoder + MLP edge decoder."""
+    """Feature-based heterogeneous GraphSAGE encoder + MLP edge decoder.
+
+    Optionally carries a MechanismHead (used only by the joint mechanism-recovery
+    experiment); models that never call ``score_mechanism`` are unaffected.
+    """
 
     def __init__(
         self,
@@ -60,6 +82,7 @@ class HeteroGNN(nn.Module):
                 HeteroConv({et: SAGEConv(hidden, hidden) for et in edge_types}, aggr="sum")
             )
         self.decoder = EdgeMLPDecoder(hidden)
+        self.mech_head = MechanismHead(hidden)
 
     def encode(self, data: HeteroData) -> Dict[str, torch.Tensor]:
         device = next(self.parameters()).device
@@ -82,6 +105,24 @@ class HeteroGNN(nn.Module):
         dev = z_dict[s_t].device
         eli = eli.to(dev)
         return self.decoder(z_dict[s_t][eli[0]], z_dict[d_t][eli[1]])
+
+    def score_mechanism(
+        self,
+        z_dict: Dict[str, torch.Tensor],
+        drug_idx: torch.Tensor,
+        gene_idx: torch.Tensor,
+        dis_idx: torch.Tensor,
+        drug_type: str = "drug",
+        gene_type: str = "gene_protein",
+        dis_type: str = "disease",
+    ) -> torch.Tensor:
+        """Score (drug, gene, disease) triples; all index tensors share length."""
+        dev = z_dict[drug_type].device
+        return self.mech_head(
+            z_dict[drug_type][drug_idx.to(dev)],
+            z_dict[gene_type][gene_idx.to(dev)],
+            z_dict[dis_type][dis_idx.to(dev)],
+        )
 
 
 class FeatureMLP(nn.Module):

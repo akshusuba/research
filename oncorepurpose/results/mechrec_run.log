@@ -1,0 +1,41 @@
+  [features] loaded cached features (dim=384)
+DrugMechDB drugs mapped: 1062 | device cuda
+
+seed 0: train_pairs=5150 test_pairs=186
+  [unblinded]
+    joint_gnn          R@5=0.161 R@10=0.215 R@20=0.296 MRR=0.180
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.005
+    target_lookup      R@5=0.661 R@10=0.806 R@20=0.903 MRR=0.410
+    degree_prior       R@5=0.022 R@10=0.022 R@20=0.032 MRR=0.021
+  [blinded]
+    joint_gnn          R@5=0.161 R@10=0.161 R@20=0.263 MRR=0.160
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.004
+    target_lookup      R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.000
+    degree_prior       R@5=0.022 R@10=0.022 R@20=0.032 MRR=0.021
+
+seed 1: train_pairs=5091 test_pairs=243
+  [unblinded]
+    joint_gnn          R@5=0.169 R@10=0.337 R@20=0.391 MRR=0.193
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.001
+    target_lookup      R@5=0.580 R@10=0.782 R@20=0.877 MRR=0.378
+    degree_prior       R@5=0.025 R@10=0.025 R@20=0.037 MRR=0.023
+  [blinded]
+    joint_gnn          R@5=0.169 R@10=0.169 R@20=0.193 MRR=0.178
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.001
+    target_lookup      R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.001
+    degree_prior       R@5=0.025 R@10=0.025 R@20=0.037 MRR=0.023
+
+seed 2: train_pairs=5073 test_pairs=260
+  [unblinded]
+    joint_gnn          R@5=0.300 R@10=0.315 R@20=0.346 MRR=0.238
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.004
+    target_lookup      R@5=0.646 R@10=0.823 R@20=0.915 MRR=0.422
+    degree_prior       R@5=0.015 R@10=0.015 R@20=0.023 MRR=0.021
+  [blinded]
+    joint_gnn          R@5=0.250 R@10=0.296 R@20=0.300 MRR=0.243
+    linkonly_affinity  R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.004
+    target_lookup      R@5=0.000 R@10=0.000 R@20=0.000 MRR=0.001
+    degree_prior       R@5=0.015 R@10=0.015 R@20=0.023 MRR=0.021
+
+Unblinded R@10: joint_gnn=0.2892956461654192, target_lookup=0.8038071800317917. Blinded R@10: joint_gnn=0.20872281618996072, target_lookup=0.0. The joint GNN adds value only if it beats the trivial target-lookup, especially blinded (where the direct drug-target edge is removed).
+Saved -> /home/elrarun/code/research/oncorepurpose/results/mechanism_recovery_eval.json

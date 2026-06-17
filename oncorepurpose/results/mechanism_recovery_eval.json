@@ -1,0 +1,89 @@
+{
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "epochs": 60,
+  "lam": 1.0,
+  "n_test_pairs": [
+    186,
+    243,
+    260
+  ],
+  "systems": [
+    "joint_gnn",
+    "linkonly_affinity",
+    "target_lookup",
+    "degree_prior"
+  ],
+  "unblinded": {
+    "joint_gnn": {
+      "recall": {
+        "5": 0.210004867472012,
+        "10": 0.2892956461654192,
+        "20": 0.344266424314214
+      },
+      "mrr": 0.2036758027374036
+    },
+    "linkonly_affinity": {
+      "recall": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 0.0
+      },
+      "mrr": 0.0030083095783221205
+    },
+    "target_lookup": {
+      "recall": {
+        "5": 0.6292303607715795,
+        "10": 0.8038071800317917,
+        "20": 0.8983845439042571
+      },
+      "mrr": 0.40328692527284155
+    },
+    "degree_prior": {
+      "recall": {
+        "5": 0.020527116584464256,
+        "10": 0.020527116584464256,
+        "20": 0.030790674876696383
+      },
+      "mrr": 0.021625389406408495
+    }
+  },
+  "blinded": {
+    "joint_gnn": {
+      "recall": {
+        "5": 0.19333820080534536,
+        "10": 0.20872281618996072,
+        "20": 0.2522854993583787
+      },
+      "mrr": 0.19365689962152455
+    },
+    "linkonly_affinity": {
+      "recall": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 0.0
+      },
+      "mrr": 0.0028520721095678992
+    },
+    "target_lookup": {
+      "recall": {
+        "5": 0.0,
+        "10": 0.0,
+        "20": 0.0
+      },
+      "mrr": 0.0005439404380138532
+    },
+    "degree_prior": {
+      "recall": {
+        "5": 0.020527116584464256,
+        "10": 0.020527116584464256,
+        "20": 0.030790674876696383
+      },
+      "mrr": 0.021624825474617432
+    }
+  },
+  "interpretation": "Unblinded R@10: joint_gnn=0.2892956461654192, target_lookup=0.8038071800317917. Blinded R@10: joint_gnn=0.20872281618996072, target_lookup=0.0. The joint GNN adds value only if it beats the trivial target-lookup, especially blinded (where the direct drug-target edge is removed)."
+}
