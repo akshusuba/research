@@ -366,6 +366,41 @@ Topotecan / TOP1: \emph{``a topoisomerase I (TOP1) inhibitor''}.}
 \label{tab:verify}
 \end{table}
 
+\subsection{Robustness: hard negatives and a cold-start GNN test}
+Two stress tests, run after an external review, keep the framing honest.
+
+\textbf{Harder negatives.} Replacing random negatives with progressively harder
+ones degrades the mechanism-score separation, as it should, but it stays above
+chance except in the hardest case (Table~\ref{tab:hardneg}). Drugs that share a
+target or pathway with a true drug for that cancer yet lack the indication
+(``shared-target'') are the genuinely hard case (AUROC $0.61$). An ablation that
+removes \emph{direct}-target paths still separates (AUROC $0.887$), so the signal
+is not merely the most obvious drug-target link.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\linewidth} cccc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Negatives (vs true indications)} & \color{white}\textbf{random} & \color{white}\textbf{oncology-drug} & \color{white}\textbf{degree-matched} & \color{white}\textbf{shared-target}\\
+\midrule
+\rowcolor{srirow} Separation AUROC & 0.887 & 0.870 & 0.742 & 0.609\\
+\bottomrule
+\end{tabular}
+\caption{Separation degrades with negative difficulty (400 vs 400, seed 0). The
+shared-target case is the honest hard limit. A no-direct-target ablation holds at
+AUROC 0.887, so indirect mechanisms also separate.}
+\label{tab:hardneg}
+\end{table}
+
+\textbf{Does a cold-start GNN out-rank XGBoost under non-semantic features? No.}
+Stripping name semantics (structural-only features, i.e. degree and node type,
+given identically to both models) in the cold-disease regime collapses XGBoost's
+text edge (AUROC $0.96 \to 0.86$), but a tuned XGBoost still narrowly out-ranks the
+GNN ($0.86$ vs $0.84$, both seeds). A random-feature reference (GNN $0.84 \approx$
+structural-GNN $0.84$) shows the achievable AUROC here reflects a drug-side
+identity prior, not message passing. We therefore do \emph{not} claim a cold-start
+GNN ranking win; the graph's value stays in mechanism extraction and verification.
+
 % ===========================================================================
 \section{Discussion: what the method beats (and what it does not)}
 
