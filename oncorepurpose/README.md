@@ -122,6 +122,34 @@ IDF-style promiscuity penalty (`1/log(drug-degree)`). This removes spurious carr
 bridges (e.g. `Sulfamerazine→ALB→…→AML`) while *improving* both headline metrics
 (separation AUROC 0.878→0.879, DrugMechDB agreement 0.787→0.802).
 
+## Finding 4 — the graph's one genuine edge: blinded mechanism recovery
+
+We trained the GNN jointly (link BCE + a contrastive loss that ranks the curated
+DrugMechDB bridge gene above degree-matched decoys) and asked it to *name the
+bridge gene* for held-out cold-disease pairs (3 seeds, n≈186–260;
+`scripts/evaluate_mechanism_recovery.py`, `results/mechanism_recovery_eval.json`).
+This is an axis a tabular model cannot touch — XGBoost never embeds a third (gene)
+node. Read it honestly:
+
+| Bridge-gene recovery | Unblinded R@10 | Blinded R@10 | Blinded MRR |
+|---|---|---|---|
+| Joint GNN (link + mechanism) | 0.31 | **0.25** | **0.21** |
+| Trivial target-lookup | **0.80** | 0.00 | 0.00 |
+| Link-only GNN (same head, no aux loss) | 0.00 | 0.00 | 0.00 |
+| Degree prior | 0.02 | 0.02 | 0.02 |
+
+**Unblinded**, the curated bridge gene is usually just the drug's direct target, so
+a trivial "look up the drug's own targets" baseline dominates (R@10 0.80) and the
+GNN adds nothing. **But with the direct drug→target edge removed (mechanism-blinded),
+the trivial lookup and degree prior collapse to ~0, while the joint GNN still
+recovers the bridge gene** (R@10 0.25 ± 0.02, per-seed 0.23–0.26) from indirect
+structure. A link-only GNN scored through the *identical* mechanism head (no
+auxiliary loss) also recovers nothing, so the signal is attributable to the
+auxiliary objective, not the architecture or scorer. Caveat: supervision is
+drug-level and the gene may stay reachable via retained PPI/pathway edges, so this
+is recovery of *known* mechanism via indirect paths, not de novo discovery — a real
+but narrow graph-only advantage, on a modest sample.
+
 ## Positioning (honest novelty)
 
 This project does **not** claim to invent KG-based or LLM-based drug repurposing.
@@ -194,13 +222,14 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Corrected, leakage-safe benchmark (tuned XGBoost); honest negative result on the link task.
 - [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
 - [x] Verifier reads Europe PMC **abstracts** (not titles); LLM grade + lexical fallback.
-- [x] Quantitative true-vs-random separation (AUROC 0.878); the falsifiable claim holds.
+- [x] Quantitative true-vs-random separation (AUROC 0.879); the falsifiable claim holds.
 - [x] LLM verifier run (OpenRouter `gpt-4o-mini`); stricter than lexical, separates true vs random.
 - [x] Improved multi-query MOA retrieval: gene-mention 80%→93%; LLM *supported* 8→14 / 50.
 - [x] DrugMechDB agreement via UniProt→HGNC map (mygene.info): **0.802** on covered pairs.
 - [x] Stricter MOA rubric + sentence grounding: LLM-*supported* precision **0.857** vs lexical 0.591.
 - [x] Hub down-weighting (carrier exclusion + IDF promiscuity penalty): removes albumin bridges, AUROC 0.878→0.879.
 - [x] Open-access full-text fetch wired in (PMC OA subset is sparse, so abstracts still dominate).
+- [x] Blinded mechanism-recovery (joint loss): graph-only R@10 0.25 where trivial/link-only baselines hit 0.
 - [ ] Broaden full-text coverage (non-OA sources) and scale the LLM verifier run.
 
 *All predictions are hypothesis-generating and not medical advice.*
