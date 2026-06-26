@@ -7,17 +7,17 @@ pipeline**, not a new field or a "first ever" claim.
 
 ## Prior work we build on
 
-- **TxGNN** (Huang, Chandak, ... Zitnik, *Nature Medicine* 2024) — a graph
+- **TxGNN** (Huang, Chandak, ... Zitnik, *Nature Medicine* 2024), a graph
   foundation model for zero-shot repurposing on a PrimeKG-derived medical KG
   (17,080 diseases, 7,957 drugs), with stringent disease-area holdouts (one area
   is "cancerous diseases"), strong zero-shot gains, and a multi-hop **Explainer**.
   This is the incumbent; our inductive cold-disease split mirrors its disease-area
   holdout idea.
-- **KGML-xDTD** — drug-treatment prediction plus KG path-based **mechanism of
+- **KGML-xDTD**: drug-treatment prediction plus KG path-based **mechanism of
   action** descriptions. Closest in spirit to our mechanism-path aim.
-- **DrugKLM** — biomedical KGs combined with **LLM mechanistic reasoning** for
+- **DrugKLM**: biomedical KGs combined with **LLM mechanistic reasoning** for
   therapeutic prioritization. Closest in spirit to our LLM-verification aim.
-- **Decagon** (Zitnik, Agrawal, Leskovec) — GNNs for relational drug-pair
+- **Decagon** (Zitnik, Agrawal, Leskovec): GNNs for relational drug-pair
   (polypharmacy) prediction, the canonical demonstration that graph models beat
   tabular ones when the task is genuinely relational.
 
@@ -47,7 +47,7 @@ Our narrower, defensible contributions:
    real mechanisms.
 
 4. **Evaluation, not just a demo.** A falsifiable claim, tested: do mechanism
-   paths separate true indications from random drug–cancer pairs? Over 400 vs 400
+   paths separate true indications from random drug-cancer pairs? Over 400 vs 400
    oncology pairs the graph mechanism signal separates them at **AUROC 0.879**
    (direct-target rate 34% vs 0.25%), and the LLM verifier grades true pairs
    *supported/weak* and random pairs *no-path* (11/50 vs 1/50 *supported*). Crucially,
