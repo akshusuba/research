@@ -21,6 +21,8 @@ seaborn>=0.12.0
 
 # Agentic evidence-report layer
 requests>=2.31.0
+# DrugMechDB YAML parsing (UniProt->HGNC agreement, mechanism recovery)
+pyyaml>=6.0
 
 # Utilities
 tqdm>=4.65.0
