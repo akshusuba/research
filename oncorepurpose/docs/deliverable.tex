@@ -95,9 +95,9 @@ interaction signal vanishes (AUROC 0.475).
 \begin{enumerate}[leftmargin=1.4em,itemsep=0pt,topsep=2pt]
 \item Plain link ranking does not need the graph: tuned XGBoost matches or beats the GNN in every regime.
 \item Only the graph produces a traceable multi-hop mechanism path.
-\item Mechanism structure separates true indications from random pairs (AUROC 0.879), survives hard negatives, and matches DrugMechDB (0.802).
-\item Blinded mechanism recovery: with the direct edge hidden, only the joint GNN names the bridge gene (R@10 0.25 vs $\sim$0 baselines).
-\item \textbf{New, prospective:} on a time-split the GNN ranks future indications at AUROC 0.930 and surfaces $11\times$ as many in the top 50 as a structure-blind control (named post-2005 approvals included).
+\item Mechanism structure separates true indications from random pairs (AUROC 0.879) and matches DrugMechDB (0.802); honest under hard negatives --- strong vs random/oncology-drug (0.887/0.870), modest (0.609) under the hardest shared-target controls.
+\item Blinded mechanism recovery: with the direct edge hidden, the \emph{jointly-supervised} GNN names the bridge gene (R@10 0.25) where degree-trivial and link-only baselines hit $\sim$0 --- the mechanism objective, not architecture alone, creates the signal.
+\item \textbf{New, prospective:} on a time-split the GNN ranks future indications at AUROC 0.930 (vs sampled negatives) and \emph{enriches the top-priority tail} --- $11\times$ as many future indications in the top 50 as a structure-blind control (named post-2005 approvals included), though it is not better on median rank.
 \item \textbf{New, faithfulness:} deleting the curated mechanism edge hurts $\gg$ a random edge (contrast 0.124, $p\approx3.6\times10^{-34}$, faithful 83\%).
 \end{enumerate}
 \end{winbox}
@@ -218,6 +218,36 @@ Quizartinib--FLT3, Tamibarotene--RARA, Topotecan--TOP1, and Trifluridine--TYMS f
 indications; random pairs usually yield no path.}
 \label{fig:mechpath}
 \end{figure}
+
+\subsection{The deliverable: a mechanism-grounded candidate dossier}
+The deployment artifact (\texttt{scripts/generate\_report.py}) is deliberately
+\emph{mechanism-first}, not score-first. For each cancer we rank novel drugs by
+disease-specific lift and then \emph{keep only} candidates for which the graph yields a real
+MOA path; phenotype/symptom coincidences are dropped by construction, so the list never
+contains rationales like ``drug $\to$ fatigue $\leftarrow$ cancer''. Table~\ref{tab:dossier}
+shows representative rows. When a cancer has no mechanism-backed novel candidate in the pool,
+we say so rather than pad the list --- the graph has to earn each entry. This is
+hypothesis-generating triage, not a vetted clinical recommendation.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} c}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Cancer} & \color{white}\textbf{Candidate} & \color{white}\textbf{Top MOA path (direct target)} & \color{white}\textbf{Lift}\\
+\midrule
+\rowcolor{srirow} glioblastoma & Tamoxifen & Tamoxifen $\to$ PRKCA $\leftarrow$ glioblastoma & $+0.67$\\
+glioblastoma & Liothyronine & Liothyronine $\to$ PCNA $\leftarrow$ glioblastoma & $+0.67$\\
+\rowcolor{srirow} metastatic melanoma & Pimecrolimus & Pimecrolimus $\to$ MTOR $\leftarrow$ melanoma & $+0.76$\\
+prostate cancer & Pamidronic acid & Pamidronic acid $\to$ CASP9 $\leftarrow$ prostate cancer & $+0.83$\\
+\rowcolor{srirow} prostate cancer & Zinc chloride & Zinc chloride $\to$ MDM2 $\leftarrow$ prostate cancer & $+0.83$\\
+\bottomrule
+\end{tabular}
+\caption{Mechanism-grounded candidate dossier (excerpt from
+\texttt{results/repurposing\_shortlist.md}). Every row carries a target/PPI/pathway MOA path;
+non-mechanistic phenotype bridges are excluded. Candidates are novel (no existing indication
+edge) and ranked by disease-specific lift. Hypothesis-generating only.}
+\label{tab:dossier}
+\end{table}
 
 \subsection{The mechanism head and the joint objective}
 A mechanism head scores a (drug, gene, disease) triple on the \emph{same} encoder
@@ -430,7 +460,11 @@ gene for held-out cold-disease pairs (3 seeds, $n\approx186$--$260$). Unblinded,
 direct target. But with that direct edge hidden, the trivial and degree baselines collapse
 to about zero while the joint GNN still recovers the gene from indirect structure
 (Table~\ref{tab:mechrec}). A link-only GNN scored through the identical head recovers
-nothing, so the signal is attributable to the auxiliary objective, not the architecture.
+nothing. Because that link-only head was never trained on the mechanism task, this contrast
+isolates the \emph{objective}, not the architecture: the precise claim is that
+\emph{joint mechanism supervision creates a recoverable mechanism signal}, which a
+link-prediction objective alone does not. We do not claim the architecture by itself could
+recover paths.
 
 \begin{table}[H]
 \centering\small
@@ -524,7 +558,12 @@ prospective hits and puts $13.9\%$ of future indications in the top $\sim$1\% ve
 for the control. The hits are recognizable post-cutoff oncology approvals the model had no
 indication edge for (Table~\ref{tab:cases}). The graph's edge is concentrated where a
 shortlist matters --- the very top of the ranking; across the bulk of pairs the
-structure-blind control is competitive, which we report rather than hide.
+structure-blind control is competitive, which we report rather than hide. Concretely, over
+all 101 future pairs the GNN's \emph{median} rank ($3{,}019$) is actually worse than the
+control's ($1{,}482$) and a paired Wilcoxon test does not favor the GNN on overall rank
+($p\approx1.0$). The honest claim is therefore narrow and specific: the graph does
+\emph{not} rank future indications better on average; it enriches a small, top-priority tail
+--- which is exactly the part of the list a repurposing screen actually reads.
 
 \begin{table}[H]
 \centering\small

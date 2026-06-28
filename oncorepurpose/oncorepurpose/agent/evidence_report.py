@@ -63,25 +63,36 @@ def search_literature(query: str, page_size: int = 5, with_abstract: bool = True
     return out
 
 
-def _dossier_prompt(drug: str, disease: str, score: float, paths: List[Dict], lit: List[Dict]) -> List[Dict]:
+def _dossier_prompt(drug: str, disease: str, score: float, paths: List[Dict],
+                    lit: List[Dict], abstract_chars: int = 600) -> List[Dict]:
     path_txt = "\n".join(f"- {p['text']}" for p in paths) or "- (no short KG path found)"
-    lit_txt = "\n".join(
-        f"- [{l['source']}:{l['id']}] {l['title']} ({l['year']})" for l in lit
-    ) or "- (no literature retrieved)"
+
+    def _ref_block(l: Dict) -> str:
+        head = f"- [{l['source']}:{l['id']}] {l['title']} ({l['year']})"
+        abs = (l.get("abstract") or "").strip()
+        if abs:
+            abs = abs[:abstract_chars].rsplit(" ", 1)[0] + ("..." if len(abs) > abstract_chars else "")
+            return f"{head}\n    abstract: {abs}"
+        return f"{head}\n    abstract: (none available)"
+
+    lit_txt = "\n".join(_ref_block(l) for l in lit) or "- (no literature retrieved)"
     sys = (
         "You are a cautious biomedical research assistant. Using ONLY the provided "
-        "knowledge-graph rationale and retrieved literature, write a concise evidence "
-        "dossier for a proposed drug-repurposing hypothesis. Do not invent citations. "
-        "Clearly separate mechanistic rationale, supporting evidence, contradicting/uncertain "
-        "evidence, and a one-line verdict. This is hypothesis-generating, not medical advice."
+        "knowledge-graph rationale and retrieved literature (title + abstract), write a "
+        "concise evidence dossier for a proposed drug-repurposing hypothesis. Ground every "
+        "claim in the supplied abstracts and do not invent citations or facts not present "
+        "in them. Clearly separate mechanistic rationale, supporting evidence, "
+        "contradicting/uncertain evidence, and a one-line verdict. This is "
+        "hypothesis-generating, not medical advice."
     )
     usr = (
         f"Hypothesis: repurpose '{drug}' for '{disease}'.\n"
         f"Model confidence score: {score:.3f}\n\n"
         f"Knowledge-graph multi-hop rationale:\n{path_txt}\n\n"
-        f"Retrieved literature (titles only):\n{lit_txt}\n\n"
+        f"Retrieved literature (title + abstract):\n{lit_txt}\n\n"
         "Write the dossier in markdown with sections: Mechanistic rationale, "
-        "Supporting evidence, Contradicting/uncertain, Verdict."
+        "Supporting evidence, Contradicting/uncertain, Verdict. Cite the [source:id] tag "
+        "next to each evidence statement you draw from an abstract."
     )
     return [{"role": "system", "content": sys}, {"role": "user", "content": usr}]
 

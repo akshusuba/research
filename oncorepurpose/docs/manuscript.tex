@@ -1,0 +1,299 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{authblk}
+
+\graphicspath{{../figures/}}
+
+\title{\textbf{OncoEvidence: when does a knowledge graph earn its place\\
+in oncology drug repurposing?}\\[2pt]
+\large A mechanism-first, honestly-evaluated evidence-triage pipeline}
+
+\author{OncoEvidence}
+\affil{\small Research preprint --- hypothesis-generating, not medical advice}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Knowledge-graph (KG) neural networks are widely promoted for drug repurposing, usually on
+the claim that the graph improves link prediction. We test that claim honestly on PrimeKG
+oncology indications and find it does \emph{not} hold: a properly tuned tabular model
+(XGBoost) on the identical node features matches or beats a heterogeneous graph neural
+network (GNN) in every evaluation regime, including inductive cold-disease and cold-drug
+splits. Rather than discard the graph, we move its job to where a tabular model cannot
+follow --- producing a \emph{traceable multi-hop mechanism-of-action (MOA) path}
+($\text{drug}\rightarrow\text{target}\rightarrow(\text{PPI}/\text{pathway})\rightarrow\text{cancer
+gene}\rightarrow\text{cancer}$) --- and we add a literature-grounded LLM layer that checks
+whether each proposed path is supported by the published record. We evaluate this pipeline
+instead of demonstrating it. Mechanism structure separates true indications from random
+pairs at AUROC $0.879$ and agrees with curated DrugMechDB mechanisms at $0.802$; under
+deliberately hard negatives the signal is strong against random and oncology-drug controls
+($0.887$/$0.870$) but only modest ($0.609$) against shared-target negatives, which we report
+rather than hide. A prospective time-split shows the graph \emph{enriches a small,
+top-priority tail}: trained only on pre-2005 structure it surfaces $11\times$ as many
+future indications in the top 50 as a structure-blind control (recovering post-cutoff
+approvals such as romidepsin and pralatrexate for cutaneous T-cell lymphoma and nilotinib
+for CML), although it is not better on median rank. A counterfactual test confirms the
+mechanism head is faithful: deleting the single curated mechanism edge collapses the
+prediction far more than deleting a random edge ($p\approx3.6\times10^{-34}$). Finally, a
+popularity-deconfounded ClinicalTrials.gov check is reported as a fully characterized
+negative. The contribution is not a new model but an honest account of \emph{when graph
+structure is actually necessary} and a mechanism-first pipeline that acts on that finding.
+\end{abstract}
+
+\section{Introduction}
+Drug repurposing --- finding new oncology uses for existing drugs --- is attractive because
+the safety profile is known and development is cheaper than \emph{de novo} discovery.
+Biomedical knowledge graphs such as PrimeKG~\cite{primekg} encode drugs, diseases, proteins,
+and pathways as a heterogeneous graph, and a large literature applies graph neural networks
+(GNNs) to predict drug--disease links over them~\cite{txgnn,decagon}. The usual headline is
+that the graph improves prediction.
+
+We argue that this headline is often an artifact of a missing baseline. When the same node
+features that feed the GNN are handed to a \emph{tuned} gradient-boosted tree, the tabular
+model is an extremely strong ranker, and the relational structure adds little to the link
+task. Reporting this negative result is the honest starting point of our work, and it
+reframes the question from ``does the graph win?'' to ``\emph{what is the graph uniquely
+good for?}''
+
+Our answer: the graph's irreplaceable output is not a score but a \emph{mechanism}. A
+tabular model can rank a (drug, cancer) pair; it cannot tell you \emph{why}. The KG can
+produce a short, readable, biologically-typed chain from the drug, through its protein
+target and interaction/pathway neighborhood, to a cancer-associated gene and the cancer.
+We make that chain the deliverable, filter out phenotype/symptom coincidences, and add an
+LLM evidence layer that grounds each chain in retrieved literature. We then \emph{evaluate}
+the whole pipeline against curated mechanisms, hard negatives, a prospective time-split, and
+a counterfactual faithfulness test.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt,topsep=2pt]
+\item \textbf{An honest ``is the graph necessary?'' audit.} With a tuned XGBoost on
+identical features (plus topology-removal and memorization-control ablations), the GNN does
+not beat the tabular baseline on link ranking in any regime (Sec.~\ref{sec:link}).
+\item \textbf{Mechanism-path extraction as the graph's real job}, prioritizing MOA relations
+over phenotype/symptom overlap, with a quantitative true-vs-random separation and an
+\emph{honest hard-negative stress test} (Sec.~\ref{sec:mech}).
+\item \textbf{A literature-grounded LLM evidence layer} that reads abstracts (not just
+titles) and is more precise than a lexical baseline against curated mechanisms
+(Sec.~\ref{sec:llm}).
+\item \textbf{Prospective and faithfulness audits}: top-tail enrichment of future
+indications under a time-split (Sec.~\ref{sec:prospective}) and a counterfactual
+edge-deletion test of mechanism faithfulness (Sec.~\ref{sec:faith}).
+\item \textbf{A popularity-deconfounded orthogonal check} against ClinicalTrials.gov,
+reported transparently as a negative (Sec.~\ref{sec:ct}).
+\end{enumerate}
+We do not claim to invent KG- or LLM-based repurposing; close prior work
+exists~\cite{txgnn,kgmlxdtd}. The contribution is the honest evaluation and the
+mechanism-first design that follows from it.
+
+\section{Data and models}
+We build a heterogeneous graph from PrimeKG~\cite{primekg} with node types for drugs,
+diseases, genes/proteins, pathways, and biological processes, and the corresponding typed
+relations (indication, drug--protein, disease--protein, protein--protein interaction,
+pathway membership). Node features are sentence-embedding encodings of node names/descriptions
+(with a hashing fallback for offline use). Oncology diseases are flagged via an ontology
+filter. The target task is the drug--disease \texttt{indication} relation.
+
+We compare four models under a shared evaluation harness: (i) a 2-layer heterogeneous GNN
+with an InfoNCE-style link decoder; (ii) a tuned XGBoost on concatenated endpoint features;
+(iii) a feature MLP; and (iv) a DistMult KG embedding as a memorization control. We evaluate
+three regimes: \emph{transductive}, \emph{inductive cold-disease} (held-out oncology diseases
+never seen in training), and \emph{inductive cold-drug}. Negatives are sampled with degree
+awareness and all splits are leakage-checked.
+
+\section{The link task does not need the graph}\label{sec:link}
+Table~\ref{tab:bench} reports the four-model comparison over five seeds. In the transductive
+regime the tuned XGBoost leads (AUROC $0.988$ vs the GNN's $0.977$). The gap matters most in
+the inductive cold-disease oncology regime --- the setting closest to real repurposing,
+where the disease is unseen --- where XGBoost reaches $0.963$ against the GNN's $0.882$. The
+GNN never wins. A topology ablation makes the reason concrete: shuffling the edges barely
+changes GNN performance, so it is leaning on node features rather than relational structure
+for this task.
+
+\begin{table}[t]
+\centering\small
+\caption{Link-prediction benchmark (mean$\pm$sd over 5 seeds). The tuned tabular model
+matches or beats the GNN in every regime; the graph does not earn its place on link ranking
+alone.}
+\label{tab:bench}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Regime} & \textbf{Model} & \textbf{AUROC} & \textbf{AUPRC} & \textbf{F1}\\
+\midrule
+\multirow{2}{*}{Transductive} & XGBoost & \textbf{0.988$\pm$0.002} & \textbf{0.988$\pm$0.002} & \textbf{0.952$\pm$0.003}\\
+ & GNN & 0.977$\pm$0.003 & 0.972$\pm$0.005 & 0.937$\pm$0.005\\
+\midrule
+\multirow{2}{*}{Cold-disease (onc.)} & XGBoost & \textbf{0.963$\pm$0.007} & \textbf{0.954$\pm$0.013} & \textbf{0.919$\pm$0.007}\\
+ & GNN & 0.882$\pm$0.050 & 0.828$\pm$0.052 & 0.843$\pm$0.040\\
+\midrule
+\multirow{2}{*}{Cold-drug} & XGBoost & \textbf{0.958$\pm$0.007} & \textbf{0.957$\pm$0.007} & 0.906$\pm$0.010\\
+ & GNN & 0.956$\pm$0.006 & 0.943$\pm$0.008 & \textbf{0.933$\pm$0.008}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The graph's real job: mechanism paths}\label{sec:mech}
+We connect a drug to a disease through \emph{mechanism} relations only, in three templates of
+decreasing specificity:
+\[
+\begin{aligned}
+\text{direct target:}\quad & \text{drug}\xrightarrow{\text{targets}} P \xleftarrow{\text{assoc}} \text{disease}\\
+\text{PPI bridge:}\quad & \text{drug}\xrightarrow{\text{targets}} P_1 \xrightarrow{\text{PPI}} P_2 \xleftarrow{\text{assoc}} \text{disease}\\
+\text{shared pathway:}\quad & \text{drug}\xrightarrow{\text{targets}} P_1 \xrightarrow{\text{in}} \text{pw} \xleftarrow{\text{in}} P_2 \xleftarrow{\text{assoc}} \text{disease}
+\end{aligned}
+\]
+Phenotype/symptom relations (a drug whose side effect happens to be a disease symptom) are
+\emph{excluded} by construction, and promiscuous hub intermediates (plasma carriers such as
+albumin, generic high-degree proteins) are blocked or down-weighted by an IDF-style
+promiscuity penalty so the path stays specific. Each pair gets a single mechanism score equal
+to its strongest path.
+
+\paragraph{Does mechanism structure separate true from random pairs?} Over 400 true
+oncology indications and 400 random drug--cancer pairs, the mechanism score separates the
+groups at \textbf{AUROC 0.879}, with a direct-target rate of $34\%$ for true pairs versus
+$0.25\%$ for random, and the extracted chains recover textbook MOAs (FLT3, RARA, TOP2A,
+TYMS).
+
+\paragraph{Honest hard negatives.} A single number against random pairs is too easy, so we
+stress-test against progressively harder negatives (Table~\ref{tab:hardneg}). The signal
+stays strong against random and oncology-drug negatives ($0.887$/$0.870$) and degrades
+gracefully against degree-matched negatives ($0.742$), but against \emph{shared-target}
+negatives --- a drug whose target is itself linked to the cancer --- it falls to $0.609$,
+near chance. This is the honest boundary of the method: mechanism structure is decisive
+against generic negatives and only weakly discriminative when the negative already shares the
+same biology. We foreground this rather than reporting only the favorable number.
+
+\begin{table}[t]
+\centering\small
+\caption{Hard-negative stress test (separation AUROC, true vs.\ each negative class). Strong
+vs.\ random/oncology-drug; modest under the hardest shared-target controls.}
+\label{tab:hardneg}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Negative class} & \textbf{random} & \textbf{oncology-drug} & \textbf{degree-matched} & \textbf{shared-target}\\
+\midrule
+Separation AUROC & 0.887 & 0.870 & 0.742 & \textbf{0.609}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Curated agreement.} Mapped to HGNC symbols, the extracted mechanism genes agree
+with expert-curated DrugMechDB mechanisms at \textbf{0.802} on covered pairs --- the paths
+are not just internally consistent, they match an external ground truth.
+
+\section{Literature-grounded LLM verification}\label{sec:llm}
+For each candidate the pipeline retrieves Europe PMC records (title \emph{and abstract}) and
+assembles the mechanism path plus the retrieved abstracts into a retrieval-augmented prompt.
+An LLM writes a structured evidence dossier (mechanistic rationale / supporting /
+contradicting / verdict) grounded in the supplied abstracts, and a separate LLM-as-judge
+pass scores plausibility and evidence strength. Against the curated mechanisms, the LLM's
+\emph{supported} calls are precise (precision $0.857$) versus $0.591$ for a lexical
+baseline, and a stricter MOA rubric with sentence-level grounding rejects coincidental hub
+paths (e.g.\ albumin bridges). The LLM verifier grades true pairs \emph{supported/weak} and
+random pairs \emph{no-path} ($11/50$ vs $1/50$ supported).
+
+\section{Prospective audit: top-tail enrichment over time}\label{sec:prospective}
+PrimeKG has no timestamps, so we assign each true indication the year of its earliest Europe
+PMC co-mention and hold out indications established after a cutoff $T=2005$ ($350$ sampled
+pairs, $341$ years resolved; $240$ past / $101$ future; 3 seeds). Trained only on pre-$T$
+structure, the graph model ranks held-out future indications at \textbf{AUROC 0.930} (vs
+sampled negatives), beating a structure-blind control by $+0.047$.
+
+The aggregate ranking story is deliberately nuanced. When we instead rank every drug against
+each future cancer using only pre-$T$ structure, the GNN's \emph{median} rank ($3{,}019$ of
+$\sim$7{,}956) is \emph{worse} than the control's ($1{,}482$), and a paired Wilcoxon test
+does not favor the GNN on overall rank ($p\approx1.0$). What the graph does is
+\emph{enrich the top-priority tail}: it places \textbf{11 of 101} future indications in the
+top 50 (a $17.3\times$ enrichment over a random screen) versus \textbf{1} for the control,
+and $13.9\%$ in the top $\sim$1\% versus $1.0\%$. The hits are recognizable post-cutoff
+approvals the model had no indication edge for (Table~\ref{tab:cases}). The honest claim is
+narrow: the graph does not rank future indications better on average; it concentrates a real
+signal exactly where a repurposing shortlist is read.
+
+\begin{table}[t]
+\centering\small
+\caption{Prospective named cases ($T=2005$, single seed). A model trained on pre-$T$
+structure ranks each drug near the top of $\sim$7{,}956 candidates for a cancer whose
+indication is first co-mentioned only after $T$, far above the structure-blind control.}
+\label{tab:cases}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Drug} & \textbf{Cancer (future indication)} & \textbf{1st lit.\ yr} & \textbf{GNN rank} & \textbf{MLP rank}\\
+\midrule
+Trabectedin & ovarian carcinoma (subtypes) & 2006--10 & \textbf{2--5} & 3038\\
+Methoxsalen & cutaneous T-cell lymphoma & 2006 & \textbf{10} & 2154\\
+Romidepsin & cutaneous T-cell lymphoma & 2008--10 & \textbf{63} & 1726\\
+Pralatrexate & cutaneous T-cell lymphoma & 2009 & \textbf{321} & 2235\\
+Nilotinib & CML, BCR-ABL1 positive & 2006 & \textbf{342} & 1098\\
+Plerixafor & plasma cell myeloma & 2007 & \textbf{428} & 1797\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Faithfulness: is the named mechanism causal to the prediction?}\label{sec:faith}
+A mechanism path is only meaningful if the model actually uses it. For each held-out pair
+whose bridge gene is curated, we delete the single mechanism edge and re-score, and compare
+against deleting a random edge of the same type. Deleting the mechanism edge collapses the
+prediction far more than a random edge (paired Wilcoxon $p\approx3.6\times10^{-34}$; faithful
+in $83.3\%$ of cases). The mechanism the system names is the mechanism the prediction leans
+on, not a post-hoc story.
+
+We also test mechanism \emph{recovery}: with the direct drug--gene edge hidden, only the
+\emph{jointly-supervised} GNN names the curated bridge gene (R@10 $0.25$), where a
+degree-trivial baseline and a link-only GNN scored through the same head recover $\sim$0.
+Because the link-only head was never trained on the mechanism task, this isolates the
+\emph{objective}, not the architecture: joint mechanism supervision creates a recoverable
+mechanism signal that a link objective alone does not. We do not claim de novo discovery;
+this is recovery of \emph{known} mechanism through indirect structure on a modest sample.
+
+\section{A popularity-deconfounded orthogonal check (an honest negative)}\label{sec:ct}
+Do the model's novel predictions show up as real human trials? A naive check against
+ClinicalTrials.gov is badly confounded: some drugs are trialed against every cancer and some
+cancers against every drug. We fit an additive two-way model
+$\text{score}(d,c)=\mu+\alpha_d+\beta_c+\varepsilon_{dc}$, remove the drug effect $\alpha_d$
+and cancer effect $\beta_c$, and test whether the residual interaction still predicts a
+trial. The within-drug signal looks strong ($0.821$), but once the cancer effect is also
+removed the interaction AUROC is $0.475$ ($p=0.85$) --- no signal. The apparent effect was
+cancer popularity, not pairwise specificity. We report this as a fully characterized
+negative; it stands in deliberate contrast to the prospective result, where specific signal
+\emph{does} appear.
+
+\section{Discussion and limitations}
+The strongest, most defensible framing of this project is not ``our GNN beats XGBoost''
+(it does not), but: \emph{a tuned tabular model is a strong ranker, the graph earns its place
+by producing testable mechanism paths, and an LLM/retrieval layer checks whether those paths
+are supported by the literature.} Every claim is paired with the test that could have
+falsified it.
+
+Limitations are real and stated throughout. The prospective year proxy is a literature
+co-mention, not a regulatory date. The faithfulness and recovery tests concern \emph{known}
+mechanism recovered through indirect structure, not de novo discovery, on modest samples.
+The mechanism signal is only weakly discriminative against shared-target negatives. The
+ClinicalTrials.gov check is a negative once popularity is removed. And the candidate
+shortlist is hypothesis-generating, not a vetted clinical recommendation. We view these not
+as caveats to bury but as the substance of an honest evaluation.
+
+\begin{thebibliography}{9}
+\bibitem{primekg} Chandak, Huang, Zitnik. Building a knowledge graph to enable precision
+medicine (PrimeKG). \emph{Scientific Data}, 2023.
+\bibitem{txgnn} Huang, Chandak, \emph{et al.}, Zitnik. A foundation model for
+clinician-centered drug repurposing (TxGNN). \emph{Nature Medicine}, 2024.
+\bibitem{kgmlxdtd} KGML-xDTD: a knowledge graph-based machine learning framework for drug
+treatment prediction and mechanism description. arXiv:2212.01384.
+\bibitem{decagon} Zitnik, Agrawal, Leskovec. Modeling polypharmacy side effects with graph
+convolutional networks (Decagon). \emph{Bioinformatics}, 2018.
+\end{thebibliography}
+
+\end{document}

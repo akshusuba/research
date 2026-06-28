@@ -121,6 +121,13 @@ def extract_paths(
 ) -> List[Dict]:
     """Find 2-hop bridges (drug -> X <- disease) through shared intermediates.
 
+    NOTE: this is a *generic* baseline bridge finder and will happily bridge on a
+    shared phenotype/symptom (``effect_phenotype``), which is not a mechanism. It is
+    kept for comparison only. The deliverable pipeline
+    (``scripts/generate_report.py``) and all evaluations use
+    ``oncorepurpose.interpret.mechanism_paths.mechanism_paths`` instead, which accepts
+    only target / PPI / pathway MOA chains.
+
     Hub intermediates (degree heuristically large) are down-weighted so paths stay
     specific. Returns readable path dicts ranked by a simple specificity score.
     """

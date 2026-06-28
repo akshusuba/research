@@ -85,18 +85,30 @@ cancer and read off where the real drug landed. A high rank means the system wou
 surfaced a genuine, later-established indication near the top of a blind screen, before that
 indication was in the graph.
 
-What we recorded on the full run (cutoff $T=2005$, single seed): of 101 future indications,
-the GNN placed 11 in the top 50 of about 7{,}956 candidate drugs (a 17.3x enrichment over a
-random screen), versus 1 for the structure-blind control. The named hits are recognizable
-post-2005 oncology approvals the model had no indication edge for: romidepsin and pralatrexate
-for cutaneous T-cell lymphoma, nilotinib for CML, trabectedin for ovarian cancers, plerixafor
-for myeloma. The graph's advantage is concentrated where a shortlist matters, the very top of
-the ranking; across the bulk of pairs the structure-blind control is competitive, which we
-report rather than hide.
+First, the honest scope. The robust, reproducible prospective signal is the one from
+Finding 5: against sampled negatives the graph ranks future indications above the
+structure-blind control across seeds (here AUROC 0.950 vs 0.918). The top-50 named-case
+enrichment below is the *fragile* part, and we say so plainly. It is sensitive to which
+pairs land in the sample and to the cutoff, because when the future set happens to be full
+of broad chemotherapeutics (doxorubicin, topotecan) the popularity-driven control ranks them
+highly too. So this cell is best read as named, qualitative case studies, not a second
+headline metric.
+
+Our authoritative sample for the named cases is the 350-pair run in
+`results/prospective_case_studies.json` (cutoff $T=2005$, the same sample as
+`scripts/prospective_case_studies.py`). There the GNN places 11 of 101 future indications in
+the top 50 of about 7{,}956 drugs (17.3x a random screen) versus 1 for the control, and the
+hits are recognizable post-2005 approvals the model had no indication edge for: romidepsin
+and pralatrexate for cutaneous T-cell lymphoma, nilotinib for CML, trabectedin for ovarian
+cancers, plerixafor for myeloma. But across *all* future pairs the GNN's median rank is
+actually worse than the control's, and a paired test does not favor it on overall rank: the
+graph concentrates a real signal in the top-priority tail rather than ranking better on
+average.
 
 This cell reuses the temporal split and resolved years from Finding 5 (run that cell first).
-In fast mode it trains briefly on a small sample, so the live ranks are far noisier than the
-recorded full-run numbers above; the point here is the method and the named-case framing.
+Because it is a different, self-contained sample, the live top-50 counts it prints will
+differ from the authoritative numbers above (and may even favor the control) -- that
+variability is itself the point about how fragile a top-tail claim is.
 """
 
 F7_CODE = r'''

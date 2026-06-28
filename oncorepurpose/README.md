@@ -198,7 +198,7 @@ scripts/
   run_experiment.py      4-model x 3-regime comparison + ablations
   mechanism_demo.py      multi-hop mechanism paths for oncology pairs
   evaluate_mechanism.py  true-vs-random separation + grounding + DrugMechDB (Aim 4)
-  generate_report.py     deliverable: vetted oncology repurposing shortlist
+  generate_report.py     mechanism-grounded oncology repurposing shortlist (hypothesis-generating)
 ```
 
 ## Setup & run
@@ -223,13 +223,16 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Multi-hop mechanism-path extractor; validated on real oncology indications.
 - [x] Verifier reads Europe PMC **abstracts** (not titles); LLM grade + lexical fallback.
 - [x] Quantitative true-vs-random separation (AUROC 0.879); the falsifiable claim holds.
+- [x] Hard-negative stress test: strong vs random / oncology-drug negatives (0.887 / 0.870), **modest (0.609) against shared-target negatives** -- honest about where the mechanism signal is and isn't decisive.
 - [x] LLM verifier run (OpenRouter `gpt-4o-mini`); stricter than lexical, separates true vs random.
 - [x] Improved multi-query MOA retrieval: gene-mention 80%→93%; LLM *supported* 8→14 / 50.
 - [x] DrugMechDB agreement via UniProt→HGNC map (mygene.info): **0.802** on covered pairs.
 - [x] Stricter MOA rubric + sentence grounding: LLM-*supported* precision **0.857** vs lexical 0.591.
 - [x] Hub down-weighting (carrier exclusion + IDF promiscuity penalty): removes albumin bridges, AUROC 0.878→0.879.
 - [x] Open-access full-text fetch wired in (PMC OA subset is sparse, so abstracts still dominate).
-- [x] Blinded mechanism-recovery (joint loss): graph-only R@10 0.25 where trivial/link-only baselines hit 0.
+- [x] Joint mechanism supervision creates recoverable mechanism signal: the jointly-trained graph names the held-out bridge gene at R@10 0.25, while degree-trivial and link-only baselines (no mechanism objective) hit 0 -- the signal comes from the mechanism objective, not architecture alone.
+- [x] Mechanism-first shortlist generator: ranks by specificity lift, keeps only candidates with a real MOA path (no phenotype bridges); see `results/repurposing_shortlist.md`.
+- [x] Learning-track notebooks: Parts 7--8 are executed with saved outputs (real numbers); Parts 1--6 and the full self-contained notebook are runnable templates.
 - [ ] Broaden full-text coverage (non-OA sources) and scale the LLM verifier run.
 
 *All predictions are hypothesis-generating and not medical advice.*
