@@ -1,0 +1,7 @@
+focus drugs: 103 | cancers: 18 | max queries: 1854
+queried pairs: 1843 | network calls: 1465
+
+Within-drug stratified AUROC = 0.821 (perm p = 0.0005; 49 drugs, 2649 comparable cancer-pairs)
+Top-cancer sign test: 31/49 drugs' best-scored cancer has a trial (base 0.391; p=0.0005407349182191476)
+saved -> /home/elrarun/code/research/oncorepurpose/results/clinicaltrials_deconfounded.json
+saved -> /home/elrarun/code/research/oncorepurpose/results/clinicaltrials_deconfounded.md

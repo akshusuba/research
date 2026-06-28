@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-06-28T20:41:25.664088",
+  "mode": "smoke",
+  "design": "within-drug stratified (popularity-deconfounded)",
+  "config": {
+    "per_disease_top": 3,
+    "max_drugs": 12,
+    "n_perm": 500,
+    "seed": 0
+  },
+  "counts": {
+    "focus_drugs": 6,
+    "cancers": 18,
+    "pairs_evaluated": 108,
+    "usable_drugs_for_auroc": 3,
+    "comparable_within_drug_pairs": 90,
+    "overall_pair_hit_fraction": 0.14814814814814814
+  },
+  "within_drug_auroc": 0.8777777777777778,
+  "within_drug_auroc_perm_p": 0.003992015968063872,
+  "top_cancer_sign_test": {
+    "n_drugs": 3,
+    "top_is_trial_count": 1,
+    "top_hit_rate": 0.3333333333333333,
+    "mean_drug_base_rate": 0.29629629629629634,
+    "binomial_p_greater": 0.65152669816593
+  },
+  "per_drug_top": [
+    {
+      "drug": "Folic acid",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.778,
+      "example_nct": "NCT03110926"
+    },
+    {
+      "drug": "Insulin beef",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Ivermectin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    }
+  ],
+  "clean_within_drug_examples": [
+    {
+      "drug": "Folic acid",
+      "trial_cancer": "cervical cancer",
+      "trial_cancer_score": 0.9979,
+      "score_gap_over_best_nontrial": 0.0284,
+      "n_trial_cancers": 14,
+      "n_cancers": 18,
+      "example_nct": "NCT03110926"
+    }
+  ]
+}

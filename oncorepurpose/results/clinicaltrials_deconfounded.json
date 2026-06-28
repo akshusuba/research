@@ -1,0 +1,531 @@
+{
+  "timestamp": "2026-06-28T20:57:59.907886",
+  "mode": "full",
+  "design": "two-way fixed-effect drug x cancer interaction (drug + cancer popularity removed)",
+  "config": {
+    "per_disease_top": 60,
+    "max_drugs": 150,
+    "n_perm": 2000,
+    "seed": 0
+  },
+  "counts": {
+    "focus_drugs": 103,
+    "cancers": 18,
+    "pairs_evaluated": 1843,
+    "usable_drugs_for_within_drug": 49,
+    "comparable_within_drug_pairs": 2649,
+    "overall_pair_hit_fraction": 0.18448182311448724
+  },
+  "interaction_auroc": 0.4745645962976009,
+  "interaction_auroc_perm_p": 0.8525737131434283,
+  "within_drug_auroc": 0.8206870517176293,
+  "within_drug_auroc_perm_p": 0.0004997501249375312,
+  "top_cancer_sign_test": {
+    "n_drugs": 49,
+    "top_is_trial_count": 31,
+    "top_hit_rate": 0.6326530612244898,
+    "mean_drug_base_rate": 0.3912231559290383,
+    "binomial_p_greater": 0.0005407349182191476
+  },
+  "interaction_examples": [
+    {
+      "drug": "Dexamethasone",
+      "cancer": "bilineal acute myeloid leukemia",
+      "score": 0.4316,
+      "interaction_residual": 0.0072,
+      "example_nct": "NCT02135874"
+    },
+    {
+      "drug": "Folic acid",
+      "cancer": "gallbladder carcinoma",
+      "score": 0.7886,
+      "interaction_residual": 0.0048,
+      "example_nct": "NCT01572324"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "cervical cancer",
+      "score": 0.9979,
+      "interaction_residual": 0.0025,
+      "example_nct": "NCT04246697"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "melanoma",
+      "score": 0.9961,
+      "interaction_residual": 0.0025,
+      "example_nct": "NCT03715985"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "prostate cancer",
+      "score": 0.9967,
+      "interaction_residual": 0.0025,
+      "example_nct": "NCT07557901"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "ovarian cancer",
+      "score": 0.9972,
+      "interaction_residual": 0.0024,
+      "example_nct": "NCT02641639"
+    },
+    {
+      "drug": "Ephedrine",
+      "cancer": "cervical cancer",
+      "score": 0.9978,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT05874492"
+    },
+    {
+      "drug": "Ephedrine",
+      "cancer": "prostate cancer",
+      "score": 0.9967,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT07626151"
+    },
+    {
+      "drug": "Norepinephrine",
+      "cancer": "hepatocellular carcinoma",
+      "score": 0.997,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT02472249"
+    },
+    {
+      "drug": "Norepinephrine",
+      "cancer": "cervical cancer",
+      "score": 0.9978,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT01418118"
+    },
+    {
+      "drug": "Norepinephrine",
+      "cancer": "melanoma",
+      "score": 0.9961,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT03347123"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "colorectal cancer",
+      "score": 0.9804,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT02509143"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "gastric cancer",
+      "score": 0.9818,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT02650375"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "non-small cell lung carcinoma",
+      "score": 0.981,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT03715985"
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "breast carcinoma",
+      "score": 0.9825,
+      "interaction_residual": 0.0023,
+      "example_nct": "NCT06150898"
+    }
+  ],
+  "per_drug_top": [
+    {
+      "drug": "Folic acid",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.778,
+      "example_nct": "NCT03110926"
+    },
+    {
+      "drug": "Insulin beef",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Ivermectin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Neostigmine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.111,
+      "example_nct": null
+    },
+    {
+      "drug": "Dexamethasone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.833,
+      "example_nct": "NCT04085120"
+    },
+    {
+      "drug": "Trabectedin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.471,
+      "example_nct": null
+    },
+    {
+      "drug": "Progesterone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.5,
+      "example_nct": "NCT00247169"
+    },
+    {
+      "drug": "Fluvastatin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.167,
+      "example_nct": null
+    },
+    {
+      "drug": "Cyproheptadine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.278,
+      "example_nct": null
+    },
+    {
+      "drug": "Desmopressin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.167,
+      "example_nct": null
+    },
+    {
+      "drug": "Amantadine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.353,
+      "example_nct": null
+    },
+    {
+      "drug": "Megestrol acetate",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.588,
+      "example_nct": "NCT00006799"
+    },
+    {
+      "drug": "Leucovorin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.778,
+      "example_nct": "NCT03110926"
+    },
+    {
+      "drug": "Rifaximin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.222,
+      "example_nct": "NCT06783153"
+    },
+    {
+      "drug": "Cinacalcet",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.222,
+      "example_nct": "NCT03027557"
+    },
+    {
+      "drug": "Simvastatin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.611,
+      "example_nct": "NCT07625930"
+    },
+    {
+      "drug": "Insulin human",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.722,
+      "example_nct": "NCT03872635"
+    },
+    {
+      "drug": "Testosterone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.333,
+      "example_nct": "NCT06343870"
+    },
+    {
+      "drug": "Hyaluronidase",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.667,
+      "example_nct": "NCT03281369"
+    },
+    {
+      "drug": "Prednisolone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.611,
+      "example_nct": "NCT04595981"
+    },
+    {
+      "drug": "Zinc sulfate",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.333,
+      "example_nct": "NCT03824925"
+    },
+    {
+      "drug": "Prednisone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.722,
+      "example_nct": "NCT04553510"
+    },
+    {
+      "drug": "Febuxostat",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Benzocaine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.722,
+      "example_nct": "NCT00447226"
+    },
+    {
+      "drug": "Prochlorperazine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.278,
+      "example_nct": "NCT02858310"
+    },
+    {
+      "drug": "Trimetrexate",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.111,
+      "example_nct": null
+    },
+    {
+      "drug": "Medroxyprogesterone acetate",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.176,
+      "example_nct": null
+    },
+    {
+      "drug": "Sapropterin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.111,
+      "example_nct": "NCT05299203"
+    },
+    {
+      "drug": "Orphenadrine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Tromethamine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.5,
+      "example_nct": "NCT04246697"
+    },
+    {
+      "drug": "Gefitinib",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.706,
+      "example_nct": "NCT00093652"
+    },
+    {
+      "drug": "Granisetron",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.5,
+      "example_nct": "NCT06092944"
+    },
+    {
+      "drug": "Ephedrine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.167,
+      "example_nct": "NCT05874492"
+    },
+    {
+      "drug": "Potassium chloride",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.611,
+      "example_nct": "NCT03267121"
+    },
+    {
+      "drug": "Hydroxocobalamin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9979,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.556,
+      "example_nct": "NCT03903952"
+    },
+    {
+      "drug": "Insulin pork",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Nelfinavir",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.556,
+      "example_nct": "NCT02207439"
+    },
+    {
+      "drug": "Allopurinol",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.111,
+      "example_nct": null
+    },
+    {
+      "drug": "Atorvastatin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.5,
+      "example_nct": "NCT02022293"
+    },
+    {
+      "drug": "Ixabepilone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.765,
+      "example_nct": "NCT01012362"
+    },
+    {
+      "drug": "Nabilone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.056,
+      "example_nct": null
+    },
+    {
+      "drug": "Temsirolimus",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.778,
+      "example_nct": "NCT01231399"
+    },
+    {
+      "drug": "Bupivacaine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.611,
+      "example_nct": "NCT07672236"
+    },
+    {
+      "drug": "Efavirenz",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.278,
+      "example_nct": null
+    },
+    {
+      "drug": "Pioglitazone",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.667,
+      "example_nct": "NCT05705492"
+    },
+    {
+      "drug": "Norepinephrine",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.333,
+      "example_nct": "NCT01418118"
+    },
+    {
+      "drug": "Timolol",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.111,
+      "example_nct": null
+    },
+    {
+      "drug": "Salmon calcitonin",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 1,
+      "drug_base_rate": 0.056,
+      "example_nct": "NCT00647140"
+    },
+    {
+      "drug": "Alprostadil",
+      "top_cancer": "cervical cancer",
+      "top_score": 0.9978,
+      "top_is_trial": 0,
+      "drug_base_rate": 0.167,
+      "example_nct": null
+    }
+  ]
+}

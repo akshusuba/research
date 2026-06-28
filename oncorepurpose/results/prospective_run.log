@@ -1,0 +1,8 @@
+device=cuda | mode=full | n_pairs=350 epochs=60
+  [features] loaded cached features (dim=384)
+years resolved: 341/350 (from cache: 350, queried: 0, no-year: 9)
+cutoff T=2005 -> PAST=240, FUTURE=101
+
+GNN surfaced 11/101 future indications in the top-50 (of ~7956 candidates); MLP 1.
+saved -> /home/elrarun/code/research/oncorepurpose/results/prospective_case_studies.json
+saved -> /home/elrarun/code/research/oncorepurpose/results/prospective_case_studies.md

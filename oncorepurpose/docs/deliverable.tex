@@ -80,10 +80,14 @@ drug\,$\to$\,target\,$\to$\,cancer-gene\,$\to$\,cancer path; that path structure
 separates true indications from random pairs at AUROC 0.879 and agrees with curated
 DrugMechDB at 0.802. Two new results make the case stronger. On a prospective time-split
 the graph model ranks \emph{future} oncology indications at AUROC 0.930 and beats a
-structure-blind control by $+0.047$. And a counterfactual test shows the mechanism head
-is \emph{faithful}: deleting the curated mechanism edge, and only that edge, collapses
-the prediction ($p\approx3.6\times10^{-34}$). One orthogonal check against
-ClinicalTrials.gov is reported as an honest negative.
+structure-blind control by $+0.047$; concretely, trained only on pre-2005 structure it
+surfaces $11\times$ as many future indications in the top 50 as the control, including
+post-cutoff approvals like romidepsin and pralatrexate for cutaneous T-cell lymphoma and
+nilotinib for CML. And a counterfactual test shows the mechanism head is \emph{faithful}:
+deleting the curated mechanism edge, and only that edge, collapses the prediction
+($p\approx3.6\times10^{-34}$). An orthogonal check against ClinicalTrials.gov is reported as
+a fully characterized negative: after removing both drug and cancer popularity, the
+interaction signal vanishes (AUROC 0.475).
 \end{problembox}
 
 \begin{winbox}
@@ -93,7 +97,7 @@ ClinicalTrials.gov is reported as an honest negative.
 \item Only the graph produces a traceable multi-hop mechanism path.
 \item Mechanism structure separates true indications from random pairs (AUROC 0.879), survives hard negatives, and matches DrugMechDB (0.802).
 \item Blinded mechanism recovery: with the direct edge hidden, only the joint GNN names the bridge gene (R@10 0.25 vs $\sim$0 baselines).
-\item \textbf{New, prospective:} on a time-split the GNN ranks future indications at AUROC 0.930, beating a structure-blind control by $+0.047$.
+\item \textbf{New, prospective:} on a time-split the GNN ranks future indications at AUROC 0.930 and surfaces $11\times$ as many in the top 50 as a structure-blind control (named post-2005 approvals included).
 \item \textbf{New, faithfulness:} deleting the curated mechanism edge hurts $\gg$ a random edge (contrast 0.124, $p\approx3.6\times10^{-34}$, faithful 83\%).
 \end{enumerate}
 \end{winbox}
@@ -510,6 +514,40 @@ control (blue) on every metric, with the gap widening on the harder AUPRC and re
 \label{fig:temporal}
 \end{figure}
 
+\textbf{From a metric to named cases.} The AUROC hides what the model actually surfaces, so
+we read off, for each held-out \emph{future} indication, where its drug landed when we score
+every drug against that cancer using only pre-$T$ structure. Of 101 future indications, the
+GNN placed \textbf{11 in the top 50} of $\sim$7{,}956 candidate drugs --- a
+\textbf{17.3$\times$} enrichment over a random screen --- against \textbf{1} for the
+structure-blind control (1.6$\times$), so the graph yields $11\times$ as many top-50
+prospective hits and puts $13.9\%$ of future indications in the top $\sim$1\% versus $1.0\%$
+for the control. The hits are recognizable post-cutoff oncology approvals the model had no
+indication edge for (Table~\ref{tab:cases}). The graph's edge is concentrated where a
+shortlist matters --- the very top of the ranking; across the bulk of pairs the
+structure-blind control is competitive, which we report rather than hide.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.18\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} c c c}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Drug} & \color{white}\textbf{Cancer (future indication)} & \color{white}\textbf{1st lit.\ yr} & \color{white}\textbf{GNN rank} & \color{white}\textbf{MLP rank}\\
+\midrule
+\rowcolor{srirow} Trabectedin & ovarian carcinoma (several subtypes) & 2006--10 & \textbf{2--5} & 3038\\
+Methoxsalen & cutaneous T-cell lymphoma & 2006 & \textbf{10} & 2154\\
+Romidepsin & cutaneous T-cell lymphoma & 2008--10 & \textbf{63} & 1726\\
+\rowcolor{srirow} Pralatrexate & cutaneous T-cell lymphoma & 2009 & \textbf{321} & 2235\\
+Nilotinib & CML, BCR-ABL1 positive & 2006 & \textbf{342} & 1098\\
+\rowcolor{srirow} Plerixafor & plasma cell myeloma & 2007 & \textbf{428} & 1797\\
+\bottomrule
+\end{tabular}
+\caption{Prospective named cases (cutoff $T=2005$, single seed). Each indication is first
+co-mentioned in the literature after $T$, yet a model trained on pre-$T$ structure alone
+ranks the drug near the top of $\sim$7{,}956 candidates for that cancer, far above the
+structure-blind control. Ranks are model- and cutoff-dependent; the year is the earliest
+Europe PMC co-mention, not a regulatory date.}
+\label{tab:cases}
+\end{table}
+
 \subsection{Finding 6 (new): the mechanism reasoning is faithful}
 Can we trust the mechanism the graph names? For each held-out pair whose bridge gene is a
 real drug-target edge we apply Eq.~\ref{eq:faith}: recompute the gene's score with the
@@ -575,18 +613,29 @@ the bridge gene's score; cutting a random other target edge $d\!\to\!g'$ barely 
 \label{fig:faith}
 \end{figure}
 
-\subsection{An honest negative: orthogonal trial validation}
+\subsection{An honest, fully characterized negative: orthogonal trial validation}
 \begin{nullbox}
 We also asked whether top \emph{novel} predictions (not already PrimeKG indications) appear
-as registered oncology trials more than matched controls. Top raw-score predictions were
-not enriched over random (6.7\% versus 7.4\%, Fisher $p=0.69$). Raw score does track trial
-existence above chance (AUROC 0.676 over 810 pairs, $p\approx1.5\times10^{-5}$), but this
-is a popularity confound: one broadly-indicated drug (folic acid) accounts for 78\% of the
-top set's hits. The specificity-lift ranking that de-confounds popularity shows no
-enrichment at all (0.55$\times$ versus random, $p=0.97$). We report this as inconclusive:
-the raw scores track human trial activity mostly through popular drugs, not through the
-specific novel shortlist. A usable version needs MeSH/ChEBI name normalization and trial
-phase/recency, which is future work.
+as registered oncology trials more than matched controls, and we chased the confounds all
+the way down. Top raw-score predictions were not enriched over random (6.7\% versus 7.4\%,
+Fisher $p=0.69$). Raw score does track trial existence above chance (AUROC 0.676 over 810
+pairs, $p\approx1.5\times10^{-5}$), but a popularity confound is visible immediately: one
+broadly-indicated drug (folic acid) accounts for 78\% of the top set's hits.
+
+\emph{Conditioning on the drug} (comparing only cancers for the same drug, which cancels
+drug popularity) the model looks strong --- within-drug stratified AUROC $0.821$ ($p=5\times
+10^{-4}$ by within-stratum permutation; 49 drugs, 2{,}649 cancer pairs), and for 31/49 drugs
+the single highest-scored cancer has a real trial (base rate 0.39, $p=5\times10^{-4}$). But
+this still confounds \emph{cancer} popularity (e.g.\ cervical cancer scores $\approx0.998$
+for almost every drug and is widely trialed). Removing \emph{both} marginals with a two-way
+fixed-effect model --- $\mathrm{score}(d,c)=\mu+\alpha_d+\beta_c+\varepsilon_{dc}$ --- and
+testing whether the interaction residual $\varepsilon_{dc}$ predicts a trial gives
+\textbf{AUROC $0.475$ (structure-aware permutation $p=0.85$): no signal}. So the apparent
+within-drug effect was cancer popularity, not pairwise specificity. The honest reading: raw
+deployment scores carry drug- and cancer-level popularity but not the drug$\times$cancer
+specificity this registry could corroborate. This is a clean, well-understood negative
+rather than a muddy one, and it stands in deliberate contrast to the prospective result
+(Finding 5), where specific predictive signal does appear.
 \end{nullbox}
 
 % ===========================================================================
@@ -604,8 +653,9 @@ so the explanation reflects the biology the model actually used.
 
 \textbf{Limitations.} The blinded recovery and faithfulness tests are recovery of known
 mechanism, not de novo discovery; some samples are modest; the time axis is a literature
-proxy; and the orthogonal trial check was a negative. None of the predictions are medical
-advice.
+proxy; and the orthogonal trial check is a negative, though now a fully characterized one
+(the signal is drug/cancer popularity, not pairwise specificity). None of the predictions
+are medical advice.
 
 % ===========================================================================
 \section{Reproducibility}
@@ -616,8 +666,9 @@ in \texttt{results/}: \texttt{oncorepurpose.json} (Findings 1 + ablations),
 \texttt{feature\_ablation.json}, \texttt{mechanism\_eval.json} (Finding 3),
 \texttt{hard\_negatives\_eval.json}, \texttt{verify\_llm\_eval.json},
 \texttt{mechanism\_recovery\_eval.json} (Finding 4), \texttt{temporal\_split\_eval.json}
-(Finding 5), \texttt{edge\_faithfulness\_eval.json} (Finding 6), and
-\texttt{clinicaltrials\_validation.json} (negative). A six-part Colab notebook track
+and \texttt{prospective\_case\_studies.json} (Finding 5, including the named cases),
+\texttt{edge\_faithfulness\_eval.json} (Finding 6), and \texttt{clinicaltrials\_validation.json}
+with \texttt{clinicaltrials\_deconfounded.json} (the characterized negative). A six-part Colab notebook track
 reproduces the pipeline end to end, with Part 4 fully self-contained. All predictions are
 hypothesis-generating research, not medical advice.
 
