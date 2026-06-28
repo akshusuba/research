@@ -1,0 +1,133 @@
+{
+  "config": {
+    "seeds": [
+      0,
+      1
+    ],
+    "epochs": 50,
+    "lam": 1.0,
+    "n_random_draws": 3,
+    "max_pairs": 100,
+    "device": "cuda",
+    "smoke": false
+  },
+  "method": "Counterfactual edge removal on a trained joint GNN (no retraining). Per held-out (drug, cancer, bridge-gene) instance: compare the bridge gene's mechanism-score/rank drop when its curated MOA drug_protein edge(s) are deleted (REMOVE-MOA) vs when a matched number of the same drug's OTHER target edges are deleted (REMOVE-RANDOM).",
+  "n_instances": 316,
+  "per_seed": [
+    {
+      "seed": 0,
+      "n_instances": 149,
+      "mean_moa_score_drop": 0.12250763147869366,
+      "mean_rand_score_drop": -0.005005306978887093,
+      "mean_score_contrast": 0.12751293845758074,
+      "mean_moa_rank_degrade": 183.24161073825502,
+      "mean_rand_rank_degrade": 0.6085011185682326,
+      "mean_rank_contrast": 182.6331096196868,
+      "fraction_faithful": 0.8523489932885906,
+      "mean_suff_score_drop": -0.05036557245774557
+    },
+    {
+      "seed": 1,
+      "n_instances": 167,
+      "mean_moa_score_drop": 0.1249263834899771,
+      "mean_rand_score_drop": 0.0032696401525638295,
+      "mean_score_contrast": 0.12165674333741326,
+      "mean_moa_rank_degrade": 235.83832335329342,
+      "mean_rand_rank_degrade": 3.4830339321357275,
+      "mean_rank_contrast": 232.35528942115775,
+      "fraction_faithful": 0.8143712574850299,
+      "mean_suff_score_drop": 0.03416408136665464
+    }
+  ],
+  "seeds_meta": [
+    {
+      "n_test_pairs": 186,
+      "n_pairs_evaluated": 100,
+      "n_pairs_no_moa_edge": 10,
+      "n_instances": 149,
+      "seed": 0
+    },
+    {
+      "n_test_pairs": 243,
+      "n_pairs_evaluated": 100,
+      "n_pairs_no_moa_edge": 8,
+      "n_instances": 167,
+      "seed": 1
+    }
+  ],
+  "headline_seed_mean_std": {
+    "mean_moa_score_drop": {
+      "mean": 0.12371700748433538,
+      "std": 0.0012093760056417213,
+      "values": [
+        0.1225,
+        0.1249
+      ]
+    },
+    "mean_rand_score_drop": {
+      "mean": -0.0008678334131616318,
+      "std": 0.004137473565725461,
+      "values": [
+        -0.005,
+        0.0033
+      ]
+    },
+    "mean_score_contrast": {
+      "mean": 0.124584840897497,
+      "std": 0.002928097560083741,
+      "values": [
+        0.1275,
+        0.1217
+      ]
+    },
+    "mean_moa_rank_degrade": {
+      "mean": 209.53996704577423,
+      "std": 26.2983563075192,
+      "values": [
+        183.2416,
+        235.8383
+      ]
+    },
+    "mean_rand_rank_degrade": {
+      "mean": 2.0457675253519803,
+      "std": 1.4372664067837477,
+      "values": [
+        0.6085,
+        3.483
+      ]
+    },
+    "fraction_faithful": {
+      "mean": 0.8333601253868103,
+      "std": 0.018988867901780337,
+      "values": [
+        0.8523,
+        0.8144
+      ]
+    },
+    "mean_suff_score_drop": {
+      "mean": -0.008100745545545462,
+      "std": 0.042264826912200106,
+      "values": [
+        -0.0504,
+        0.0342
+      ]
+    }
+  },
+  "pooled": {
+    "n_instances": 316,
+    "mean_moa_score_drop": 0.12378589599098586,
+    "mean_rand_score_drop": -0.0006321545391646114,
+    "mean_score_contrast": 0.12441805053015047,
+    "median_moa_score_drop": 0.05156931281089783,
+    "median_rand_score_drop": -0.00013120969136555988,
+    "fraction_faithful": 0.8322784810126582,
+    "wilcoxon_stat": 44761.0,
+    "wilcoxon_p_greater": 3.6219043786754184e-34,
+    "separation_auroc": 0.8354630668162154,
+    "mean_moa_rank_degrade": 211.0379746835443,
+    "mean_rand_rank_degrade": 2.1276371308016877
+  },
+  "score_drop_ratio_moa_over_random": null,
+  "faithful_verdict": true,
+  "interpretation": "FAITHFUL: MOA-edge removal degrades the bridge gene's score significantly more than removing other target edges of the same drug. Pooled over 316 held-out (drug,cancer,bridge-gene) instances: mean score drop under MOA removal = 0.124 vs random removal = -0.001 (contrast = 0.124); fraction of instances where MOA removal hurts more = 0.832; paired Wilcoxon p (MOA>random) = 3.62e-34; separation AUROC = 0.835. Mean rank degradation: MOA = 211.0 vs random = 2.1 positions."
+}
