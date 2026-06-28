@@ -1,0 +1,405 @@
+\documentclass[11pt]{article}
+
+% ---------------------------------------------------------------------------
+%  OncoEvidence -- final project deliverable (completed-project report)
+%  Compile with:  tectonic docs/deliverable.tex
+%  Numbers are pulled from results/*.json in this repository.
+% ---------------------------------------------------------------------------
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc,shapes.geometric}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{../figures/}{figures/}}
+
+% ----- Palette -------------------------------------------------------------
+\definecolor{sriblue}{HTML}{1F4E79}
+\definecolor{sriaccent}{HTML}{E8684A}
+\definecolor{srigreen}{HTML}{2E8B57}
+\definecolor{srigray}{HTML}{4B5563}
+\definecolor{srilight}{HTML}{EAF1F8}
+\definecolor{sriamber}{HTML}{F6BD16}
+\definecolor{srirow}{HTML}{F2F6FB}
+\definecolor{srired}{HTML}{C0392B}
+
+\usepackage[colorlinks=true,linkcolor=sriblue,citecolor=sriblue,urlcolor=sriaccent]{hyperref}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{sriblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{sriblue!85!black}}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.4ex}{0.8ex}
+
+\newtcolorbox{problembox}{colback=srilight,colframe=sriblue,boxrule=0.9pt,
+  arc=2pt,left=6pt,right=6pt,top=5pt,bottom=5pt}
+\newtcolorbox{winbox}{colback=sriaccent!8,colframe=sriaccent,boxrule=0.9pt,
+  arc=2pt,left=6pt,right=6pt,top=5pt,bottom=5pt}
+\newtcolorbox{nullbox}{colback=srigray!8,colframe=srigray,boxrule=0.9pt,
+  arc=2pt,left=6pt,right=6pt,top=5pt,bottom=5pt}
+
+\renewcommand{\arraystretch}{1.25}
+\newcommand{\NN}{\mathcal{N}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{sriblue} OncoEvidence: Mechanism-Guided Evidence\\ Triage for Cancer Drug Repurposing}\\[4pt]
+  {\large\bfseries\color{sriblue!80!black} A completed-project report: when a knowledge graph earns its place,\\ and how to show its mechanism reasoning is predictive and faithful}\\[10pt]
+  {\large Akshatha Arunkumar}\\[2pt]
+  {\small Final Project Deliverable \quad\textbar\quad \today}
+\end{center}
+
+\vspace{2pt}
+\begin{problembox}
+\textbf{Summary.} OncoEvidence ranks oncology drug-repurposing candidates on the
+PrimeKG knowledge graph, extracts the multi-hop mechanism path that would explain
+each one, and uses a literature-grounded language model to grade whether that
+mechanism is supported. The project is built around an honest question: once a
+strong tabular ranker is in place, what does the graph actually add? The answer is
+mechanism, and this report goes further than earlier drafts by showing that the
+graph's mechanism signal is (i) \emph{predictive} over time and (ii) \emph{faithful}
+to curated biology, with one orthogonal validation reported as an honest negative.
+\end{problembox}
+
+\begin{winbox}
+\textbf{Six findings.}
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=2pt]
+\item On plain link ranking, a tuned XGBoost matches or beats the graph network in
+every regime, so ranking alone does not justify the graph.
+\item Only the graph produces a traceable multi-hop mechanism path.
+\item Mechanism structure separates true oncology indications from random pairs at
+AUROC 0.879, holds up under hard negatives, and agrees with curated DrugMechDB at 0.802.
+\item Blinded mechanism recovery: with the direct drug-target edge hidden, only the
+jointly trained GNN names the curated bridge gene (Recall@10 0.25), while trivial and
+link-only baselines collapse to about zero.
+\item \textbf{New: prospective validation.} On a time-split test, the GNN ranks
+\emph{future} oncology indications at AUROC 0.930 and beats a structure-blind control
+by +0.047 AUROC.
+\item \textbf{New: faithfulness.} Deleting a pair's curated mechanism edge drops the
+bridge gene's score far more than deleting a random edge (contrast 0.124,
+$p \approx 3.6\times 10^{-34}$, faithful in 83\% of cases).
+\end{enumerate}
+\end{winbox}
+
+% ===========================================================================
+\section{Background and significance}
+
+Developing a new drug takes many years and large cost, while thousands of approved
+drugs already have known safety profiles. If an approved drug acts on a protein or
+pathway that also drives a cancer, repurposing it can be a fast route to a new
+treatment. Biomedical knowledge graphs such as PrimeKG encode millions of
+relationships among drugs, proteins, genes, pathways, and diseases, so the
+information needed to reason about such mechanisms exists as paths through the graph.
+The open problem is \emph{trust}: a bare drug-disease score hides its reasoning and
+cannot separate a real mechanism from a coincidence.
+
+\textbf{Novelty, stated carefully.} Knowledge-graph repurposing with explanations is
+not new: TxGNN is a graph foundation model with multi-hop rationales, and KGML-xDTD
+predicts treatment links with KG-based mechanism paths. This project does not claim
+``a knowledge graph plus a language model for repurposing'' as novel. The defensible
+contribution is methodological: quantify \emph{when} graph structure adds value
+beyond a strong tabular ranker, show that its value is mechanism extraction rather
+than better ranking, and then audit those mechanisms three ways that most demos skip:
+against curated mechanism databases, against a prospective time-split, and against a
+counterfactual faithfulness test.
+
+% ===========================================================================
+\section{Datasets and system}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.50\linewidth} >{\raggedright\arraybackslash}p{0.20\linewidth}}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Resource} & \color{white}\textbf{Content} & \color{white}\textbf{Role}\\
+\midrule
+\rowcolor{srirow} PrimeKG & $\sim$129k nodes, $\sim$8.1M directed edges; 7{,}957 drugs, 17{,}080 diseases ($\sim$3{,}170 oncology) & Ranking + mechanism paths\\
+Europe PMC & abstracts and open-access full text via REST & Evidence + time axis\\
+\rowcolor{srirow} DrugMechDB & curated drug mechanism-of-action paths (UniProt-keyed) & Mechanism ground truth\\
+ClinicalTrials.gov & registered interventional studies (API v2) & Orthogonal check\\
+\bottomrule
+\end{tabular}
+\caption{Public resources. DrugMechDB UniProt accessions are mapped to HGNC symbols
+via mygene.info; the per-pair time axis in Finding 5 is the earliest Europe PMC
+co-mention year.}
+\label{tab:data}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=5mm and 8mm,
+  box/.style={rounded corners,draw=sriblue,fill=srilight,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
+  acc/.style={rounded corners,draw=sriaccent,fill=sriaccent!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
+  grn/.style={rounded corners,draw=srigreen,fill=srigreen!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
+  >={Stealth[length=2.2mm]}]
+  \node[box] (kg) {PrimeKG\\graph};
+  \node[acc,right=of kg] (rank) {Candidate\\ranking\\(GNN / XGBoost)};
+  \node[box,right=of rank] (mech) {Mechanism\\path};
+  \node[grn,right=of mech] (llm) {LLM evidence\\verifier};
+  \node[box,right=of llm] (out) {Ranked\\dossier};
+  \draw[->,thick] (kg)--(rank); \draw[->,thick] (rank)--(mech);
+  \draw[->,thick] (mech)--(llm); \draw[->,thick] (llm)--(out);
+  \node[srigray,font=\scriptsize\itshape,below=2mm of mech] {Europe PMC abstracts feed the verifier};
+\end{tikzpicture}
+\caption{The OncoEvidence pipeline: rank candidates, extract a mechanism path,
+verify it against the literature, output an evidence-backed shortlist.}
+\label{fig:pipeline}
+\end{figure}
+
+% ===========================================================================
+\section{Methods}
+
+\textbf{Ranking.} Repurposing is link prediction on drug-indication-disease edges. A
+heterogeneous GraphSAGE encoder builds node embeddings by message passing,
+\begin{equation}
+h_v^{(l)} = \sigma\!\Big( W^{(l)}\big[\,h_v^{(l-1)}\ \big\Vert\
+\textstyle\operatorname*{AGG}_{u\in\NN(v)} h_u^{(l-1)}\big]\Big),
+\qquad s(d,c) = \mathrm{MLP}\big([z_d \Vert z_c]\big).
+\label{eq:gnn}
+\end{equation}
+The GNN, a DistMult embedding, and a tuned XGBoost all receive the \emph{same}
+SentenceTransformer node features, so any gap measures graph structure, not features.
+
+\textbf{Mechanism extraction.} For a candidate we search PrimeKG for short paths
+through mechanism relations, scoring each by specificity and penalizing promiscuous
+hubs:
+\begin{equation}
+\mathrm{score}(p) = \beta_{\text{type}} + \frac{1}{\log_2(\deg(\text{bridge})+2)}\cdot
+\frac{1}{\log_2(\delta_{\text{drug}}+2)},
+\label{eq:mech}
+\end{equation}
+where $\delta_{\text{drug}}$ is the number of drugs that bind the bridge protein (an
+inverse-frequency penalty that suppresses carriers such as albumin) and
+$\beta_{\text{type}}$ orders direct-target over interaction over shared-pathway.
+
+\textbf{Evidence verification.} For the top path we retrieve abstracts, extract
+sentences mentioning both drug and gene, and ask a language model to grade the
+mechanism supported / weak / contradicted / unknown, requiring a verbatim quote and
+grading a purely statistical association as weak.
+
+\textbf{Mechanism head.} A joint objective adds a contrastive term that ranks the
+curated DrugMechDB bridge gene above degree-matched decoys, using the same encoder
+embeddings, $s_{\text{mech}}(d,g,c) = \mathrm{MLP}([z_d \Vert z_g \Vert z_c])$. This
+is the head used in Findings 4 and 6.
+
+% ===========================================================================
+\section{Results}
+
+\subsection{Finding 1: the link task does not need the graph}
+With a tuned XGBoost on shared features, the GNN does not win in any regime
+(Table~\ref{tab:bench}). For link ranking with rich text features, a strong tabular
+model suffices; a drug/disease name embedding lets it take a semantic-similarity
+shortcut without graph reasoning.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\linewidth} cccc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Test AUROC (5 seeds)} & \color{white}\textbf{GNN} & \color{white}\textbf{XGBoost} & \color{white}\textbf{MLP} & \color{white}\textbf{KGE}\\
+\midrule
+\rowcolor{srirow} Transductive & 0.977 & \textbf{0.988} & 0.973 & 0.907\\
+Inductive (cold-disease, oncology) & 0.882 & \textbf{0.963} & 0.930 & 0.452\\
+\rowcolor{srirow} Inductive (cold-drug) & 0.956 & \textbf{0.958} & 0.931 & 0.482\\
+\bottomrule
+\end{tabular}
+\caption{Corrected benchmark. The DistMult memorizer (KGE) collapses on unseen nodes,
+confirming the task needs content features, not memorized identity.}
+\label{tab:bench}
+\end{table}
+
+\subsection{Finding 2: the graph carries real mechanism}
+A tabular model cannot produce a traceable mechanism; the graph can. On true
+oncology indications the extractor recovers textbook direct-target mechanisms, for
+example Quizartinib-FLT3 (myeloid leukemia), Tamibarotene-RARA (acute promyelocytic
+leukemia), Topotecan-TOP1 (ovarian cancer), and Trifluridine-TYMS (colorectal cancer).
+
+\subsection{Finding 3: mechanism structure separates true from random pairs}
+Over 400 true indications versus 400 random pairs, the mechanism signal separates the
+two groups at \textbf{AUROC 0.879} (Table~\ref{tab:sep}). The extracted bridge genes
+also agree with curated DrugMechDB mechanisms for 211 of 263 covered pairs
+(\textbf{agreement 0.802}). The language-model verifier is the conservative reviewer:
+of its ``supported'' calls that DrugMechDB covers, 6/7 are curated-confirmed, versus
+13/22 for a keyword baseline (small denominators, reported as a pilot signal).
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.40\linewidth} cc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Metric} & \color{white}\textbf{True} & \color{white}\textbf{Random}\\
+\midrule
+\rowcolor{srirow} Mean mechanism score & \textbf{1.95} & 0.17\\
+Direct-target rate & \textbf{34.0\%} & 0.25\%\\
+\rowcolor{srirow} Any mechanistic path & \textbf{81.3\%} & 8.8\%\\
+\bottomrule
+\end{tabular}
+\quad
+\raisebox{-2.2\height}{\parbox{0.30\linewidth}{\centering\textbf{Separation AUROC}\\[2pt]
+{\Large\color{sriaccent}\textbf{0.879}}}}
+\caption{Mechanism paths separate true indications from random pairs. A true
+indication is roughly $136\times$ more likely to have a direct drug-target to
+cancer-gene link.}
+\label{tab:sep}
+\end{table}
+
+\subsection{Finding 4: the graph's one genuine ranking-free edge}
+We trained the GNN jointly and asked it to name the curated bridge gene for held-out
+cold-disease pairs (3 seeds, $n\approx186$--$260$). Unblinded, a trivial
+``the drug's own targets'' baseline dominates because the bridge gene is usually the
+drug's direct target. But with that direct edge hidden (mechanism-blinded), the
+trivial and degree baselines collapse to about zero while the joint GNN still recovers
+the gene from indirect structure (Table~\ref{tab:mechrec}). A link-only GNN scored
+through the identical head recovers nothing, so the signal is attributable to the
+auxiliary objective.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.40\linewidth} cc c}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Bridge-gene recovery} & \color{white}\textbf{Unblinded R@10} & \color{white}\textbf{Blinded R@10} & \color{white}\textbf{Blinded MRR}\\
+\midrule
+\rowcolor{srirow} Joint GNN (link + mechanism) & 0.31 & \textbf{0.25} & \textbf{0.21}\\
+Trivial target-lookup & \textbf{0.80} & 0.00 & 0.00\\
+\rowcolor{srirow} Link-only GNN (same head, no aux loss) & 0.00 & 0.00 & 0.00\\
+Degree prior & 0.02 & 0.02 & 0.02\\
+\bottomrule
+\end{tabular}
+\caption{Mechanism recovery on held-out pairs. When the direct edge is hidden, only
+the joint GNN recovers the gene, a small ($\sim$0.25 R@10) but genuine graph-only
+signal. Caveat: this is recovery of \emph{known} mechanism via indirect paths, not de
+novo discovery, on a modest sample.}
+\label{tab:mechrec}
+\end{table}
+
+\subsection{Finding 5 (new): the model is predictive over time}
+The findings above are retrospective. To test whether the model could have flagged an
+indication \emph{before} it was established, we assign each true oncology pair an
+approximate first-evidence year (earliest Europe PMC co-mention), choose cutoff
+$T=2005$, keep only pairs known by $T$ inside the message-passing graph, and hold out
+the later pairs as a prospective test set (350 sampled pairs; 341 years resolved; 240
+past, 101 future; 3 seeds). The GNN ranks the held-out future indications at
+\textbf{AUROC 0.930} and \textbf{AUPRC 0.707}, and beats the structure-blind control
+on every metric (Table~\ref{tab:temporal}). Unlike the plain link task in Finding 1,
+the graph adds a small but consistent edge here, widest on the harder metrics
+(AUPRC +0.115, recall@100 +0.116).
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth} cccc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Prospective ($T{=}2005$)} & \color{white}\textbf{AUROC} & \color{white}\textbf{AUPRC} & \color{white}\textbf{R@50} & \color{white}\textbf{R@100}\\
+\midrule
+\rowcolor{srirow} GNN (graph) & \textbf{0.930} & \textbf{0.707} & \textbf{0.393} & \textbf{0.703}\\
+MLP (structure-blind) & 0.882 & 0.592 & 0.337 & 0.587\\
+\midrule
+Graph gain & +0.047 & +0.115 & +0.056 & +0.116\\
+\bottomrule
+\end{tabular}
+\caption{Prospective time-split (mean over 3 seeds). The model ranks future
+indications well above chance, and the graph beats the tabular-style control on every
+metric and seed. Caveat: the year proxy is the earliest literature co-mention, not a
+regulatory date, and this is a single seeded 350-pair sample, so magnitudes are
+indicative.}
+\label{tab:temporal}
+\end{table}
+
+\subsection{Finding 6 (new): the mechanism reasoning is faithful}
+Can we trust the mechanism the graph names? We take the trained joint model and, for
+each held-out pair whose bridge gene is a real drug-target edge, recompute the gene's
+mechanism score with the full graph, with that pair's curated mechanism edge deleted,
+and with a random other target edge of the same drug deleted (316 instances, 2 seeds,
+no retraining). Removing the curated edge degrades the bridge gene far more than
+removing a random one (Table~\ref{tab:faith}): a paired Wilcoxon test gives
+$p \approx 3.6\times 10^{-34}$, the model is faithful in 83\% of instances, and the two
+populations separate at AUROC 0.835. This turns ``the graph explains'' from a claim
+into a measured property.
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.40\linewidth} cc}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Counterfactual edge removal} & \color{white}\textbf{Score drop} & \color{white}\textbf{Rank drop}\\
+\midrule
+\rowcolor{srirow} Remove curated mechanism edge & \textbf{0.124} & \textbf{$\sim$211}\\
+Remove random target edge (same drug) & $-0.001$ & $\sim$2\\
+\midrule
+Contrast (faithfulness) & \textbf{0.124} & ---\\
+\bottomrule
+\end{tabular}
+\caption{Faithfulness by counterfactual edge removal (pooled, 316 instances). Faithful
+in 83.3\% of cases; paired Wilcoxon $p\approx3.6\times10^{-34}$; separation AUROC 0.835.
+Measured on the well-posed population (pairs whose bridge gene is an actual
+drug-target edge), in logit space.}
+\label{tab:faith}
+\end{table}
+
+\subsection{An honest negative: orthogonal trial validation}
+\begin{nullbox}
+We also asked whether top \emph{novel} predictions (not already PrimeKG indications)
+appear as registered oncology trials more than matched controls. Top raw-score
+predictions were not enriched over random (6.7\% versus 7.4\%, Fisher $p=0.69$). Raw
+score does track trial existence above chance (AUROC 0.676 over 810 pairs,
+$p\approx1.5\times10^{-5}$), but this is a popularity confound: one broadly-indicated
+drug (folic acid) accounts for 78\% of the top set's hits. The specificity-lift
+ranking that de-confounds popularity shows no enrichment at all (0.55$\times$ versus
+random, $p=0.97$). We report this as inconclusive: the raw scores track human trial
+activity mostly through popular drugs, not through the specific novel shortlist. A
+usable version needs MeSH/ChEBI name normalization and trial phase/recency, which is
+future work.
+\end{nullbox}
+
+% ===========================================================================
+\section{Discussion}
+
+The contribution is a disciplined account of where a knowledge graph helps. On plain
+link ranking it does not beat a tuned tabular model, and we say so. Its value is the
+traceable mechanism a tabular model cannot produce, and this report strengthens that
+case along the two axes that matter for a real triage tool. Finding 5 shows the
+mechanism-aware graph model is \emph{predictive}: trained only on pre-2005 structure,
+it ranks post-2005 indications at 0.930 AUROC and beats the structure-blind control,
+so the signal is not merely retrospective bookkeeping. Finding 6 shows the mechanism
+reasoning is \emph{faithful}: deleting the curated edge, and only that edge, collapses
+the prediction, so the explanation reflects the biology the model actually used.
+
+\textbf{Limitations.} The blinded recovery and faithfulness tests are recovery of
+known mechanism, not de novo discovery; some samples are modest; the time axis is a
+literature proxy; and the orthogonal trial check was a negative. None of the
+predictions are medical advice.
+
+% ===========================================================================
+\section{Reproducibility}
+
+Open tools (PyTorch Geometric, scikit-learn, XGBoost) and public data (PrimeKG,
+Europe PMC, DrugMechDB, ClinicalTrials.gov). Every reported number has a script and a
+JSON record in \texttt{results/}: \texttt{oncorepurpose.json} (Finding 1),
+\texttt{mechanism\_eval.json} (Finding 3), \texttt{mechanism\_recovery\_eval.json}
+(Finding 4), \texttt{temporal\_split\_eval.json} (Finding 5),
+\texttt{edge\_faithfulness\_eval.json} (Finding 6), and
+\texttt{clinicaltrials\_validation.json} (negative). A six-part Colab notebook track
+reproduces the pipeline end to end, with Part 4 fully self-contained. All predictions
+are hypothesis-generating research, not medical advice.
+
+% ===========================================================================
+\begin{thebibliography}{9}
+\small
+\bibitem{txgnn} Huang K, Chandak P, et al. \textit{A foundation model for
+clinician-centered drug repurposing (TxGNN)}. Nature Medicine, 2024.
+\bibitem{primekg} Chandak P, Huang K, Zitnik M. \textit{Building a knowledge graph
+to enable precision medicine (PrimeKG)}. Scientific Data, 2023.
+\bibitem{kgmlxdtd} \textit{KGML-xDTD: a knowledge graph-based framework for drug
+treatment prediction and mechanism description}. 2023.
+\bibitem{decagon} Zitnik M, Agrawal M, Leskovec J. \textit{Modeling polypharmacy
+side effects with graph convolutional networks (Decagon)}. Bioinformatics, 2018.
+\bibitem{drugmechdb} Mayers M, et al. \textit{DrugMechDB: a curated database of
+drug mechanism paths}. 2022.
+\bibitem{sage} Hamilton W, Ying R, Leskovec J. \textit{Inductive representation
+learning on large graphs (GraphSAGE)}. NeurIPS, 2017.
+\end{thebibliography}
+
+\end{document}

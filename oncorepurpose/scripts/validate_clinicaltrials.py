@@ -147,7 +147,16 @@ class CTClient:
                     })
                 result = {"total": total, "hit": int(total > 0), "examples": examples}
                 break
-            except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError) as e:
+            except urllib.error.HTTPError as e:
+                if e.code == 400:
+                    # Query too long/complex even after sanitization: these are
+                    # raw IUPAC chemical strings, not searchable drug names. Treat
+                    # as a definitive "no usable name -> no trial" (not an error).
+                    result = {"total": 0, "hit": 0, "examples": [], "unsearchable": True}
+                    break
+                last_err = f"HTTP {e.code}"
+                time.sleep(self.sleep * (attempt + 1) + 0.5)
+            except (urllib.error.URLError, TimeoutError, ValueError) as e:
                 last_err = str(e)
                 time.sleep(self.sleep * (attempt + 1) + 0.5)
             except Exception as e:  # never let the run crash
@@ -547,27 +556,60 @@ def main():
 
     # ---- AUROC: trial_hit ~ model_score over scored novel pairs ---------- #
     auroc = None
+    auroc_p = None
     scored = [c for c in candidates
               if c.get("model_score") == c.get("model_score")  # not NaN
               and c["set"] in ("top", "low", "random")]
     labels = [c["trial_hit"] for c in scored]
     if scored and 0 < sum(labels) < len(labels):
         from sklearn.metrics import roc_auc_score
+        from scipy.stats import mannwhitneyu
         auroc = float(roc_auc_score(labels, [c["model_score"] for c in scored]))
+        pos = [c["model_score"] for c in scored if c["trial_hit"]]
+        neg = [c["model_score"] for c in scored if not c["trial_hit"]]
+        auroc_p = float(mannwhitneyu(pos, neg, alternative="greater").pvalue)
 
-    # ---- Concrete corroborated examples (top set with a trial) ----------- #
+    # ---- Promiscuity / popularity confound diagnostic -------------------- #
+    # If a handful of broadly-indicated drugs (e.g. folic acid) account for most
+    # "hits", a positive AUROC is a popularity artifact rather than specific
+    # repurposing insight. Report the concentration of hits across drugs.
+    from collections import Counter
+    confound = {}
+    for sname in ("top", "random", "top_lift"):
+        items = sets.get(sname, [])
+        hit_drugs = Counter(c["drug"] for c in items if c["trial_hit"])
+        n_hits = sum(hit_drugs.values())
+        confound[sname] = {
+            "n_hits": n_hits,
+            "n_distinct_hit_drugs": len(hit_drugs),
+            "top_hit_drug": (hit_drugs.most_common(1)[0] if hit_drugs else None),
+            "share_top_drug": (hit_drugs.most_common(1)[0][1] / n_hits) if n_hits else None,
+        }
+
+    # ---- Concrete corroborated examples (one row per distinct hit drug) --- #
+    def distinct_examples(set_name, limit=12):
+        items = sorted([c for c in sets.get(set_name, []) if c["trial_hit"]],
+                       key=lambda c: c.get("model_score") or 0, reverse=True)
+        seen_d, out = set(), []
+        for c in items:
+            if c["drug"].lower() in seen_d:
+                continue
+            seen_d.add(c["drug"].lower())
+            ex = c.get("trial_examples", [])
+            out.append({
+                "drug": c["drug"], "cancer": c["cancer"],
+                "model_score": c["model_score"], "rank": c["rank"],
+                "trial_total": c["trial_total"],
+                "example_nct": ex[0]["nct"] if ex else None,
+                "example_title": ex[0]["title"] if ex else None,
+            })
+            if len(out) >= limit:
+                break
+        return out
+
     top = sets.get("top", [])
-    examples = []
-    for c in sorted([c for c in top if c["trial_hit"]],
-                    key=lambda c: c.get("model_score") or 0, reverse=True)[:12]:
-        ex = c.get("trial_examples", [])
-        examples.append({
-            "drug": c["drug"], "cancer": c["cancer"],
-            "model_score": c["model_score"], "rank": c["rank"],
-            "trial_total": c["trial_total"],
-            "example_nct": ex[0]["nct"] if ex else None,
-            "example_title": ex[0]["title"] if ex else None,
-        })
+    examples = distinct_examples("top")
+    examples_lift = distinct_examples("top_lift")
 
     result = {
         "meta": {**meta, "seed": args.seed,
@@ -577,8 +619,11 @@ def main():
         "set_summary": summary,
         "comparisons": comparisons,
         "auroc_trial_vs_modelscore": auroc,
+        "auroc_mannwhitney_p": auroc_p,
         "n_scored_for_auroc": len(scored),
+        "promiscuity_confound": confound,
         "corroborated_examples": examples,
+        "corroborated_examples_shortlist_ranking": examples_lift,
         "pairs": candidates,
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -633,9 +678,27 @@ def write_markdown(result: dict, path: Path, smoke: bool):
     lines.append("")
     auroc = result.get("auroc_trial_vs_modelscore")
     if auroc is not None:
+        ap = result.get("auroc_mannwhitney_p")
+        ap_s = f", Mann-Whitney p = {ap:.3g}" if ap is not None else ""
         lines.append(f"**AUROC** of \"interventional trial exists\" vs raw model score over "
                      f"{result['n_scored_for_auroc']} scored novel pairs (top+low+random): "
-                     f"**{auroc:.3f}** (0.5 = no signal).\n")
+                     f"**{auroc:.3f}**{ap_s} (0.5 = no signal).\n")
+
+    conf = result.get("promiscuity_confound", {})
+    if conf:
+        lines.append("## Popularity / promiscuity confound\n")
+        lines.append("How concentrated are the trial \"hits\" on a few broadly-indicated drugs? "
+                     "If one drug accounts for most hits, a positive raw-score AUROC reflects drug "
+                     "popularity (such drugs are scored high *everywhere* and trialed *everywhere*) "
+                     "rather than specific repurposing insight.\n")
+        lines.append("| set | hits | distinct hit-drugs | most frequent hit-drug (share) |")
+        lines.append("| --- | --- | --- | --- |")
+        for sname, cc in conf.items():
+            thd = cc.get("top_hit_drug")
+            share = cc.get("share_top_drug")
+            thd_s = f"{thd[0]} ({thd[1]}/{cc['n_hits']}, {share:.0%})" if thd else "-"
+            lines.append(f"| {sname} | {cc['n_hits']} | {cc['n_distinct_hit_drugs']} | {thd_s} |")
+        lines.append("")
 
     # Auto-generated interpretation from the numbers.
     if not smoke:
@@ -653,23 +716,40 @@ def write_markdown(result: dict, path: Path, smoke: bool):
                 verdict.append(f"Top raw-score novel predictions are NOT enriched vs random "
                                f"({tr['ratio']:.2f}x, p={tr['p_value']:.3g}).")
         if auroc is not None:
-            if auroc >= 0.6:
-                verdict.append(f"However, raw model score ranks trial-existence with AUROC {auroc:.3f}, "
-                               f"i.e. the highest-scored pairs are markedly more likely to have a real trial "
-                               f"-- an independent corroboration of the model's link scores.")
+            ap = result.get("auroc_mannwhitney_p")
+            sig = (ap is not None and ap < 0.05)
+            if auroc >= 0.6 and sig:
+                verdict.append(f"Raw model score does rank trial-existence above chance "
+                               f"(AUROC {auroc:.3f}, p={ap:.2g}): higher-scored novel pairs are more "
+                               f"likely to have a real interventional trial.")
+            elif auroc >= 0.6:
+                verdict.append(f"Raw model score shows a weak (non-significant) ranking signal for "
+                               f"trial-existence (AUROC {auroc:.3f}).")
             else:
                 verdict.append(f"Raw model score gives little ranking signal for trial-existence (AUROC {auroc:.3f}).")
+        # Popularity-confound caveat on the AUROC.
+        ct = (result.get("promiscuity_confound", {}) or {}).get("top", {})
+        share = ct.get("share_top_drug")
+        if share is not None and share >= 0.3 and ct.get("top_hit_drug"):
+            verdict.append(f"But this is heavily confounded by drug popularity: a single broadly-indicated "
+                           f"drug ({ct['top_hit_drug'][0]}) accounts for {share:.0%} of the top set's hits "
+                           f"-- such drugs score high for every cancer and are trialed for every cancer.")
         tl = comp.get("top_lift_vs_random")
         if tl:
-            verdict.append(f"The specificity-lift shortlist ranking is {tl['ratio']:.2f}x vs random "
-                           f"(p={tl['p_value']:.3g}); lift deliberately surfaces specific/obscure compounds, "
-                           f"many of which have no trials yet.")
+            verdict.append(f"Consistently, the specificity-lift ranking (the deployed shortlist ordering, which "
+                           f"de-confounds popularity) shows NO trial enrichment ({tl['ratio']:.2f}x vs random, "
+                           f"p={tl['p_value']:.3g}): the genuinely specific novel predictions are not (yet) "
+                           f"over-represented in trials.")
+        verdict.append("Bottom line: weak and confounded independent signal -- this corroborates that the "
+                       "model's raw scores track human trial activity (mostly via popular drugs), but does NOT "
+                       "yet provide clean real-world validation of the specific novel repurposing shortlist.")
         lines.append("## Interpretation\n")
         lines.append(" ".join(verdict) + "\n")
 
-    ex = result.get("corroborated_examples", [])
-    if ex:
-        lines.append("## Concrete corroborated novel predictions (top set, real trial exists)\n")
+    def ex_table(ex, header):
+        if not ex:
+            return
+        lines.append(header)
         lines.append("| drug | cancer | model score | rank | # trials | example NCT |")
         lines.append("| --- | --- | --- | --- | --- | --- |")
         for e in ex:
@@ -678,6 +758,11 @@ def write_markdown(result: dict, path: Path, smoke: bool):
             lines.append(f"| {e['drug']} | {e['cancer']} | {ms} | {rk} | {e['trial_total']} | "
                          f"{e['example_nct'] or ''} |")
         lines.append("")
+
+    ex_table(result.get("corroborated_examples", []),
+             "## Concrete corroborated novel predictions -- raw-score top set (one row per distinct drug)\n")
+    ex_table(result.get("corroborated_examples_shortlist_ranking", []),
+             "## Concrete corroborated novel predictions -- specificity-lift shortlist ranking (one row per distinct drug)\n")
 
     lines.append("## Caveats\n")
     lines.append("- **Name matching is fuzzy.** Drug/cancer strings are passed to ClinicalTrials.gov's "
