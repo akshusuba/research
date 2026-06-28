@@ -1,0 +1,61 @@
+Loaded cached model scores (skipping training).
+Candidate pairs: 1080 -> {'top': 270, 'low': 270, 'random': 270, 'top_lift': 270}
+Querying (434/1080 already cached) ...
+  25/1080 queried
+  50/1080 queried
+  75/1080 queried
+  100/1080 queried
+  125/1080 queried
+  150/1080 queried
+  175/1080 queried
+  200/1080 queried
+  225/1080 queried
+  250/1080 queried
+  275/1080 queried
+  300/1080 queried
+  325/1080 queried
+  350/1080 queried
+  375/1080 queried
+  400/1080 queried
+  425/1080 queried
+  450/1080 queried
+  475/1080 queried
+  500/1080 queried
+  525/1080 queried
+  550/1080 queried
+  575/1080 queried
+  600/1080 queried
+  625/1080 queried
+  650/1080 queried
+  675/1080 queried
+  700/1080 queried
+  725/1080 queried
+  750/1080 queried
+  775/1080 queried
+  800/1080 queried
+  825/1080 queried
+  850/1080 queried
+  875/1080 queried
+  900/1080 queried
+  925/1080 queried
+  950/1080 queried
+  975/1080 queried
+  1000/1080 queried
+  1025/1080 queried
+  1050/1080 queried
+  1075/1080 queried
+Network calls: 639, errors: 0
+
+Saved -> /home/elrarun/code/research/oncorepurpose/results/clinicaltrials_validation.json
+Saved -> /home/elrarun/code/research/oncorepurpose/results/clinicaltrials_validation.md
+
+=== HEADLINE ===
+  top     : 18/270 = 6.7% have an interventional trial
+  low     : 12/270 = 4.4% have an interventional trial
+  random  : 20/270 = 7.4% have an interventional trial
+  top_lift: 11/270 = 4.1% have an interventional trial
+  top_vs_random: 6.7% vs 7.4%  ratio=0.90  p=0.6929
+  top_vs_low: 6.7% vs 4.4%  ratio=1.50  p=0.1739
+  top_lift_vs_random: 4.1% vs 7.4%  ratio=0.55  p=0.9686
+  top_lift_vs_low: 4.1% vs 4.4%  ratio=0.92  p=0.6646
+  AUROC(trial ~ model_score) over 810 pairs = 0.676

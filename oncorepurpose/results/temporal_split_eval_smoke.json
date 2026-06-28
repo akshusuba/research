@@ -1,0 +1,252 @@
+{
+  "timestamp": "2026-06-28T01:27:10.657155",
+  "mode": "smoke",
+  "dataset": "PrimeKG",
+  "target_edge_type": [
+    "drug",
+    "indication",
+    "disease"
+  ],
+  "config": {
+    "n_pairs_sampled": 16,
+    "epochs": 12,
+    "mlp_epochs": 40,
+    "patience": 10,
+    "seeds": [
+      0
+    ],
+    "percentile": 70.0,
+    "sample_seed": 0,
+    "recall_ks": [
+      5,
+      10
+    ],
+    "hidden": 128,
+    "test_neg_ratio": 2.0
+  },
+  "cutoff_year": 2015,
+  "counts": {
+    "true_oncology_pairs_total": 1629,
+    "sampled": 16,
+    "years_resolved": 16,
+    "past": 11,
+    "future": 5
+  },
+  "year_distribution": {
+    "min": 1954,
+    "p25": 1965.25,
+    "median": 1990.5,
+    "p75": 2019.0,
+    "max": 2026
+  },
+  "split_info": {
+    "regime": "temporal",
+    "cutoff_year": 2015,
+    "n_past_total": 11,
+    "n_train_pos": 9,
+    "n_val_pos": 2,
+    "n_future_pos": 5,
+    "neg_ratio": 1.0,
+    "test_neg_ratio": 2.0
+  },
+  "results": {
+    "GNN": {
+      "auprc": {
+        "mean": 0.9666666666666666,
+        "std": 0.0,
+        "values": [
+          0.9666666666666666
+        ]
+      },
+      "auroc": {
+        "mean": 0.98,
+        "std": 0.0,
+        "values": [
+          0.98
+        ]
+      },
+      "f1": {
+        "mean": 0.9090909090909091,
+        "std": 0.0,
+        "values": [
+          0.9090909090909091
+        ]
+      },
+      "hits@1": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "hits@10": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "hits@3": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "mrr": {
+        "mean": 0.4499999999999999,
+        "std": 0.0,
+        "values": [
+          0.4499999999999999
+        ]
+      },
+      "precision": {
+        "mean": 0.8333333333333334,
+        "std": 0.0,
+        "values": [
+          0.8333333333333334
+        ]
+      },
+      "recall": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "recall@10": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "recall@5": {
+        "mean": 0.800000011920929,
+        "std": 0.0,
+        "values": [
+          0.800000011920929
+        ]
+      }
+    },
+    "MLP": {
+      "auprc": {
+        "mean": 0.8111111111111111,
+        "std": 0.0,
+        "values": [
+          0.8111111111111111
+        ]
+      },
+      "auroc": {
+        "mean": 0.84,
+        "std": 0.0,
+        "values": [
+          0.84
+        ]
+      },
+      "f1": {
+        "mean": 0.75,
+        "std": 0.0,
+        "values": [
+          0.75
+        ]
+      },
+      "hits@1": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "hits@10": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "hits@3": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "mrr": {
+        "mean": 0.41388888888888886,
+        "std": 0.0,
+        "values": [
+          0.41388888888888886
+        ]
+      },
+      "precision": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "recall": {
+        "mean": 0.6,
+        "std": 0.0,
+        "values": [
+          0.6
+        ]
+      },
+      "recall@10": {
+        "mean": 1.0,
+        "std": 0.0,
+        "values": [
+          1.0
+        ]
+      },
+      "recall@5": {
+        "mean": 0.6000000238418579,
+        "std": 0.0,
+        "values": [
+          0.6000000238418579
+        ]
+      }
+    }
+  },
+  "per_seed": {
+    "GNN": [
+      {
+        "auroc": 0.98,
+        "auprc": 0.9666666666666666,
+        "hits@1": 1.0,
+        "hits@3": 1.0,
+        "hits@10": 1.0,
+        "mrr": 0.4499999999999999,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091,
+        "recall@5": 0.800000011920929,
+        "recall@10": 1.0
+      }
+    ],
+    "MLP": [
+      {
+        "auroc": 0.84,
+        "auprc": 0.8111111111111111,
+        "hits@1": 1.0,
+        "hits@3": 1.0,
+        "hits@10": 1.0,
+        "mrr": 0.41388888888888886,
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1": 0.75,
+        "recall@5": 0.6000000238418579,
+        "recall@10": 1.0
+      }
+    ]
+  },
+  "comparison": {
+    "gnn_auroc_mean": 0.98,
+    "mlp_auroc_mean": 0.84,
+    "graph_gain_auroc": 0.14,
+    "gnn_above_chance": true
+  },
+  "headline": "Prospective (temporal) test on FUTURE oncology indications (cutoff T=2015): GNN AUROC=0.980, structure-blind MLP AUROC=0.840 (graph gain +0.140).",
+  "device": "cuda"
+}

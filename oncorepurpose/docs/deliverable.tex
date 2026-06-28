@@ -150,23 +150,13 @@ any performance gap measures graph structure, not features.}
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-  node distance=5mm and 9mm,
-  box/.style={rounded corners,draw=sriblue,fill=srilight,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
-  acc/.style={rounded corners,draw=sriaccent,fill=sriaccent!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
-  grn/.style={rounded corners,draw=srigreen,fill=srigreen!10,thick,align=center,font=\footnotesize,inner sep=3pt,minimum height=0.85cm},
-  >={Stealth[length=2.2mm]}]
-  \node[box] (kg) {PrimeKG\\graph};
-  \node[acc,right=of kg] (rank) {Candidate\\ranking\\(GNN / XGBoost)};
-  \node[box,right=of rank] (mech) {Mechanism\\path};
-  \node[grn,right=of mech] (llm) {LLM evidence\\verifier};
-  \node[box,right=of llm] (out) {Ranked\\dossier};
-  \draw[->,thick] (kg)--(rank); \draw[->,thick] (rank)--(mech);
-  \draw[->,thick] (mech)--(llm); \draw[->,thick] (llm)--(out);
-  \node[srigray,font=\scriptsize\itshape,below=2mm of mech] {Europe PMC abstracts feed the verifier};
-\end{tikzpicture}
-\caption{The OncoEvidence pipeline: rank candidates, extract a mechanism path, verify it
-against the literature, output an evidence-backed shortlist.}
+\includegraphics[width=\linewidth]{oncoevidence_main_diagram.png}
+\caption{The OncoEvidence pipeline. We rank drug--disease candidates over PrimeKG,
+extract a multi-hop mechanism path (drug $\to$ target $\to$ cancer gene $\to$ cancer),
+verify it against Europe PMC abstracts with an LLM, and emit an evidence-backed ranked
+dossier. Two audits stress-test the system: a prospective time-split (train on past,
+test on future) and a counterfactual faithfulness test (remove mechanistic edges and
+re-evaluate).}
 \label{fig:pipeline}
 \end{figure}
 

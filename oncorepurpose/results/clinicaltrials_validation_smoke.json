@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "mode": "smoke",
+    "n_positives": 6,
+    "n_controls": 6,
+    "seed": 0,
+    "hit_definition": ">=1 interventional ClinicalTrials.gov study for query.intr=drug & query.cond=cancer",
+    "api": "https://clinicaltrials.gov/api/v2/studies",
+    "network_calls": 0,
+    "query_errors": 0
+  },
+  "set_summary": {
+    "top": {
+      "n": 6,
+      "hits": 1,
+      "fraction": 0.16666666666666666,
+      "n_unique_drugs": 2
+    },
+    "random": {
+      "n": 6,
+      "hits": 1,
+      "fraction": 0.16666666666666666,
+      "n_unique_drugs": 6
+    }
+  },
+  "comparisons": {
+    "top_vs_random": {
+      "positive_fraction": 0.16666666666666666,
+      "control_fraction": 0.16666666666666666,
+      "ratio": 1.0,
+      "odds_ratio": 1.0,
+      "p_value": 0.7727272727272727,
+      "test": "Fisher exact, one-sided (positive > control)"
+    }
+  },
+  "auroc_trial_vs_modelscore": 1.0,
+  "auroc_mannwhitney_p": 0.16666666666666666,
+  "n_scored_for_auroc": 6,
+  "promiscuity_confound": {
+    "top": {
+      "n_hits": 1,
+      "n_distinct_hit_drugs": 1,
+      "top_hit_drug": [
+        "Cyclosporine",
+        1
+      ],
+      "share_top_drug": 1.0
+    },
+    "random": {
+      "n_hits": 1,
+      "n_distinct_hit_drugs": 1,
+      "top_hit_drug": [
+        "Tremelimumab",
+        1
+      ],
+      "share_top_drug": 1.0
+    },
+    "top_lift": {
+      "n_hits": 0,
+      "n_distinct_hit_drugs": 0,
+      "top_hit_drug": null,
+      "share_top_drug": null
+    }
+  },
+  "corroborated_examples": [
+    {
+      "drug": "Cyclosporine",
+      "cancer": "metastatic melanoma",
+      "model_score": 0.9961053729057312,
+      "rank": null,
+      "trial_total": 2,
+      "example_nct": "NCT00006233",
+      "example_title": "Combination Chemotherapy, Total-Body Irradiation, Peripheral Stem Cell Transplantation, and Lymphocyte Infusion in Treating Patients With Stage IV Melanoma"
+    }
+  ],
+  "corroborated_examples_shortlist_ranking": [],
+  "pairs": [
+    {
+      "drug": "Cyclosporine",
+      "cancer": "glioblastoma",
+      "model_score": 0.9953769445419312,
+      "rank": null,
+      "set": "top",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Etretinate",
+      "cancer": "glioblastoma",
+      "model_score": 0.9948798418045044,
+      "rank": null,
+      "set": "top",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Cyclosporine",
+      "cancer": "pancreatic adenocarcinoma",
+      "model_score": 0.9945449829101562,
+      "rank": null,
+      "set": "top",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Etretinate",
+      "cancer": "pancreatic adenocarcinoma",
+      "model_score": 0.9939568042755127,
+      "rank": null,
+      "set": "top",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Cyclosporine",
+      "cancer": "metastatic melanoma",
+      "model_score": 0.9961053729057312,
+      "rank": null,
+      "set": "top",
+      "trial_total": 2,
+      "trial_hit": 1,
+      "trial_examples": [
+        {
+          "nct": "NCT00006233",
+          "title": "Combination Chemotherapy, Total-Body Irradiation, Peripheral Stem Cell Transplantation, and Lymphocyte Infusion in Treating Patients With Stage IV Melanoma",
+          "status": "COMPLETED"
+        },
+        {
+          "nct": "NCT00003060",
+          "title": "Chemotherapy Plus Bone Marrow Transplantation in Treating Patients With Metastatic Melanoma",
+          "status": "TERMINATED"
+        }
+      ],
+      "query_error": null
+    },
+    {
+      "drug": "Etretinate",
+      "cancer": "metastatic melanoma",
+      "model_score": 0.9956894516944885,
+      "rank": null,
+      "set": "top",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Cibenzoline",
+      "cancer": "metastatic melanoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Iobenguane sulfate I-123",
+      "cancer": "metastatic melanoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Sulfamerazine",
+      "cancer": "metastatic melanoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Bradykinin",
+      "cancer": "pancreatic adenocarcinoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    },
+    {
+      "drug": "Tremelimumab",
+      "cancer": "metastatic melanoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 10,
+      "trial_hit": 1,
+      "trial_examples": [
+        {
+          "nct": "NCT01034787",
+          "title": "Study of AntiCTLA4 in Patients With Unresectable or Metastatic Uveal Melanoma",
+          "status": "COMPLETED"
+        },
+        {
+          "nct": "NCT02535078",
+          "title": "Phase 1b/2 Study of the Combination of IMCgp100 With Durvalumab and/or Tremelimumab in Advanced Cutaneous Melanoma",
+          "status": "WITHDRAWN"
+        },
+        {
+          "nct": "NCT00585000",
+          "title": "A Study To Assess The Safety Of Administering CP-675,206 As A One Hour Infusion In Patients With Surgically Incurable Advanced Melanoma",
+          "status": "TERMINATED"
+        },
+        {
+          "nct": "NCT04223648",
+          "title": "Programmed Cell Death 1 + Selected Cell Therapy With Durvalumab (MEDI4736) and Tremelimumab in Metastatic Melanoma",
+          "status": "WITHDRAWN"
+        },
+        {
+          "nct": "NCT02141542",
+          "title": "Phase I Clinical Trial of Tremelimumab Plus MEDI3617 in Patients With Unresectable Stage III or Stage IV Melanoma",
+          "status": "COMPLETED"
+        }
+      ],
+      "query_error": null
+    },
+    {
+      "drug": "Olaptesed Pegol",
+      "cancer": "metastatic melanoma",
+      "model_score": NaN,
+      "rank": -1,
+      "set": "random",
+      "trial_total": 0,
+      "trial_hit": 0,
+      "trial_examples": [],
+      "query_error": null
+    }
+  ]
+}
