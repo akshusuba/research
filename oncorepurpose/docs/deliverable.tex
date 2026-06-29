@@ -79,16 +79,17 @@ beats the graph network at link ranking. But only the graph yields a traceable
 drug\,$\to$\,target\,$\to$\,cancer-gene\,$\to$\,cancer path; that path structure
 separates true indications from random pairs at AUROC 0.879 and agrees with curated
 DrugMechDB at 0.802. Two new results make the case stronger. On a prospective time-split
-the graph model ranks \emph{future} oncology indications at AUROC 0.930 and beats a
-structure-blind control by $+0.047$; concretely, trained only on pre-2005 structure it
-surfaces $11\times$ as many future indications in the top 50 as the control, including
-post-cutoff approvals like romidepsin and pralatrexate for cutaneous T-cell lymphoma and
-nilotinib for CML. And a counterfactual test shows the mechanism head is \emph{faithful}:
+the graph model ranks \emph{future} oncology indications at AUROC 0.930 (vs sampled
+negatives) and beats a structure-blind control by $+0.047$; it is \emph{not} better on
+median rank, but it \emph{enriches the top-priority tail} --- trained only on pre-2005
+structure it surfaces $11\times$ as many future indications in the top 50 as the control,
+including post-cutoff approvals like romidepsin and pralatrexate for cutaneous T-cell
+lymphoma and nilotinib for CML. And a counterfactual test shows the mechanism head is \emph{faithful}:
 deleting the curated mechanism edge, and only that edge, collapses the prediction
 ($p\approx3.6\times10^{-34}$). A counterfactual stress test then shows the prediction is
 causal (target-edge ablation AUROC 0.878), specific (a wrong target is rejected 92.6\% of
 the time), and literature-supported over decoy paths; and DepMap CRISPR / GTEx data
-independently confirm the bridge genes are real cancer dependencies (AUROC 0.607,
+independently corroborate that the bridge genes are real cancer dependencies (AUROC 0.607,
 $p=4.6\times10^{-6}$), reframing the work as an evidence-triage platform rather than a
 ranker. An orthogonal check against ClinicalTrials.gov is reported as
 a fully characterized negative: after removing both drug and cancer popularity, the
@@ -105,7 +106,7 @@ interaction signal vanishes (AUROC 0.475).
 \item \textbf{New, prospective:} on a time-split the GNN ranks future indications at AUROC 0.930 (vs sampled negatives) and \emph{enriches the top-priority tail} --- $11\times$ as many future indications in the top 50 as a structure-blind control (named post-2005 approvals included), though it is not better on median rank.
 \item \textbf{New, faithfulness:} deleting the curated mechanism edge hurts $\gg$ a random edge (contrast 0.124, $p\approx3.6\times10^{-34}$, faithful 83\%).
 \item \textbf{New, right reason:} a counterfactual stress test shows the prediction is causal (target-edge ablation AUROC 0.878), specific (wrong-target rejection 92.6\%), and literature-supported over decoys (supported 0.80 vs 0.17).
-\item \textbf{New, orthogonal:} DepMap CRISPR / GTEx confirm true-MOA bridge genes are real cancer dependencies (AUROC 0.607, $p=4.6\times10^{-6}$) with no graph or text; functional features lift the hardest separation to 0.751.
+\item \textbf{New, orthogonal:} DepMap CRISPR / GTEx corroborate that true-MOA bridge genes are real cancer dependencies (AUROC 0.607, $p=4.6\times10^{-6}$) with no graph or text; functional features lift the hardest separation to 0.751.
 \item \textbf{New, load-bearing retrieval:} evidence-weighting the graph sharpens the shared-target case from 0.618 to 0.742 and demotes coincidental hub paths. Decision-ready extras: conformal abstention (90.3\% coverage), bootstrap CIs, multi-cutoff temporal trend, 83\% non-textbook novelty, and 60 registered predictions.
 \end{enumerate}
 \end{winbox}
@@ -194,9 +195,11 @@ representation for unseen nodes). All models are trained with binary cross-entro
 positives and sampled negatives.
 
 \subsection{Mechanism-path extraction}
+\begin{sloppypar}
 For a candidate we search PrimeKG for short paths through mechanism relations
 (drug-target, protein-protein, protein-pathway, protein-disease), scoring each by
 specificity and penalizing promiscuous hubs:
+\end{sloppypar}
 \begin{equation}
 \mathrm{score}(p) \;=\; \beta_{\text{type}} \;+\;
 \underbrace{\frac{1}{\log_2(\deg(\text{bridge})+2)}}_{\text{bridge specificity}}\cdot
@@ -227,41 +230,14 @@ indications; random pairs usually yield no path.}
 \label{fig:mechpath}
 \end{figure}
 
-\subsection{The deliverable: a mechanism-grounded candidate dossier}
-The deployment artifact (\texttt{scripts/generate\_report.py}) is deliberately
-\emph{mechanism-first}, not score-first. For each cancer we rank novel drugs by
-disease-specific lift and then \emph{keep only} candidates for which the graph yields a real
-MOA path; phenotype/symptom coincidences are dropped by construction, so the list never
-contains rationales like ``drug $\to$ fatigue $\leftarrow$ cancer''. Table~\ref{tab:dossier}
-shows representative rows. When a cancer has no mechanism-backed novel candidate in the pool,
-we say so rather than pad the list --- the graph has to earn each entry. This is
-hypothesis-generating triage, not a vetted clinical recommendation.
-
-\begin{table}[H]
-\centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} c}
-\toprule
-\rowcolor{sriblue}\color{white}\textbf{Cancer} & \color{white}\textbf{Candidate} & \color{white}\textbf{Top MOA path (direct target)} & \color{white}\textbf{Lift}\\
-\midrule
-\rowcolor{srirow} glioblastoma & Tamoxifen & Tamoxifen $\to$ PRKCA $\leftarrow$ glioblastoma & $+0.67$\\
-glioblastoma & Liothyronine & Liothyronine $\to$ PCNA $\leftarrow$ glioblastoma & $+0.67$\\
-\rowcolor{srirow} metastatic melanoma & Pimecrolimus & Pimecrolimus $\to$ MTOR $\leftarrow$ melanoma & $+0.76$\\
-prostate cancer & Pamidronic acid & Pamidronic acid $\to$ CASP9 $\leftarrow$ prostate cancer & $+0.83$\\
-\rowcolor{srirow} prostate cancer & Zinc chloride & Zinc chloride $\to$ MDM2 $\leftarrow$ prostate cancer & $+0.83$\\
-\bottomrule
-\end{tabular}
-\caption{Mechanism-grounded candidate dossier (excerpt from
-\texttt{results/repurposing\_shortlist.md}). Every row carries a target/PPI/pathway MOA path;
-non-mechanistic phenotype bridges are excluded. Candidates are novel (no existing indication
-edge) and ranked by disease-specific lift. Hypothesis-generating only.}
-\label{tab:dossier}
-\end{table}
-
-\paragraph{The single best converging-evidence candidate.} The point of the platform is that
-the layers are \emph{independent}, so when several agree on the same novel hypothesis the
-signal is non-trivial. \texttt{converging\_evidence.py} ranks the shortlist by how many
-independent layers converge. The lead is \textbf{Pimecrolimus $\rightarrow$ metastatic melanoma}
-via mTOR, where \emph{six} independent layers agree
+\subsection{The deliverable: the converging-evidence lead candidate}
+\begin{sloppypar}
+The deployment artifact is deliberately \emph{mechanism-first}, not score-first --- and its
+front door is not a long ranked list but the single hypothesis on which the most
+\emph{independent} evidence layers agree. Because each layer is computed by a separate
+experiment, agreement across them is non-trivial. \texttt{converging\_evidence.py} ranks the
+novel shortlist this way; the lead is \textbf{Pimecrolimus $\rightarrow$ metastatic melanoma}
+via mTOR, where \emph{six} independent layers converge
 (\texttt{results/converging\_evidence.md}):
 \begin{enumerate}[leftmargin=1.4em,itemsep=0pt,topsep=2pt]
 \item \textbf{Graph mechanism:} a direct-target MOA path
@@ -280,11 +256,46 @@ mTOR inhibition is a genuine melanoma axis, yet pimecrolimus---a topical calcine
 inhibitor---is a non-obvious repurposing candidate: exactly the kind of mechanism-grounded,
 multiply-corroborated hypothesis the platform is built to surface.
 
+\paragraph{Supplementary: the broader mechanism-grounded shortlist.} Behind the lead,
+\texttt{scripts/generate\_report.py} emits a per-cancer shortlist that \emph{keeps only}
+candidates for which the graph yields a real MOA path (phenotype/symptom coincidences are
+dropped by construction, so the list never contains rationales like
+``drug $\to$ fatigue $\leftarrow$ cancer''); Table~\ref{tab:dossier} shows representative rows.
+This is raw, hypothesis-generating triage --- it deliberately surfaces non-obvious entries
+(e.g.\ repositioned metabolic or ion-transport agents) for a human to filter, and is best read
+as a candidate pool feeding the convergence analysis above, not as a vetted recommendation.
+When a cancer has no mechanism-backed novel candidate in the pool, we say so rather than pad
+the list. The full ranked list lives in \texttt{results/repurposing\_shortlist.md}.
+\end{sloppypar}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.20\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} c}
+\toprule
+\rowcolor{sriblue}\color{white}\textbf{Cancer} & \color{white}\textbf{Candidate} & \color{white}\textbf{Top MOA path (direct target)} & \color{white}\textbf{Lift}\\
+\midrule
+\rowcolor{srirow} metastatic melanoma & Pimecrolimus (lead) & Pimecrolimus $\to$ MTOR $\leftarrow$ melanoma & $+0.76$\\
+glioblastoma & Tamoxifen & Tamoxifen $\to$ PRKCA $\leftarrow$ glioblastoma & $+0.67$\\
+\rowcolor{srirow} glioblastoma & Liothyronine & Liothyronine $\to$ PCNA $\leftarrow$ glioblastoma & $+0.67$\\
+prostate cancer & Pamidronic acid & Pamidronic acid $\to$ CASP9 $\leftarrow$ prostate cancer & $+0.83$\\
+\rowcolor{srirow} prostate cancer & Zinc chloride & Zinc chloride $\to$ MDM2 $\leftarrow$ prostate cancer & $+0.83$\\
+\bottomrule
+\end{tabular}
+\caption{Supplementary mechanism-grounded shortlist (excerpt from
+\texttt{results/repurposing\_shortlist.md}), with the converging-evidence lead at top. Every
+row carries a target/PPI/pathway MOA path; non-mechanistic phenotype bridges are excluded.
+Candidates are novel (no existing indication edge) and ranked by disease-specific lift. Raw
+triage, hypothesis-generating only.}
+\label{tab:dossier}
+\end{table}
+
 \subsection{The mechanism head and the joint objective}
+\begin{sloppypar}
 A mechanism head scores a (drug, gene, disease) triple on the \emph{same} encoder
 embeddings, $s_{\text{mech}}(d,g,c)=\mathrm{MLP}\big([\zd_d\Vert\zd_g\Vert\zd_c]\big)$.
 We train it jointly with the link objective using an InfoNCE term that ranks the curated
 DrugMechDB bridge gene $g^{+}$ above $K$ degree-matched decoys $g^{-}_k$:
+\end{sloppypar}
 \begin{equation}
 \mathcal{L} = \mathcal{L}_{\text{link}} + \lambda\,\mathcal{L}_{\text{mech}},
 \qquad
@@ -528,7 +539,8 @@ but consistent edge here, widest on the harder metrics.
 \begin{table}[H]
 \centering\small
 \begin{minipage}[t]{0.52\linewidth}\centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.34\linewidth} cccc}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{l cccc}
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{$T{=}2005$} & \color{white}\textbf{AUROC} & \color{white}\textbf{AUPRC} & \color{white}\textbf{R@50} & \color{white}\textbf{R@100}\\
 \midrule
@@ -698,7 +710,7 @@ scoring a pair; it relies on the specific, literature-attested mechanism.
 
 \begin{table}[H]
 \centering\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.50\linewidth} c c}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.40\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} c}
 \toprule
 \rowcolor{sriblue}\color{white}\textbf{Counterfactual test} & \color{white}\textbf{Key statistic} & \color{white}\textbf{Sep.\ AUROC}\\
 \midrule
@@ -828,6 +840,7 @@ are medical advice.
 % ===========================================================================
 \section{Reproducibility}
 
+\begin{sloppypar}
 Open tools (PyTorch Geometric, scikit-learn, XGBoost) and public data (PrimeKG, Europe
 PMC, DrugMechDB, ClinicalTrials.gov). Every reported number has a script and a JSON record
 in \texttt{results/}: \texttt{oncorepurpose.json} (Findings 1 + ablations),
@@ -840,7 +853,7 @@ and \texttt{prospective\_case\_studies.json} (Finding 5, including the named cas
 \texttt{functional\_genomics\_validation.json} (Finding 8),
 \texttt{evidence\_weighted\_graph.json} (Finding 9), the decision-readiness records
 (\texttt{conformal\_triage.json}, \texttt{stats\_hardening.json},
-\texttt{mechanism\_novelty.json}, \texttt{registered\_predictions.json},
+\texttt{mechanism\_novelty.json}, \texttt{registered\_predictions\_20260628.json},
 \texttt{converging\_evidence.json} --- the single best multiply-corroborated candidate),
 and \texttt{clinicaltrials\_validation.json}
 with \texttt{clinicaltrials\_deconfounded.json} (the characterized negative). A ten-part Colab notebook track
@@ -848,6 +861,7 @@ reproduces the pipeline end to end (Part 4 / the master notebook is fully self-c
 the prospective named cases and the popularity-deconfounded check; Parts 9--10 add the counterfactual
 stress test and functional-genomics corroboration). All predictions are
 hypothesis-generating research, not medical advice.
+\end{sloppypar}
 
 % ===========================================================================
 \begin{thebibliography}{9}
