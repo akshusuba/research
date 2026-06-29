@@ -1,0 +1,1187 @@
+{
+  "framing": "OncoEvidence does not just predict repurposing candidates; it tests whether the proposed mechanism is causally important, biologically specific, and literature-supported. This file surfaces the novel candidate where the most independent evidence layers converge.",
+  "n_candidates": 30,
+  "layer_definitions": {
+    "graph_mechanism": "a real MOA path (direct-target/PPI/pathway) exists in PrimeKG",
+    "calibration_accept": "split-conformal triage accepts (confidence >= alpha)",
+    "novelty_ok": "mechanism is new_mechanism or known_drug_new_cancer (not hub artifact / not textbook)",
+    "driver_context": "mechanism touches a known cancer-driver family for the disease",
+    "no_contradiction": "Europe PMC scan finds no net contradicting evidence",
+    "functional_dependency": "(optional) bridge gene is a CRISPR dependency in the matched DepMap lineage"
+  },
+  "lead": {
+    "drug": "Pimecrolimus",
+    "disease": "metastatic melanoma",
+    "n_layers_pass": 6,
+    "convergence_score": 6.509,
+    "layers": {
+      "graph_mechanism": true,
+      "calibration_accept": true,
+      "novelty_ok": true,
+      "driver_context": true,
+      "no_contradiction": true,
+      "functional_dependency": true
+    },
+    "mechanism_support": "direct-target mechanism",
+    "mechanism_score": 3.043,
+    "specificity_lift": 0.757,
+    "model_score": 0.875,
+    "conformal_triage": "accept",
+    "calibrated_confidence": 0.73,
+    "novelty_label": "new_mechanism",
+    "novelty_justification": "Specific MOA path via ['MTOR'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pimecrolimus is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+    "driver_context_aligned": true,
+    "touched_drivers": [
+      "MTOR"
+    ],
+    "context_rationale": "Pimecrolimus targets MTOR in a PI3K/AKT/mTOR-driven context of metastatic melanoma [driver hit: MTOR].",
+    "supporting_sentences": 0,
+    "contradicting_sentences": 0,
+    "best_path": "Pimecrolimus --targets--> MTOR <--associated-- metastatic melanoma",
+    "bridge_genes": [
+      "MTOR"
+    ],
+    "functional_genomics": {
+      "lineage": "Skin",
+      "mean_chronos": -1.056,
+      "n_cell_lines": 71
+    },
+    "top_reference": "MCSP<sup>+</sup> metastasis founder cells activate immunosuppression early in human melanoma metastatic colonization."
+  },
+  "ranking": [
+    {
+      "drug": "Pimecrolimus",
+      "disease": "metastatic melanoma",
+      "n_layers_pass": 6,
+      "convergence_score": 6.509,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.043,
+      "specificity_lift": 0.757,
+      "model_score": 0.875,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.73,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['MTOR'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pimecrolimus is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MTOR"
+      ],
+      "context_rationale": "Pimecrolimus targets MTOR in a PI3K/AKT/mTOR-driven context of metastatic melanoma [driver hit: MTOR].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Pimecrolimus --targets--> MTOR <--associated-- metastatic melanoma",
+      "bridge_genes": [
+        "MTOR"
+      ],
+      "functional_genomics": {
+        "lineage": "Skin",
+        "mean_chronos": -1.056,
+        "n_cell_lines": 71
+      },
+      "top_reference": "MCSP<sup>+</sup> metastasis founder cells activate immunosuppression early in human melanoma metastatic colonization."
+    },
+    {
+      "drug": "Hydroflumethiazide",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "n_layers_pass": 6,
+      "convergence_score": 6.504,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.112,
+      "specificity_lift": 0.737,
+      "model_score": 0.854,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.63,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['CA9'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Hydroflumethiazide is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MYC"
+      ],
+      "context_rationale": "Hydroflumethiazide targets CA4 (reaching MYC) in a cell-cycle/RB-driven context of non-small cell lung carcinoma (disease) [driver hit: MYC].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Hydroflumethiazide --targets--> CA9 <--associated-- non-small cell lung carcinoma (disease)",
+      "bridge_genes": [
+        "CA9"
+      ],
+      "functional_genomics": {
+        "lineage": "Lung",
+        "mean_chronos": -0.132,
+        "n_cell_lines": 119
+      },
+      "top_reference": "The role and mechanism of CHMP4C in poor prognosis and drug sensitivity of lung adenocarcinoma."
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "glioblastoma (disease)",
+      "n_layers_pass": 6,
+      "convergence_score": 6.311,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.087,
+      "specificity_lift": 0.671,
+      "model_score": 0.788,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.426,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Liothyronine is already an indicated oncology drug (e.g. goiter, multinodular 1, with or without Sertoli-Leydig cell tumors, familial thyroid carcinoma); a plausible MOA path exists for this new cancer via ['PCNA'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "CDK6"
+      ],
+      "context_rationale": "Liothyronine targets PCNA (reaching CDK6) in a cell-cycle/RB-driven context of glioblastoma (disease) [driver hit: CDK6].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Liothyronine --targets--> PCNA <--associated-- glioblastoma (disease)",
+      "bridge_genes": [
+        "PCNA"
+      ],
+      "functional_genomics": {
+        "lineage": "CNS/Brain",
+        "mean_chronos": -2.629,
+        "n_cell_lines": 86
+      },
+      "top_reference": "Recent advances in drug repurposing for cancer immunomodulation emerging strategies, mechanistic insights, and clinical translation."
+    },
+    {
+      "drug": "Nesiritide",
+      "disease": "prostate cancer",
+      "n_layers_pass": 5,
+      "convergence_score": 5.876,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.272,
+      "specificity_lift": 0.826,
+      "model_score": 0.941,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.935,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['NPR3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Nesiritide is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Nesiritide targets NPR2 (reaching MDM2) in a p53-driven context of prostate cancer [driver hit: MDM2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Nesiritide --targets--> NPR3 <--associated-- prostate cancer",
+      "bridge_genes": [
+        "NPR3"
+      ],
+      "functional_genomics": {
+        "lineage": "Prostate",
+        "mean_chronos": 0.08,
+        "n_cell_lines": 10
+      },
+      "top_reference": "Rarely listed essential medicines in 158 national lists."
+    },
+    {
+      "drug": "Zinc chloride",
+      "disease": "prostate cancer",
+      "n_layers_pass": 5,
+      "convergence_score": 5.818,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.215,
+      "specificity_lift": 0.827,
+      "model_score": 0.934,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.913,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['SLC39A1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Zinc chloride is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Zinc chloride targets MDM2 in a p53-driven context of prostate cancer [driver hit: MDM2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Zinc chloride --targets--> SLC39A1 <--associated-- prostate cancer",
+      "bridge_genes": [
+        "SLC39A1"
+      ],
+      "functional_genomics": {
+        "lineage": "Prostate",
+        "mean_chronos": 0.031,
+        "n_cell_lines": 10
+      },
+      "top_reference": "Radiolabelled ZnO, Iron Oxide-Based, and Gold Nanoparticles for Cancer Therapy: Synthesis, Surface Engineering, and Radiolabelling Strategies"
+    },
+    {
+      "drug": "Glycine",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "n_layers_pass": 5,
+      "convergence_score": 5.574,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.193,
+      "specificity_lift": 0.736,
+      "model_score": 0.855,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.64,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['SHMT2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Glycine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Glycine targets GCAT (reaching MDM2) in a p53-driven context of non-small cell lung carcinoma (disease) [driver hit: MDM2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Glycine --targets--> SHMT2 <--associated-- non-small cell lung carcinoma (disease)",
+      "bridge_genes": [
+        "SHMT2"
+      ],
+      "functional_genomics": {
+        "lineage": "Lung",
+        "mean_chronos": -0.057,
+        "n_cell_lines": 119
+      },
+      "top_reference": "Prognostic significance of intratumoral neutrophil extracellular traps in pulmonary pleomorphic carcinoma: comparison with adenocarcinoma."
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "n_layers_pass": 5,
+      "convergence_score": 5.507,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.082,
+      "specificity_lift": 0.738,
+      "model_score": 0.863,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.663,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['RB1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Insulin pork is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "RB1"
+      ],
+      "context_rationale": "Insulin pork targets RB1 in a cell-cycle/RB-driven context of non-small cell lung carcinoma (disease) [driver hit: RB1].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Insulin pork --targets--> RB1 <--associated-- non-small cell lung carcinoma (disease)",
+      "bridge_genes": [
+        "RB1"
+      ],
+      "functional_genomics": {
+        "lineage": "Lung",
+        "mean_chronos": 0.174,
+        "n_cell_lines": 119
+      },
+      "top_reference": "Cooked meat-derived extracellular vesicles ssc-miR-1 induces metabolic disorders in the mice liver via PI3k/AKT pathway."
+    },
+    {
+      "drug": "Probenecid",
+      "disease": "glioblastoma (disease)",
+      "n_layers_pass": 5,
+      "convergence_score": 5.357,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.083,
+      "specificity_lift": 0.674,
+      "model_score": 0.795,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.445,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['SLC22A10'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Probenecid is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MYC"
+      ],
+      "context_rationale": "Probenecid targets SLC22A12 (reaching MYC) in a cell-cycle/RB-driven context of glioblastoma (disease) [driver hit: MYC].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Probenecid --targets--> SLC22A10 <--associated-- glioblastoma (disease)",
+      "bridge_genes": [
+        "SLC22A10"
+      ],
+      "functional_genomics": {
+        "lineage": "CNS/Brain",
+        "mean_chronos": -0.074,
+        "n_cell_lines": 86
+      },
+      "top_reference": "Crossing the blood-brain barrier: emerging therapeutic strategies for neurological disease."
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "glioblastoma (disease)",
+      "n_layers_pass": 5,
+      "convergence_score": 5.305,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.068,
+      "specificity_lift": 0.672,
+      "model_score": 0.788,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.434,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Tamoxifen is already an indicated oncology drug (e.g. female breast carcinoma, invasive ductal breast carcinoma); a plausible MOA path exists for this new cancer via ['PRKCA'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tamoxifen has a MOA path in glioblastoma (disease) but it does not touch a curated driver of this cancer (['IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'kinase-fusion', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Tamoxifen --targets--> PRKCA <--associated-- glioblastoma (disease)",
+      "bridge_genes": [
+        "PRKCA"
+      ],
+      "functional_genomics": {
+        "lineage": "CNS/Brain",
+        "mean_chronos": -0.2,
+        "n_cell_lines": 86
+      },
+      "top_reference": "Steroid receptor coactivator 3-deficient regulatory T cells eradicate multiple solid tumors in syngeneic mouse models."
+    },
+    {
+      "drug": "Lapatinib",
+      "disease": "ovarian carcinoma",
+      "n_layers_pass": 5,
+      "convergence_score": 4.539,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": false,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.036,
+      "specificity_lift": 0.061,
+      "model_score": 0.181,
+      "conformal_triage": "abstain",
+      "calibrated_confidence": 0.062,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Lapatinib is already an indicated oncology drug (e.g. HER2 positive breast carcinoma); a plausible MOA path exists for this new cancer via ['ERBB2'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Lapatinib targets ERBB2 in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Lapatinib --targets--> ERBB2 <--associated-- ovarian carcinoma",
+      "bridge_genes": [
+        "ERBB2"
+      ],
+      "functional_genomics": {
+        "lineage": "Ovary/Fallopian Tube",
+        "mean_chronos": -0.433,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Oncofertility in the Age of HER2 Blockade, Immunotherapy, PARP inhibitors, CDK4/6 inhibitors and Endocrine Treatment: Unanswered Questions in Breast Cancer."
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "ovarian carcinoma",
+      "n_layers_pass": 5,
+      "convergence_score": 3.862,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": false,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": true
+      },
+      "mechanism_support": "interaction-level mechanism",
+      "mechanism_score": 2.315,
+      "specificity_lift": 0.057,
+      "model_score": 0.174,
+      "conformal_triage": "abstain",
+      "calibrated_confidence": 0.062,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Liothyronine is already an indicated oncology drug (e.g. goiter, multinodular 1, with or without Sertoli-Leydig cell tumors, familial thyroid carcinoma); a plausible MOA path exists for this new cancer via ['PCNA', 'USP32'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "TP53"
+      ],
+      "context_rationale": "Liothyronine targets PCNA (reaching TP53) in a p53-driven context of ovarian carcinoma [driver hit: TP53].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Liothyronine --targets--> PCNA --interacts--> USP32 <--associated-- ovarian carcinoma",
+      "bridge_genes": [
+        "PCNA",
+        "USP32"
+      ],
+      "functional_genomics": {
+        "lineage": "Ovary/Fallopian Tube",
+        "mean_chronos": -1.502,
+        "n_cell_lines": 59
+      },
+      "top_reference": "PPP4C: a potential molecular marker and therapeutic target in thyroid cancer and triple-negative breast cancer."
+    },
+    {
+      "drug": "Pamidronic acid",
+      "disease": "prostate cancer",
+      "n_layers_pass": 4,
+      "convergence_score": 4.816,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.199,
+      "specificity_lift": 0.83,
+      "model_score": 0.936,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.927,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['CASP9'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pamidronic acid is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pamidronic acid has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Pamidronic acid --targets--> CASP9 <--associated-- prostate cancer",
+      "bridge_genes": [
+        "CASP9"
+      ],
+      "functional_genomics": {
+        "lineage": "Prostate",
+        "mean_chronos": -0.005,
+        "n_cell_lines": 10
+      },
+      "top_reference": "Real-world study of medication-related osteonecrosis of the jaw from 2010 to 2023 based on Food and Drug Administration Adverse Event Reporting System"
+    },
+    {
+      "drug": "Imatinib",
+      "disease": "colorectal cancer",
+      "n_layers_pass": 4,
+      "convergence_score": 4.699,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.144,
+      "specificity_lift": 0.707,
+      "model_score": 0.826,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.622,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Imatinib is already an indicated oncology drug (e.g. gastrointestinal stromal tumor, chronic myelogenous leukemia, BCR-ABL1 positive); a plausible MOA path exists for this new cancer via ['ABCA3'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Imatinib has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "supporting_sentences": 2,
+      "contradicting_sentences": 0,
+      "best_path": "Imatinib --targets--> ABCA3 <--associated-- colorectal cancer",
+      "bridge_genes": [
+        "ABCA3"
+      ],
+      "functional_genomics": {
+        "lineage": "Bowel",
+        "mean_chronos": -0.011,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Zebularine Boosts Imatinib Efficacy in Cells of Colorectal Cancer via Wnt-Survivin-P-Glycoprotein Pathway."
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "colorectal cancer",
+      "n_layers_pass": 4,
+      "convergence_score": 4.538,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.178,
+      "specificity_lift": 0.711,
+      "model_score": 0.836,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.643,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['PCSK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Insulin pork is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Insulin pork has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Insulin pork --targets--> PCSK2 <--associated-- colorectal cancer",
+      "bridge_genes": [
+        "PCSK2"
+      ],
+      "functional_genomics": {
+        "lineage": "Bowel",
+        "mean_chronos": 0.072,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Association of Anti-Inflammatory Dietary Adherence With Biomarkers and Gut Microbiota Related to Colorectal Cancer Risk: A Retrospective Study."
+    },
+    {
+      "drug": "Insulin human",
+      "disease": "colorectal cancer",
+      "n_layers_pass": 4,
+      "convergence_score": 4.529,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.178,
+      "specificity_lift": 0.71,
+      "model_score": 0.83,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.628,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['PCSK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Insulin human is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Insulin human has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Insulin human --targets--> PCSK2 <--associated-- colorectal cancer",
+      "bridge_genes": [
+        "PCSK2"
+      ],
+      "functional_genomics": {
+        "lineage": "Bowel",
+        "mean_chronos": 0.072,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Fine particulate matter and tobacco product exposure exacerbates metabolic syndrome-related colon cancer via regulating oxidative stress and tumor-associated macrophage interactions."
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "colorectal cancer",
+      "n_layers_pass": 4,
+      "convergence_score": 4.522,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": false,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.176,
+      "specificity_lift": 0.708,
+      "model_score": 0.824,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.617,
+      "novelty_label": "known_mechanism",
+      "novelty_justification": "Extracted MOA gene(s) ['ESR2'] are curated drug->target mechanism for Tamoxifen in DrugMechDB -- this is a known mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ESR2"
+      ],
+      "context_rationale": "Tamoxifen targets ESR2 in a hormone-driven context of colorectal cancer [driver hit: ESR2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Tamoxifen --targets--> PRKCZ <--associated-- colorectal cancer",
+      "bridge_genes": [
+        "PRKCZ"
+      ],
+      "functional_genomics": {
+        "lineage": "Bowel",
+        "mean_chronos": -0.1,
+        "n_cell_lines": 59
+      },
+      "top_reference": "ATM-Related Cancer Predisposition"
+    },
+    {
+      "drug": "Atosiban",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "n_layers_pass": 4,
+      "convergence_score": 4.484,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.099,
+      "specificity_lift": 0.737,
+      "model_score": 0.851,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.623,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['OXTR'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Atosiban is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Atosiban has a MOA path in non-small cell lung carcinoma (disease) but it does not touch a curated driver of this cancer (['Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Atosiban --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)",
+      "bridge_genes": [
+        "OXTR"
+      ],
+      "functional_genomics": {
+        "lineage": "Lung",
+        "mean_chronos": 0.007,
+        "n_cell_lines": 119
+      },
+      "top_reference": "Immunomodulatory crosstalk between GPCR and hippo signaling in cancer: implications for tumor immunity and therapeutic targeting."
+    },
+    {
+      "drug": "Carboplatin",
+      "disease": "glioblastoma (disease)",
+      "n_layers_pass": 4,
+      "convergence_score": 4.394,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.058,
+      "specificity_lift": 0.673,
+      "model_score": 0.791,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.439,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Carboplatin is already an indicated oncology drug (e.g. ovarian cancer, hereditary breast ovarian cancer syndrome); a plausible MOA path exists for this new cancer via ['GSTT1'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Carboplatin has a MOA path in glioblastoma (disease) but it does not touch a curated driver of this cancer (['IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'kinase-fusion', 'p53']).",
+      "supporting_sentences": 1,
+      "contradicting_sentences": 0,
+      "best_path": "Carboplatin --targets--> GSTT1 <--associated-- glioblastoma (disease)",
+      "bridge_genes": [
+        "GSTT1"
+      ],
+      "functional_genomics": null,
+      "top_reference": "Metastatic High-Grade Serous Ovarian Carcinoma Presenting as a Temporal Lobe Glioblastoma Mimic: A Diagnostic Pitfall."
+    },
+    {
+      "drug": "Cisplatin",
+      "disease": "glioblastoma (disease)",
+      "n_layers_pass": 4,
+      "convergence_score": 4.298,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": false,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.058,
+      "specificity_lift": 0.673,
+      "model_score": 0.791,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.446,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Cisplatin is already an indicated oncology drug (e.g. ovarian cancer, hereditary breast ovarian cancer syndrome); a plausible MOA path exists for this new cancer via ['GSTT1'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "PIK3R1"
+      ],
+      "context_rationale": "Cisplatin targets CYP4A11 (reaching PIK3R1) in a PI3K/AKT/mTOR-driven context of glioblastoma (disease) [driver hit: PIK3R1].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 1,
+      "best_path": "Cisplatin --targets--> GSTT1 <--associated-- glioblastoma (disease)",
+      "bridge_genes": [
+        "GSTT1"
+      ],
+      "functional_genomics": null,
+      "top_reference": "In Vitro Anti-Glioblastoma Activity of a Novel Pt(IV)-Ganoderic Acid A Conjugate."
+    },
+    {
+      "drug": "Potassium chloride",
+      "disease": "metastatic melanoma",
+      "n_layers_pass": 4,
+      "convergence_score": 3.906,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "interaction-level mechanism",
+      "mechanism_score": 2.315,
+      "specificity_lift": 0.759,
+      "model_score": 0.878,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.751,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['SLC12A6', 'OXSR1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Potassium chloride is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Potassium chloride has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Potassium chloride --targets--> SLC12A6 --interacts--> OXSR1 <--associated-- metastatic melanoma",
+      "bridge_genes": [
+        "SLC12A6",
+        "OXSR1"
+      ],
+      "functional_genomics": {
+        "lineage": "Skin",
+        "mean_chronos": -0.038,
+        "n_cell_lines": 71
+      },
+      "top_reference": "Enteropathogenic Escherichia coli and Bacterial Overgrowth Co-infection Exacerbating Immune Checkpoint Inhibitor-Induced Colitis."
+    },
+    {
+      "drug": "Isoprenaline",
+      "disease": "metastatic melanoma",
+      "n_layers_pass": 4,
+      "convergence_score": 3.87,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "interaction-level mechanism",
+      "mechanism_score": 2.315,
+      "specificity_lift": 0.758,
+      "model_score": 0.868,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.706,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['PIK3R3', 'CAMK1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Isoprenaline is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Isoprenaline has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Isoprenaline --targets--> PIK3R3 --interacts--> CAMK1 <--associated-- metastatic melanoma",
+      "bridge_genes": [
+        "PIK3R3",
+        "CAMK1"
+      ],
+      "functional_genomics": {
+        "lineage": "Skin",
+        "mean_chronos": -0.039,
+        "n_cell_lines": 71
+      },
+      "top_reference": "\u03b2-Adrenergic Signaling Promotes Anti-Tumor Immunity in TP53-mutant Oral Squamous Cell Carcinoma."
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "metastatic melanoma",
+      "n_layers_pass": 4,
+      "convergence_score": 3.828,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "interaction-level mechanism",
+      "mechanism_score": 2.272,
+      "specificity_lift": 0.758,
+      "model_score": 0.87,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.71,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['NFATC1', 'ROCK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pseudoephedrine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pseudoephedrine has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Pseudoephedrine --targets--> NFATC1 --interacts--> ROCK2 <--associated-- metastatic melanoma",
+      "bridge_genes": [
+        "NFATC1",
+        "ROCK2"
+      ],
+      "functional_genomics": {
+        "lineage": "Skin",
+        "mean_chronos": 0.052,
+        "n_cell_lines": 71
+      },
+      "top_reference": "Transnasal drug delivery to the brain: circumventing barriers for brain tumor patients."
+    },
+    {
+      "drug": "Glycine",
+      "disease": "ovarian carcinoma",
+      "n_layers_pass": 4,
+      "convergence_score": 3.622,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": false,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.182,
+      "specificity_lift": 0.059,
+      "model_score": 0.177,
+      "conformal_triage": "abstain",
+      "calibrated_confidence": 0.062,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Glycine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Glycine targets BAAT (reaching ERBB2) in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Glycine --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "bridge_genes": [
+        "GLRA3"
+      ],
+      "functional_genomics": {
+        "lineage": "Ovary/Fallopian Tube",
+        "mean_chronos": -0.007,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Activity of datopotamab deruxtecan in TROP2-expressing low-grade serous ovarian cancer: a preclinical study"
+    },
+    {
+      "drug": "Lindane",
+      "disease": "ovarian carcinoma",
+      "n_layers_pass": 4,
+      "convergence_score": 3.622,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": false,
+        "novelty_ok": true,
+        "driver_context": true,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.182,
+      "specificity_lift": 0.058,
+      "model_score": 0.176,
+      "conformal_triage": "abstain",
+      "calibrated_confidence": 0.062,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Lindane is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Lindane targets PGR (reaching ERBB2) in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Lindane --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "bridge_genes": [
+        "GLRA3"
+      ],
+      "functional_genomics": {
+        "lineage": "Ovary/Fallopian Tube",
+        "mean_chronos": -0.007,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Effect of pesticides on breast cancer tumor."
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "prostate cancer",
+      "n_layers_pass": 3,
+      "convergence_score": 3.745,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": false,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.118,
+      "specificity_lift": 0.828,
+      "model_score": 0.94,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.935,
+      "novelty_label": "known_mechanism",
+      "novelty_justification": "Extracted MOA gene(s) ['ADRB2'] are curated drug->target mechanism for Pseudoephedrine in DrugMechDB -- this is a known mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pseudoephedrine has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Pseudoephedrine --targets--> ATF3 <--associated-- prostate cancer",
+      "bridge_genes": [
+        "ATF3"
+      ],
+      "functional_genomics": {
+        "lineage": "Prostate",
+        "mean_chronos": 0.031,
+        "n_cell_lines": 10
+      },
+      "top_reference": "Oncosexology: A Narrative Review on Sexual Health and Quality of Life in Cancer Patients."
+    },
+    {
+      "drug": "Tetracosactide",
+      "disease": "prostate cancer",
+      "n_layers_pass": 3,
+      "convergence_score": 3.744,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": false,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.116,
+      "specificity_lift": 0.828,
+      "model_score": 0.939,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.936,
+      "novelty_label": "known_mechanism",
+      "novelty_justification": "Extracted MOA gene(s) ['MC2R'] are curated drug->target mechanism for Tetracosactide in DrugMechDB -- this is a known mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tetracosactide has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Tetracosactide --targets--> MC2R <--associated-- prostate cancer",
+      "bridge_genes": [
+        "MC2R"
+      ],
+      "functional_genomics": {
+        "lineage": "Prostate",
+        "mean_chronos": 0.058,
+        "n_cell_lines": 10
+      },
+      "top_reference": "Adrenal insufficiency after long-term high-dose ethinylestradiol use in a transgender woman"
+    },
+    {
+      "drug": "Metformin",
+      "disease": "colorectal cancer",
+      "n_layers_pass": 3,
+      "convergence_score": 3.611,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": false,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.167,
+      "specificity_lift": 0.707,
+      "model_score": 0.826,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.617,
+      "novelty_label": "known_mechanism",
+      "novelty_justification": "Extracted MOA gene(s) ['ETFDH'] are curated drug->target mechanism for Metformin in DrugMechDB -- this is a known mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Metformin has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "supporting_sentences": 1,
+      "contradicting_sentences": 0,
+      "best_path": "Metformin --targets--> ETFDH <--associated-- colorectal cancer",
+      "bridge_genes": [
+        "ETFDH"
+      ],
+      "functional_genomics": {
+        "lineage": "Bowel",
+        "mean_chronos": 0.048,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Interrogating the Mechanistic Link between Neighborhood Deprivation and Colorectal Cancer Risk through Transcriptomic Analysis of Normal Colorectal Biopsies."
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "metastatic melanoma",
+      "n_layers_pass": 3,
+      "convergence_score": 3.591,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": false,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.136,
+      "specificity_lift": 0.758,
+      "model_score": 0.874,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.734,
+      "novelty_label": "known_drug_new_cancer",
+      "novelty_justification": "Tamoxifen is already an indicated oncology drug (e.g. female breast carcinoma, invasive ductal breast carcinoma); a plausible MOA path exists for this new cancer via ['PRKCI'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tamoxifen has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 1,
+      "best_path": "Tamoxifen --targets--> PRKCI <--associated-- metastatic melanoma",
+      "bridge_genes": [
+        "PRKCI"
+      ],
+      "functional_genomics": {
+        "lineage": "Skin",
+        "mean_chronos": -0.076,
+        "n_cell_lines": 71
+      },
+      "top_reference": "Cervical Metastasis From Primary Breast Carcinoma: A Case Report and Review of Extragenital Tumors Involving the Uterine Cervix."
+    },
+    {
+      "drug": "Oxytocin",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "n_layers_pass": 3,
+      "convergence_score": 3.486,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": true,
+        "novelty_ok": false,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.099,
+      "specificity_lift": 0.737,
+      "model_score": 0.853,
+      "conformal_triage": "accept",
+      "calibrated_confidence": 0.627,
+      "novelty_label": "known_mechanism",
+      "novelty_justification": "Extracted MOA gene(s) ['OXTR'] are curated drug->target mechanism for Oxytocin in DrugMechDB -- this is a known mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Oxytocin has a MOA path in non-small cell lung carcinoma (disease) but it does not touch a curated driver of this cancer (['Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Oxytocin --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)",
+      "bridge_genes": [
+        "OXTR"
+      ],
+      "functional_genomics": {
+        "lineage": "Lung",
+        "mean_chronos": 0.007,
+        "n_cell_lines": 119
+      },
+      "top_reference": "Advances in antimicrobial peptides: promising cancer treatments and vaccines."
+    },
+    {
+      "drug": "Ivermectin",
+      "disease": "ovarian carcinoma",
+      "n_layers_pass": 3,
+      "convergence_score": 2.631,
+      "layers": {
+        "graph_mechanism": true,
+        "calibration_accept": false,
+        "novelty_ok": true,
+        "driver_context": false,
+        "no_contradiction": true,
+        "functional_dependency": false
+      },
+      "mechanism_support": "direct-target mechanism",
+      "mechanism_score": 3.182,
+      "specificity_lift": 0.068,
+      "model_score": 0.194,
+      "conformal_triage": "abstain",
+      "calibrated_confidence": 0.062,
+      "novelty_label": "new_mechanism",
+      "novelty_justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Ivermectin is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Ivermectin has a MOA path in ovarian carcinoma but it does not touch a curated driver of this cancer (['RAS/MAPK', 'RTK/EGFR', 'p53']).",
+      "supporting_sentences": 0,
+      "contradicting_sentences": 0,
+      "best_path": "Ivermectin --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "bridge_genes": [
+        "GLRA3"
+      ],
+      "functional_genomics": {
+        "lineage": "Ovary/Fallopian Tube",
+        "mean_chronos": -0.007,
+        "n_cell_lines": 59
+      },
+      "top_reference": "Captivating Synergistic, Dose-Dependent Anticancer Effects of Tumor-Regulation Modulators Chloroquine and Ivermectin Completely Abolished by an Opposing Modulator, Deoxycholic Acid, in Hamster Fibrosarcoma: In Vivo, In Vitro, and Literature Review."
+    }
+  ]
+}

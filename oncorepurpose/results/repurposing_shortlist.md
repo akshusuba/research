@@ -2,6 +2,8 @@
 
 _Candidates are ranked by disease-specific lift and kept only if the knowledge graph yields a mechanism-of-action path (direct target / PPI / shared pathway). Phenotype/symptom coincidences are excluded. Hypothesis-generating; not medical advice._
 
+> **Lead converging-evidence candidate:** **Pimecrolimus → metastatic melanoma** (via mTOR) — the one novel candidate where six independent layers agree (graph MOA path, conformal accept, novel mechanism, PI3K/AKT/mTOR driver context, no literature contradiction, and an independent DepMap CRISPR dependency of MTOR in melanoma cell lines). See `results/converging_evidence.md`.
+
 ## glioblastoma (disease)
 
 ### Probenecid  (direct-target mechanism | model score 0.795 | specificity lift +0.674)

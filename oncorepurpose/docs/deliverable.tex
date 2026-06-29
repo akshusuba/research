@@ -257,6 +257,29 @@ edge) and ranked by disease-specific lift. Hypothesis-generating only.}
 \label{tab:dossier}
 \end{table}
 
+\paragraph{The single best converging-evidence candidate.} The point of the platform is that
+the layers are \emph{independent}, so when several agree on the same novel hypothesis the
+signal is non-trivial. \texttt{converging\_evidence.py} ranks the shortlist by how many
+independent layers converge. The lead is \textbf{Pimecrolimus $\rightarrow$ metastatic melanoma}
+via mTOR, where \emph{six} independent layers agree
+(\texttt{results/converging\_evidence.md}):
+\begin{enumerate}[leftmargin=1.4em,itemsep=0pt,topsep=2pt]
+\item \textbf{Graph mechanism:} a direct-target MOA path
+\textit{Pimecrolimus $\to$ MTOR $\leftarrow$ melanoma} (specificity lift $+0.76$).
+\item \textbf{Conformal calibration:} the candidate is \emph{accepted} (confidence $0.73$), not abstained.
+\item \textbf{Mechanism novelty:} labelled \emph{new\_mechanism} --- pimecrolimus is not an
+established oncology drug, so this is hypothesis-generating rather than a rediscovered textbook fact.
+\item \textbf{Oncology driver context:} the target sits in the PI3K/AKT/mTOR driver axis of melanoma.
+\item \textbf{Literature:} the Europe PMC contradiction scan finds no contradicting evidence.
+\item \textbf{Functional genomics (independent of the graph and the literature):} MTOR is a real
+CRISPR dependency in $71$ melanoma (Skin) cell lines (mean Chronos $-1.06$, DepMap), and the
+specificity-aware ranking down-weights pan-essential genes (e.g.\ PCNA) so the lead reflects
+lineage-relevant biology rather than generic essentiality.
+\end{enumerate}
+mTOR inhibition is a genuine melanoma axis, yet pimecrolimus---a topical calcineurin
+inhibitor---is a non-obvious repurposing candidate: exactly the kind of mechanism-grounded,
+multiply-corroborated hypothesis the platform is built to surface.
+
 \subsection{The mechanism head and the joint objective}
 A mechanism head scores a (drug, gene, disease) triple on the \emph{same} encoder
 embeddings, $s_{\text{mech}}(d,g,c)=\mathrm{MLP}\big([\zd_d\Vert\zd_g\Vert\zd_c]\big)$.
@@ -817,11 +840,13 @@ and \texttt{prospective\_case\_studies.json} (Finding 5, including the named cas
 \texttt{functional\_genomics\_validation.json} (Finding 8),
 \texttt{evidence\_weighted\_graph.json} (Finding 9), the decision-readiness records
 (\texttt{conformal\_triage.json}, \texttt{stats\_hardening.json},
-\texttt{mechanism\_novelty.json}, \texttt{registered\_predictions.json}),
+\texttt{mechanism\_novelty.json}, \texttt{registered\_predictions.json},
+\texttt{converging\_evidence.json} --- the single best multiply-corroborated candidate),
 and \texttt{clinicaltrials\_validation.json}
-with \texttt{clinicaltrials\_deconfounded.json} (the characterized negative). An eight-part Colab notebook track
-reproduces the pipeline end to end (Part 4 is fully self-contained; Parts 7--8 cover the prospective
-named cases and the popularity-deconfounded check). All predictions are
+with \texttt{clinicaltrials\_deconfounded.json} (the characterized negative). A ten-part Colab notebook track
+reproduces the pipeline end to end (Part 4 / the master notebook is fully self-contained; Parts 7--8 cover
+the prospective named cases and the popularity-deconfounded check; Parts 9--10 add the counterfactual
+stress test and functional-genomics corroboration). All predictions are
 hypothesis-generating research, not medical advice.
 
 % ===========================================================================

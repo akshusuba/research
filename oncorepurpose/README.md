@@ -236,6 +236,8 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] **Independent functional-genomics corroboration** (`validate_functional_genomics.py`): DepMap CRISPR / GTEx confirm true-MOA bridge genes are real cancer dependencies (AUROC 0.607, p=4.6e-6) with no graph/text; a specificity classifier lifts the hardest separation 0.609→0.751 (honest control: structure-only GBM already 0.731).
 - [x] **Evidence-weighted graph** (`evidence_weighted_graph.py`): re-weighting paths by Europe PMC support sharpens the shared-target case 0.618→0.742 and demotes coincidental hub paths -- the retrieval layer is load-bearing.
 - [x] **Decision-readiness**: conformal abstention (90.3% coverage), bootstrap 95% CIs, multi-cutoff temporal trend, mechanism-novelty triage (~83% non-textbook), and 60 hash-committed registered predictions for prospective falsification.
+- [x] **Converging-evidence candidate** (`converging_evidence.py`): surfaces the one novel hypothesis where the most independent layers agree -- **Pimecrolimus → metastatic melanoma** (mTOR), backed by graph MOA path, conformal accept, novel mechanism, PI3K/AKT/mTOR driver context, no literature contradiction, and a DepMap CRISPR dependency; see `results/converging_evidence.md`.
+- [x] **Ten-part Colab learning track** + self-contained master notebook: Parts 7--8 executed with saved outputs (real numbers), Parts 9--10 add the counterfactual stress test and functional-genomics corroboration, the rest are runnable templates.
 - [ ] Broaden full-text coverage (non-OA sources) and scale the LLM verifier run.
 
 *All predictions are hypothesis-generating and not medical advice.*
