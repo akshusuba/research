@@ -1,0 +1,474 @@
+{
+  "title": "OncoEvidence: Counterfactual Mechanism Stress Test (mechanism-guided cancer drug repurposing)",
+  "config": {
+    "seeds": [
+      0
+    ],
+    "epochs": 40,
+    "lam": 1.0,
+    "n_random": 2,
+    "max_pairs": 200,
+    "n_verify": 30,
+    "n_true_hardneg": 400,
+    "n_neg_hardneg": 400,
+    "device_requested": "cuda",
+    "drugmechdb_drugs_mapped": 1062,
+    "smoke": false
+  },
+  "test1_target_edge_ablation": {
+    "description": "Causal importance: remove the curated drug->target MOA edge vs a matched random drug_protein edge of the same drug; measure the bridge gene's mechanism-score drop.",
+    "per_seed": [
+      {
+        "n_instances": 337,
+        "mean_moa_score_drop": 0.16495466692157598,
+        "mean_rand_score_drop": -0.003335311904533017,
+        "mean_score_contrast": 0.168289978826109,
+        "fraction_faithful": 0.8724035608308606,
+        "wilcoxon_p_greater": 1.0475558395916463e-40,
+        "separation_auroc": 0.8784351363488276,
+        "mean_moa_rank_degrade": 308.6913946587537,
+        "mean_rand_rank_degrade": 0.06528189910979229
+      }
+    ],
+    "pooled": {
+      "n_instances": 337,
+      "mean_moa_score_drop": 0.16495466692157598,
+      "mean_rand_score_drop": -0.003335311904533017,
+      "mean_score_contrast": 0.168289978826109,
+      "fraction_faithful": 0.8724035608308606,
+      "wilcoxon_p_greater": 1.0475558395916463e-40,
+      "separation_auroc": 0.8784351363488276,
+      "mean_moa_rank_degrade": 308.6913946587537,
+      "mean_rand_rank_degrade": 0.06528189910979229
+    }
+  },
+  "test2_wrong_target_substitution": {
+    "description": "Specificity: replace the true target with a drug-degree-matched decoy NOT associated with the disease; the model should score the true MOA above the decoy MOA.",
+    "per_seed": [
+      {
+        "n_instances": 337,
+        "rejection_rate": 0.9258160237388724,
+        "true_vs_decoy_auroc": 0.9233681726527485,
+        "mean_true_score": 3.7752702420436464,
+        "mean_decoy_score": -1.9588976857868694,
+        "mean_score_margin": 5.734167927830516
+      }
+    ],
+    "pooled": {
+      "n_instances": 337,
+      "rejection_rate": 0.9258160237388724,
+      "true_vs_decoy_auroc": 0.9233681726527485,
+      "mean_true_score": 3.7752702420436464,
+      "mean_decoy_score": -1.9588976857868694,
+      "mean_score_margin": 5.734167927830516
+    }
+  },
+  "gnn_per_seed_meta": [
+    {
+      "seed": 0,
+      "n_test_pairs": 186,
+      "n_pairs_evaluated": 186
+    }
+  ],
+  "test3_decoy_path_verifier": {
+    "n_pairs": 30,
+    "use_llm": false,
+    "true_grade_dist": {
+      "supported": 24,
+      "weak": 5,
+      "unknown": 1
+    },
+    "decoy_grade_dist": {
+      "unknown": 12,
+      "supported": 5,
+      "weak": 13
+    },
+    "supported_rate_true": 0.8,
+    "supported_rate_decoy": 0.16666666666666666,
+    "supported_or_weak_rate_true": 0.9666666666666667,
+    "supported_or_weak_rate_decoy": 0.6,
+    "records": [
+      {
+        "drug": "Methotrexate",
+        "disease": "non-Hodgkin lymphoma",
+        "true_gene": "FPGS",
+        "decoy_gene": "S100A16",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Topotecan",
+        "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+        "true_gene": "TOP1",
+        "decoy_gene": "VEGFA",
+        "true_grade": "supported",
+        "decoy_grade": "supported",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Vincristine",
+        "disease": "ALK-positive large B-cell lymphoma",
+        "true_gene": "ABCG2",
+        "decoy_gene": "MMACHC",
+        "true_grade": "weak",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Hydrocortisone",
+        "disease": "lymphoma, non-Hodgkin, familial",
+        "true_gene": "NR3C1",
+        "decoy_gene": "PZP",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Vincristine",
+        "disease": "acute lymphoblastic leukemia (disease)",
+        "true_gene": "ABCB1",
+        "decoy_gene": "SLC22A11",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Cisplatin",
+        "disease": "malignant Sertoli-Leydig cell tumor of ovary",
+        "true_gene": "ATP7B",
+        "decoy_gene": "SUCNR1",
+        "true_grade": "supported",
+        "decoy_grade": "supported",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Decitabine",
+        "disease": "acute myeloid leukemia with NPM1 somatic mutations",
+        "true_gene": "DNMT3A",
+        "decoy_gene": "ABCB11",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Melphalan",
+        "disease": "yolk sac tumor",
+        "true_gene": "SLC7A5",
+        "decoy_gene": "PIK3CD",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Hydrocortisone",
+        "disease": "precursor T-cell acute lymphoblastic leukemia",
+        "true_gene": "NR3C1",
+        "decoy_gene": "IGHG2",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Bevacizumab",
+        "disease": "undifferentiated carcinoma of the corpus uteri",
+        "true_gene": "C1QB",
+        "decoy_gene": "SLC30A2",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 0,
+        "source": "lexical"
+      },
+      {
+        "drug": "Erlotinib",
+        "disease": "non-small cell lung carcinoma (disease)",
+        "true_gene": "ABCB1",
+        "decoy_gene": "MCCC2",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Carboplatin",
+        "disease": "immature ovarian teratoma",
+        "true_gene": "ATP7B",
+        "decoy_gene": "NFE2L1",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Desoximetasone",
+        "disease": "primary cutaneous T-cell lymphoma",
+        "true_gene": "NR3C1",
+        "decoy_gene": "HTR7",
+        "true_grade": "weak",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 1,
+        "source": "lexical"
+      },
+      {
+        "drug": "Dexamethasone",
+        "disease": "Burkitt lymphoma",
+        "true_gene": "CYP2E1",
+        "decoy_gene": "CDK6",
+        "true_grade": "weak",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Brigatinib",
+        "disease": "non-small cell lung carcinoma (disease)",
+        "true_gene": "ALK",
+        "decoy_gene": "ELOVL5",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Lonidamine",
+        "disease": "lung neoplasm",
+        "true_gene": "CFTR",
+        "decoy_gene": "HS3ST1",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 1,
+        "source": "lexical"
+      },
+      {
+        "drug": "Carmustine",
+        "disease": "classic Hodgkin lymphoma, lymphocyte-rich type",
+        "true_gene": "GSR",
+        "decoy_gene": "KRT2",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Panobinostat",
+        "disease": "plasma cell myeloma",
+        "true_gene": "HDAC2",
+        "decoy_gene": "PLA2G2A",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Pemetrexed",
+        "disease": "malignant mesothelioma (disease)",
+        "true_gene": "GART",
+        "decoy_gene": "DGKE",
+        "true_grade": "supported",
+        "decoy_grade": "supported",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Vincristine",
+        "disease": "T-cell/histiocyte rich large B cell lymphoma",
+        "true_gene": "ABCG2",
+        "decoy_gene": "HTR3A",
+        "true_grade": "weak",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Vinblastine",
+        "disease": "Hodgkins lymphoma",
+        "true_gene": "TUBG1",
+        "decoy_gene": "NFE2L3P1",
+        "true_grade": "weak",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Bleomycin",
+        "disease": "primary cutaneous diffuse large B-cell lymphoma, Leg type",
+        "true_gene": "LIG3",
+        "decoy_gene": "HSPA13",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Carmustine",
+        "disease": "diffuse astrocytoma",
+        "true_gene": "GSR",
+        "decoy_gene": "NEU2",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Hydroxyurea",
+        "disease": "primary non-gestational choriocarcinoma of ovary",
+        "true_gene": "RRM1",
+        "decoy_gene": "CD274",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Apalutamide",
+        "disease": "prostate cancer",
+        "true_gene": "CYP2C19",
+        "decoy_gene": "UQCRB",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Prednisone",
+        "disease": "acute lymphoblastic/lymphocytic leukemia",
+        "true_gene": "NR3C1",
+        "decoy_gene": "SLC44A2",
+        "true_grade": "supported",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Glasdegib",
+        "disease": "acute myeloid leukemia with inv3(p21;q26.2) or t(3;3)(p21;q26.2)",
+        "true_gene": "SLC47A1",
+        "decoy_gene": "SLC1A4",
+        "true_grade": "unknown",
+        "decoy_grade": "unknown",
+        "true_n_abstracts": 1,
+        "decoy_n_abstracts": 0,
+        "source": "lexical"
+      },
+      {
+        "drug": "Hydroxyurea",
+        "disease": "theca steroid-producing cell malignant tumor of ovary, not further specified",
+        "true_gene": "RRM1",
+        "decoy_gene": "ACHE",
+        "true_grade": "supported",
+        "decoy_grade": "supported",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Panobinostat",
+        "disease": "primary cutaneous T-cell non-Hodgkin lymphoma",
+        "true_gene": "HDAC1",
+        "decoy_gene": "SDHC",
+        "true_grade": "supported",
+        "decoy_grade": "weak",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      },
+      {
+        "drug": "Levothyroxine",
+        "disease": "familial papillary thyroid carcinoma with renal papillary neoplasia",
+        "true_gene": "THRB",
+        "decoy_gene": "ACE",
+        "true_grade": "supported",
+        "decoy_grade": "supported",
+        "true_n_abstracts": 4,
+        "decoy_n_abstracts": 4,
+        "source": "lexical"
+      }
+    ],
+    "supported_separation": 0.6333333333333334,
+    "supported_or_weak_separation": 0.3666666666666667,
+    "description": "Literature support: swap the real bridge gene for a decoy; the verifier should support the true MOA path more than the decoy. Lexical MOA rubric (no LLM key); an LLM judge would strengthen this."
+  },
+  "test4_hard_negatives": {
+    "n_true": 400,
+    "true_mean_score": 1.954999359942403,
+    "true_any_path_rate": 0.8125,
+    "negative_types": {
+      "random": {
+        "n_neg": 400,
+        "auroc": 0.8871562500000001,
+        "neg_mean_score": 0.12308541618989528,
+        "neg_any_path_rate": 0.065
+      },
+      "degree_matched": {
+        "n_neg": 400,
+        "auroc": 0.742521875,
+        "neg_mean_score": 0.9970677015996461,
+        "neg_any_path_rate": 0.5
+      },
+      "oncology_drug": {
+        "n_neg": 400,
+        "auroc": 0.8696687499999999,
+        "neg_mean_score": 0.2110973924323465,
+        "neg_any_path_rate": 0.1125
+      },
+      "shared_target": {
+        "n_neg": 368,
+        "auroc": 0.6093036684782609,
+        "neg_mean_score": 1.6370486116921839,
+        "neg_any_path_rate": 0.7907608695652174
+      }
+    },
+    "description": "Counterfactual specificity vs non-random negatives: the graph mechanism score should still separate true MOA pairs from plausible (shared-target / oncology-drug / degree-matched) negatives, not just random ones."
+  },
+  "verdict": {
+    "headline": "4/4 counterfactual tests pass. VERDICT: MOVES THE NEEDLE \u2014 the model demonstrably relies on the true MOA edge and rejects fake mechanisms on the tests that probe causal importance and specificity.",
+    "passes": {
+      "test1": true,
+      "test2": true,
+      "test3": true,
+      "test4": true
+    },
+    "per_test": [
+      "T1 target-edge ablation: contrast=0.168 (MOA=0.165 vs random=-0.003), faithful=0.872, Wilcoxon p=0.00, AUROC=0.878 -> PASS",
+      "T2 wrong-target substitution: rejection=0.926, true-vs-decoy AUROC=0.923, margin=5.734 -> PASS",
+      "T3 decoy-path verifier: supported true=0.800 vs decoy=0.167 (sep=0.633); supported|weak sep=0.367 -> PASS",
+      "T4 hard negatives: random AUROC=0.887, hardest=shared_target AUROC=0.609 (>0.5 means mechanism signal survives) -> PASS"
+    ],
+    "moves_the_needle": true
+  }
+}

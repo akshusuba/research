@@ -1,0 +1,837 @@
+{
+  "framing": "OncoEvidence: Counterfactual Evidence-Triage for Mechanism-Guided Cancer Drug Repurposing -- subtype / driver-context layer.",
+  "driver_families": {
+    "RTK/EGFR": [
+      "EGFR",
+      "ERBB2",
+      "ERBB3",
+      "ERBB4",
+      "MET",
+      "KIT",
+      "PDGFRA",
+      "FGFR1",
+      "FGFR2",
+      "FGFR3",
+      "ALK",
+      "ROS1",
+      "RET",
+      "FLT3",
+      "KDR"
+    ],
+    "PI3K/AKT/mTOR": [
+      "PIK3CA",
+      "PIK3R1",
+      "PTEN",
+      "AKT1",
+      "AKT2",
+      "MTOR",
+      "TSC1",
+      "TSC2"
+    ],
+    "RAS/MAPK": [
+      "KRAS",
+      "NRAS",
+      "HRAS",
+      "BRAF",
+      "RAF1",
+      "MAP2K1",
+      "MAPK1",
+      "NF1"
+    ],
+    "p53": [
+      "TP53",
+      "MDM2",
+      "MDM4"
+    ],
+    "cell-cycle/RB": [
+      "RB1",
+      "CDKN2A",
+      "CDK4",
+      "CDK6",
+      "CCND1",
+      "CCNE1",
+      "MYC",
+      "MYCN",
+      "E2F1"
+    ],
+    "WNT": [
+      "CTNNB1",
+      "APC",
+      "AXIN1"
+    ],
+    "Notch": [
+      "NOTCH1",
+      "NOTCH2",
+      "NOTCH3"
+    ],
+    "DNA-repair": [
+      "BRCA1",
+      "BRCA2",
+      "ATM",
+      "ATR",
+      "MLH1",
+      "MSH2",
+      "PARP1",
+      "PALB2"
+    ],
+    "hormone": [
+      "ESR1",
+      "ESR2",
+      "AR",
+      "PGR"
+    ],
+    "IDH/metabolic": [
+      "IDH1",
+      "IDH2",
+      "VHL",
+      "FH",
+      "SDHB"
+    ],
+    "kinase-fusion": [
+      "ABL1",
+      "BCR",
+      "JAK2",
+      "JAK1",
+      "PML",
+      "RARA"
+    ]
+  },
+  "disease_contexts": {
+    "glioblastoma (disease)": {
+      "driver_genes": [
+        "ALK",
+        "APC",
+        "BRAF",
+        "CCND1",
+        "CDK4",
+        "CDK6",
+        "CDKN2A",
+        "CTNNB1",
+        "EGFR",
+        "HRAS",
+        "IDH1",
+        "IDH2",
+        "MDM4",
+        "MET",
+        "MTOR",
+        "MYC",
+        "NF1",
+        "NOTCH1",
+        "NOTCH2",
+        "NOTCH3",
+        "PDGFRA",
+        "PIK3CA",
+        "PIK3R1",
+        "PML",
+        "PTEN"
+      ],
+      "families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ]
+    },
+    "metastatic melanoma": {
+      "driver_genes": [
+        "CDK6",
+        "MTOR",
+        "PDGFRA"
+      ],
+      "families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ]
+    },
+    "prostate cancer": {
+      "driver_genes": [
+        "AKT1",
+        "APC",
+        "AR",
+        "ATM",
+        "ATR",
+        "BRAF",
+        "BRCA1",
+        "BRCA2",
+        "CCND1",
+        "CTNNB1",
+        "EGFR",
+        "ERBB2",
+        "ERBB3",
+        "ESR1",
+        "ESR2",
+        "HRAS",
+        "IDH1",
+        "JAK1",
+        "JAK2",
+        "KRAS",
+        "MDM2",
+        "MET",
+        "MLH1",
+        "MYC",
+        "PALB2",
+        "PARP1",
+        "PIK3CA",
+        "PIK3R1",
+        "PML",
+        "PTEN",
+        "RB1",
+        "TP53"
+      ],
+      "families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ]
+    },
+    "non-small cell lung carcinoma (disease)": {
+      "driver_genes": [
+        "AKT1",
+        "AKT2",
+        "ALK",
+        "APC",
+        "BRAF",
+        "CDKN2A",
+        "E2F1",
+        "EGFR",
+        "ERBB2",
+        "FGFR1",
+        "FGFR2",
+        "KDR",
+        "KIT",
+        "KRAS",
+        "MAP2K1",
+        "MDM2",
+        "MET",
+        "MTOR",
+        "MYC",
+        "NOTCH3",
+        "NRAS",
+        "PIK3CA",
+        "PTEN",
+        "RAF1",
+        "RB1",
+        "RET",
+        "ROS1",
+        "TP53"
+      ],
+      "families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ]
+    },
+    "colorectal cancer": {
+      "driver_genes": [
+        "AKT1",
+        "APC",
+        "BRAF",
+        "CCND1",
+        "CTNNB1",
+        "EGFR",
+        "ERBB2",
+        "ESR2",
+        "FGFR3",
+        "IDH1",
+        "KDR",
+        "KRAS",
+        "MLH1",
+        "MSH2",
+        "MTOR",
+        "MYC",
+        "NF1",
+        "NOTCH1",
+        "NRAS",
+        "PARP1",
+        "PIK3CA",
+        "PTEN",
+        "RET",
+        "TP53"
+      ],
+      "families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ]
+    },
+    "ovarian carcinoma": {
+      "driver_genes": [
+        "ERBB2",
+        "RAF1",
+        "TP53"
+      ],
+      "families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ]
+    }
+  },
+  "n_candidates": 30,
+  "n_driver_context_aligned": 14,
+  "driver_context_alignment_rate": 0.4666666666666667,
+  "candidates": [
+    {
+      "drug": "Probenecid",
+      "disease": "glioblastoma (disease)",
+      "driver_context_families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MYC"
+      ],
+      "context_rationale": "Probenecid targets SLC22A12 (reaching MYC) in a cell-cycle/RB-driven context of glioblastoma (disease) [driver hit: MYC].",
+      "best_path": "Probenecid --targets--> SLC22A12 --interacts--> MYC <--associated-- glioblastoma (disease)"
+    },
+    {
+      "drug": "Cisplatin",
+      "disease": "glioblastoma (disease)",
+      "driver_context_families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "PIK3R1"
+      ],
+      "context_rationale": "Cisplatin targets CYP4A11 (reaching PIK3R1) in a PI3K/AKT/mTOR-driven context of glioblastoma (disease) [driver hit: PIK3R1].",
+      "best_path": "Cisplatin --targets--> CYP4A11 --interacts--> PIK3R1 <--associated-- glioblastoma (disease)"
+    },
+    {
+      "drug": "Carboplatin",
+      "disease": "glioblastoma (disease)",
+      "driver_context_families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Carboplatin has a MOA path in glioblastoma (disease) but it does not touch a curated driver of this cancer (['IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'kinase-fusion', 'p53']).",
+      "best_path": "Carboplatin --targets--> GSTT1 <--associated-- glioblastoma (disease)"
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "glioblastoma (disease)",
+      "driver_context_families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tamoxifen has a MOA path in glioblastoma (disease) but it does not touch a curated driver of this cancer (['IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'kinase-fusion', 'p53']).",
+      "best_path": "Tamoxifen --targets--> PRKCA <--associated-- glioblastoma (disease)"
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "glioblastoma (disease)",
+      "driver_context_families": [
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "CDK6"
+      ],
+      "context_rationale": "Liothyronine targets PCNA (reaching CDK6) in a cell-cycle/RB-driven context of glioblastoma (disease) [driver hit: CDK6].",
+      "best_path": "Liothyronine --targets--> PCNA --interacts--> CDK6 <--associated-- glioblastoma (disease)"
+    },
+    {
+      "drug": "Potassium chloride",
+      "disease": "metastatic melanoma",
+      "driver_context_families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Potassium chloride has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "best_path": "Potassium chloride --targets--> SLC12A6 --interacts--> OXSR1 <--associated-- metastatic melanoma"
+    },
+    {
+      "drug": "Isoprenaline",
+      "disease": "metastatic melanoma",
+      "driver_context_families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Isoprenaline has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "best_path": "Isoprenaline --targets--> PIK3R3 --interacts--> CAMK1 <--associated-- metastatic melanoma"
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "metastatic melanoma",
+      "driver_context_families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pseudoephedrine has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "best_path": "Pseudoephedrine --targets--> NFATC1 --interacts--> ROCK2 <--associated-- metastatic melanoma"
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "metastatic melanoma",
+      "driver_context_families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tamoxifen has a MOA path in metastatic melanoma but it does not touch a curated driver of this cancer (['PI3K/AKT/mTOR', 'RTK/EGFR', 'cell-cycle/RB']).",
+      "best_path": "Tamoxifen --targets--> PRKCI <--associated-- metastatic melanoma"
+    },
+    {
+      "drug": "Pimecrolimus",
+      "disease": "metastatic melanoma",
+      "driver_context_families": [
+        "PI3K/AKT/mTOR",
+        "RTK/EGFR",
+        "cell-cycle/RB"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MTOR"
+      ],
+      "context_rationale": "Pimecrolimus targets MTOR in a PI3K/AKT/mTOR-driven context of metastatic melanoma [driver hit: MTOR].",
+      "best_path": "Pimecrolimus --targets--> MTOR <--associated-- metastatic melanoma"
+    },
+    {
+      "drug": "Pamidronic acid",
+      "disease": "prostate cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pamidronic acid has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "best_path": "Pamidronic acid --targets--> CASP9 <--associated-- prostate cancer"
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "prostate cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Pseudoephedrine has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "best_path": "Pseudoephedrine --targets--> ATF3 <--associated-- prostate cancer"
+    },
+    {
+      "drug": "Tetracosactide",
+      "disease": "prostate cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Tetracosactide has a MOA path in prostate cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'kinase-fusion', 'p53']).",
+      "best_path": "Tetracosactide --targets--> MC2R <--associated-- prostate cancer"
+    },
+    {
+      "drug": "Zinc chloride",
+      "disease": "prostate cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Zinc chloride targets MDM2 in a p53-driven context of prostate cancer [driver hit: MDM2].",
+      "best_path": "Zinc chloride --targets--> MDM2 <--associated-- prostate cancer"
+    },
+    {
+      "drug": "Nesiritide",
+      "disease": "prostate cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "kinase-fusion",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Nesiritide targets NPR2 (reaching MDM2) in a p53-driven context of prostate cancer [driver hit: MDM2].",
+      "best_path": "Nesiritide --targets--> NPR2 --interacts--> MDM2 <--associated-- prostate cancer"
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "driver_context_families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "RB1"
+      ],
+      "context_rationale": "Insulin pork targets RB1 in a cell-cycle/RB-driven context of non-small cell lung carcinoma (disease) [driver hit: RB1].",
+      "best_path": "Insulin pork --targets--> RB1 <--associated-- non-small cell lung carcinoma (disease)"
+    },
+    {
+      "drug": "Oxytocin",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "driver_context_families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Oxytocin has a MOA path in non-small cell lung carcinoma (disease) but it does not touch a curated driver of this cancer (['Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'p53']).",
+      "best_path": "Oxytocin --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)"
+    },
+    {
+      "drug": "Hydroflumethiazide",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "driver_context_families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MYC"
+      ],
+      "context_rationale": "Hydroflumethiazide targets CA4 (reaching MYC) in a cell-cycle/RB-driven context of non-small cell lung carcinoma (disease) [driver hit: MYC].",
+      "best_path": "Hydroflumethiazide --targets--> CA4 --interacts--> MYC <--associated-- non-small cell lung carcinoma (disease)"
+    },
+    {
+      "drug": "Atosiban",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "driver_context_families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Atosiban has a MOA path in non-small cell lung carcinoma (disease) but it does not touch a curated driver of this cancer (['Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'p53']).",
+      "best_path": "Atosiban --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)"
+    },
+    {
+      "drug": "Glycine",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "driver_context_families": [
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "MDM2"
+      ],
+      "context_rationale": "Glycine targets GCAT (reaching MDM2) in a p53-driven context of non-small cell lung carcinoma (disease) [driver hit: MDM2].",
+      "best_path": "Glycine --targets--> GCAT --interacts--> MDM2 <--associated-- non-small cell lung carcinoma (disease)"
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "colorectal cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Insulin pork has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "best_path": "Insulin pork --targets--> PCSK2 <--associated-- colorectal cancer"
+    },
+    {
+      "drug": "Insulin human",
+      "disease": "colorectal cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Insulin human has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "best_path": "Insulin human --targets--> PCSK2 <--associated-- colorectal cancer"
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "colorectal cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ESR2"
+      ],
+      "context_rationale": "Tamoxifen targets ESR2 in a hormone-driven context of colorectal cancer [driver hit: ESR2].",
+      "best_path": "Tamoxifen --targets--> ESR2 <--associated-- colorectal cancer"
+    },
+    {
+      "drug": "Imatinib",
+      "disease": "colorectal cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Imatinib has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "best_path": "Imatinib --targets--> ABCA3 <--associated-- colorectal cancer"
+    },
+    {
+      "drug": "Metformin",
+      "disease": "colorectal cancer",
+      "driver_context_families": [
+        "DNA-repair",
+        "IDH/metabolic",
+        "Notch",
+        "PI3K/AKT/mTOR",
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "WNT",
+        "cell-cycle/RB",
+        "hormone",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Metformin has a MOA path in colorectal cancer but it does not touch a curated driver of this cancer (['DNA-repair', 'IDH/metabolic', 'Notch', 'PI3K/AKT/mTOR', 'RAS/MAPK', 'RTK/EGFR', 'WNT', 'cell-cycle/RB', 'hormone', 'p53']).",
+      "best_path": "Metformin --targets--> ETFDH <--associated-- colorectal cancer"
+    },
+    {
+      "drug": "Ivermectin",
+      "disease": "ovarian carcinoma",
+      "driver_context_families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ],
+      "driver_context_aligned": false,
+      "touched_drivers": [],
+      "context_rationale": "Ivermectin has a MOA path in ovarian carcinoma but it does not touch a curated driver of this cancer (['RAS/MAPK', 'RTK/EGFR', 'p53']).",
+      "best_path": "Ivermectin --targets--> GLRA3 <--associated-- ovarian carcinoma"
+    },
+    {
+      "drug": "Lapatinib",
+      "disease": "ovarian carcinoma",
+      "driver_context_families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Lapatinib targets ERBB2 in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "best_path": "Lapatinib --targets--> ERBB2 <--associated-- ovarian carcinoma"
+    },
+    {
+      "drug": "Glycine",
+      "disease": "ovarian carcinoma",
+      "driver_context_families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Glycine targets BAAT (reaching ERBB2) in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "best_path": "Glycine --targets--> BAAT --interacts--> ERBB2 <--associated-- ovarian carcinoma"
+    },
+    {
+      "drug": "Lindane",
+      "disease": "ovarian carcinoma",
+      "driver_context_families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "ERBB2"
+      ],
+      "context_rationale": "Lindane targets PGR (reaching ERBB2) in a RTK/EGFR-driven context of ovarian carcinoma [driver hit: ERBB2].",
+      "best_path": "Lindane --targets--> PGR --interacts--> ERBB2 <--associated-- ovarian carcinoma"
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "ovarian carcinoma",
+      "driver_context_families": [
+        "RAS/MAPK",
+        "RTK/EGFR",
+        "p53"
+      ],
+      "driver_context_aligned": true,
+      "touched_drivers": [
+        "TP53"
+      ],
+      "context_rationale": "Liothyronine targets PCNA (reaching TP53) in a p53-driven context of ovarian carcinoma [driver hit: TP53].",
+      "best_path": "Liothyronine --targets--> PCNA --in pathway--> TP53 Regulates Transcription of Genes Involved in G2 Cell Cycle Arrest <--in pathway-- TP53 <--associated-- ovarian carcinoma"
+    }
+  ]
+}

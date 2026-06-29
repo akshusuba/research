@@ -1,0 +1,321 @@
+{
+  "framing": "OncoEvidence: Counterfactual Evidence-Triage for Mechanism-Guided Cancer Drug Repurposing -- mechanism-novelty triage.",
+  "source": "repurposing_shortlist.json",
+  "hub_drug_degree_threshold": 100,
+  "drugmechdb": {
+    "available": true,
+    "n_db_drugs": 1071,
+    "n_uniprot_accessions": 775,
+    "n_accessions_mapped": 526
+  },
+  "n_candidates": 30,
+  "label_definitions": {
+    "known_mechanism": "drug->gene MOA curated in DrugMechDB (textbook fact)",
+    "known_drug_new_cancer": "established oncology drug, plausible MOA path, new cancer",
+    "new_mechanism": "specific MOA path exists but drug->gene MOA not in DrugMechDB",
+    "unsupported_or_hub_artifact": "no specific path / only promiscuous-hub bridge"
+  },
+  "distribution": {
+    "known_mechanism": 5,
+    "known_drug_new_cancer": 8,
+    "new_mechanism": 17,
+    "unsupported_or_hub_artifact": 0
+  },
+  "non_textbook_share": 0.8333333333333334,
+  "rows": [
+    {
+      "drug": "Probenecid",
+      "disease": "glioblastoma (disease)",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['SLC22A10'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Probenecid is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Probenecid --targets--> SLC22A10 <--associated-- glioblastoma (disease)",
+      "drugmechdb_genes": [
+        "SLC22A11",
+        "SLC22A6",
+        "SLC22A8"
+      ]
+    },
+    {
+      "drug": "Cisplatin",
+      "disease": "glioblastoma (disease)",
+      "label": "known_drug_new_cancer",
+      "justification": "Cisplatin is already an indicated oncology drug (e.g. ovarian cancer, hereditary breast ovarian cancer syndrome); a plausible MOA path exists for this new cancer via ['GSTT1'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Cisplatin --targets--> GSTT1 <--associated-- glioblastoma (disease)",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Carboplatin",
+      "disease": "glioblastoma (disease)",
+      "label": "known_drug_new_cancer",
+      "justification": "Carboplatin is already an indicated oncology drug (e.g. ovarian cancer, hereditary breast ovarian cancer syndrome); a plausible MOA path exists for this new cancer via ['GSTT1'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Carboplatin --targets--> GSTT1 <--associated-- glioblastoma (disease)",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "glioblastoma (disease)",
+      "label": "known_drug_new_cancer",
+      "justification": "Tamoxifen is already an indicated oncology drug (e.g. female breast carcinoma, invasive ductal breast carcinoma); a plausible MOA path exists for this new cancer via ['PRKCA'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Tamoxifen --targets--> PRKCA <--associated-- glioblastoma (disease)",
+      "drugmechdb_genes": [
+        "ESR1",
+        "ESR2"
+      ]
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "glioblastoma (disease)",
+      "label": "known_drug_new_cancer",
+      "justification": "Liothyronine is already an indicated oncology drug (e.g. goiter, multinodular 1, with or without Sertoli-Leydig cell tumors, familial thyroid carcinoma); a plausible MOA path exists for this new cancer via ['PCNA'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Liothyronine --targets--> PCNA <--associated-- glioblastoma (disease)",
+      "drugmechdb_genes": [
+        "THRA",
+        "THRB"
+      ]
+    },
+    {
+      "drug": "Potassium chloride",
+      "disease": "metastatic melanoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['SLC12A6', 'OXSR1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Potassium chloride is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Potassium chloride --targets--> SLC12A6 --interacts--> OXSR1 <--associated-- metastatic melanoma",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Isoprenaline",
+      "disease": "metastatic melanoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['PIK3R3', 'CAMK1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Isoprenaline is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Isoprenaline --targets--> PIK3R3 --interacts--> CAMK1 <--associated-- metastatic melanoma",
+      "drugmechdb_genes": [
+        "ADCY5",
+        "ADRB1",
+        "ADRB2",
+        "ADRB3"
+      ]
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "metastatic melanoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['NFATC1', 'ROCK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pseudoephedrine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Pseudoephedrine --targets--> NFATC1 --interacts--> ROCK2 <--associated-- metastatic melanoma",
+      "drugmechdb_genes": [
+        "ADRA1A",
+        "ADRB2"
+      ]
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "metastatic melanoma",
+      "label": "known_drug_new_cancer",
+      "justification": "Tamoxifen is already an indicated oncology drug (e.g. female breast carcinoma, invasive ductal breast carcinoma); a plausible MOA path exists for this new cancer via ['PRKCI'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Tamoxifen --targets--> PRKCI <--associated-- metastatic melanoma",
+      "drugmechdb_genes": [
+        "ESR1",
+        "ESR2"
+      ]
+    },
+    {
+      "drug": "Pimecrolimus",
+      "disease": "metastatic melanoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['MTOR'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pimecrolimus is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Pimecrolimus --targets--> MTOR <--associated-- metastatic melanoma",
+      "drugmechdb_genes": [
+        "PPP3CA"
+      ]
+    },
+    {
+      "drug": "Pamidronic acid",
+      "disease": "prostate cancer",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['CASP9'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Pamidronic acid is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Pamidronic acid --targets--> CASP9 <--associated-- prostate cancer",
+      "drugmechdb_genes": [
+        "FDPS",
+        "GGPS1"
+      ]
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "disease": "prostate cancer",
+      "label": "known_mechanism",
+      "justification": "Extracted MOA gene(s) ['ADRB2'] are curated drug->target mechanism for Pseudoephedrine in DrugMechDB -- this is a known mechanism.",
+      "best_path": "Pseudoephedrine --targets--> ADRB2 <--associated-- prostate cancer",
+      "drugmechdb_genes": [
+        "ADRA1A",
+        "ADRB2"
+      ]
+    },
+    {
+      "drug": "Tetracosactide",
+      "disease": "prostate cancer",
+      "label": "known_mechanism",
+      "justification": "Extracted MOA gene(s) ['MC2R'] are curated drug->target mechanism for Tetracosactide in DrugMechDB -- this is a known mechanism.",
+      "best_path": "Tetracosactide --targets--> MC2R <--associated-- prostate cancer",
+      "drugmechdb_genes": [
+        "MC2R"
+      ]
+    },
+    {
+      "drug": "Zinc chloride",
+      "disease": "prostate cancer",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['SLC39A1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Zinc chloride is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Zinc chloride --targets--> SLC39A1 <--associated-- prostate cancer",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Nesiritide",
+      "disease": "prostate cancer",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['NPR3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Nesiritide is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Nesiritide --targets--> NPR3 <--associated-- prostate cancer",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['RB1'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Insulin pork is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Insulin pork --targets--> RB1 <--associated-- non-small cell lung carcinoma (disease)",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Oxytocin",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "label": "known_mechanism",
+      "justification": "Extracted MOA gene(s) ['OXTR'] are curated drug->target mechanism for Oxytocin in DrugMechDB -- this is a known mechanism.",
+      "best_path": "Oxytocin --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)",
+      "drugmechdb_genes": [
+        "OXTR"
+      ]
+    },
+    {
+      "drug": "Hydroflumethiazide",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['CA9'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Hydroflumethiazide is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Hydroflumethiazide --targets--> CA9 <--associated-- non-small cell lung carcinoma (disease)",
+      "drugmechdb_genes": [
+        "CA2",
+        "KCNMA1",
+        "SLC12A3"
+      ]
+    },
+    {
+      "drug": "Atosiban",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['OXTR'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Atosiban is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Atosiban --targets--> OXTR <--associated-- non-small cell lung carcinoma (disease)",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Glycine",
+      "disease": "non-small cell lung carcinoma (disease)",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['SHMT2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Glycine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Glycine --targets--> SHMT2 <--associated-- non-small cell lung carcinoma (disease)",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Insulin pork",
+      "disease": "colorectal cancer",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['PCSK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Insulin pork is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Insulin pork --targets--> PCSK2 <--associated-- colorectal cancer",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Insulin human",
+      "disease": "colorectal cancer",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['PCSK2'] exists, but the drug->target MOA is NOT in DrugMechDB (drug covered in DrugMechDB) and Insulin human is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Insulin human --targets--> PCSK2 <--associated-- colorectal cancer",
+      "drugmechdb_genes": [
+        "INSR"
+      ]
+    },
+    {
+      "drug": "Tamoxifen",
+      "disease": "colorectal cancer",
+      "label": "known_mechanism",
+      "justification": "Extracted MOA gene(s) ['ESR2'] are curated drug->target mechanism for Tamoxifen in DrugMechDB -- this is a known mechanism.",
+      "best_path": "Tamoxifen --targets--> ESR2 <--associated-- colorectal cancer",
+      "drugmechdb_genes": [
+        "ESR1",
+        "ESR2"
+      ]
+    },
+    {
+      "drug": "Imatinib",
+      "disease": "colorectal cancer",
+      "label": "known_drug_new_cancer",
+      "justification": "Imatinib is already an indicated oncology drug (e.g. gastrointestinal stromal tumor, chronic myelogenous leukemia, BCR-ABL1 positive); a plausible MOA path exists for this new cancer via ['ABCA3'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Imatinib --targets--> ABCA3 <--associated-- colorectal cancer",
+      "drugmechdb_genes": [
+        "ABL1",
+        "C-KIT",
+        "KIT",
+        "PDGF",
+        "PDGFRA"
+      ]
+    },
+    {
+      "drug": "Metformin",
+      "disease": "colorectal cancer",
+      "label": "known_mechanism",
+      "justification": "Extracted MOA gene(s) ['ETFDH'] are curated drug->target mechanism for Metformin in DrugMechDB -- this is a known mechanism.",
+      "best_path": "Metformin --targets--> ETFDH <--associated-- colorectal cancer",
+      "drugmechdb_genes": [
+        "ETFDH"
+      ]
+    },
+    {
+      "drug": "Ivermectin",
+      "disease": "ovarian carcinoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Ivermectin is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Ivermectin --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Lapatinib",
+      "disease": "ovarian carcinoma",
+      "label": "known_drug_new_cancer",
+      "justification": "Lapatinib is already an indicated oncology drug (e.g. HER2 positive breast carcinoma); a plausible MOA path exists for this new cancer via ['ERBB2'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Lapatinib --targets--> ERBB2 <--associated-- ovarian carcinoma",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Glycine",
+      "disease": "ovarian carcinoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Glycine is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Glycine --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Lindane",
+      "disease": "ovarian carcinoma",
+      "label": "new_mechanism",
+      "justification": "Specific MOA path via ['GLRA3'] exists, but the drug->target MOA is NOT in DrugMechDB (drug absent in DrugMechDB) and Lindane is not an established oncology drug -- a non-obvious, hypothesis-generating mechanism.",
+      "best_path": "Lindane --targets--> GLRA3 <--associated-- ovarian carcinoma",
+      "drugmechdb_genes": []
+    },
+    {
+      "drug": "Liothyronine",
+      "disease": "ovarian carcinoma",
+      "label": "known_drug_new_cancer",
+      "justification": "Liothyronine is already an indicated oncology drug (e.g. goiter, multinodular 1, with or without Sertoli-Leydig cell tumors, familial thyroid carcinoma); a plausible MOA path exists for this new cancer via ['PCNA', 'USP32'], but the specific drug->gene MOA is not in DrugMechDB.",
+      "best_path": "Liothyronine --targets--> PCNA --interacts--> USP32 <--associated-- ovarian carcinoma",
+      "drugmechdb_genes": [
+        "THRA",
+        "THRB"
+      ]
+    }
+  ],
+  "skipped": []
+}

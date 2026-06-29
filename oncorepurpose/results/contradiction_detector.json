@@ -1,0 +1,1995 @@
+{
+  "timestamp": "2026-06-29T00:09:29.592614",
+  "mode": "full",
+  "config": {
+    "n_true": 60,
+    "n_shortlist": 30,
+    "per_query": 12,
+    "sleep": 0.3,
+    "flag_min_contra": 2,
+    "flag_min_fraction": 0.34
+  },
+  "epmc_stats": {
+    "hits": 270,
+    "live": 0,
+    "errors": 0,
+    "empty": 0
+  },
+  "network_blocked": false,
+  "true_summary": {
+    "n_pairs": 60,
+    "pairs_with_any_contradiction": 12,
+    "pairs_flagged": 5,
+    "total_supporting_sentences": 9,
+    "total_contradicting_sentences": 19,
+    "mean_contra_fraction": 0.169
+  },
+  "shortlist_summary": {
+    "n_pairs": 30,
+    "pairs_with_any_contradiction": 2,
+    "pairs_flagged": 0,
+    "total_supporting_sentences": 4,
+    "total_contradicting_sentences": 2,
+    "mean_contra_fraction": 0.067
+  },
+  "flagged_shortlist": [],
+  "true_pairs": [
+    {
+      "drug": "Niraparib",
+      "cancer": "primary peritoneal serous/papillary carcinoma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Oteracil",
+      "cancer": "gastric neoplasm",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Methotrexate",
+      "cancer": "non-Hodgkin lymphoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Topotecan",
+      "cancer": "malignant Sertoli-Leydig cell tumor of ovary",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Vincristine",
+      "cancer": "ALK-positive large B-cell lymphoma",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Hydrocortisone",
+      "cancer": "lymphoma, non-Hodgkin, familial",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Vincristine",
+      "cancer": "acute lymphoblastic leukemia",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "We report outcomes of the phase 2 study combining carfilzomib (CFZ) plus vincristine, dexamethasone, asparaginase, and daunorubicin (CFZ-VXLD) in heavily pre-treated, pediatric patients with relapsed/refractory (R/R) acute lymphoblastic leukemia (ALL).",
+          "cues": [
+            "refractory",
+            "relapse"
+          ],
+          "source": "MED",
+          "id": "42234929",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Cisplatin",
+      "cancer": "malignant Sertoli-Leydig cell tumor of ovary",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Decitabine",
+      "cancer": "acute myeloid leukemia with NPM1 somatic mutations",
+      "n_abstracts": 16,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Melphalan",
+      "cancer": "yolk sac tumor",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Melphalan, Etoposide, and Carboplatin Megatherapy with Autologous Stem Cell Transplantation in Children with Relapsing or Therapy-Resistant Extracranial Germ-Cell Tumors-A Retrospective Analysis..",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "33352733",
+          "year": 2020
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Mechlorethamine",
+      "cancer": "B-cell neoplasm",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Thiotepa",
+      "cancer": "malignant germ cell tumor of ovary",
+      "n_abstracts": 21,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Diazoxide",
+      "cancer": "islet cell adenomatosis",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 3,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 3,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "ContextSome children with diazoxide-unresponsive congenital hyperinsulinism (HI) lack any detectable disease-causing mutation in peripheral-blood DNA.ObjectiveThis work aimed to examine whether somatic postzygotic mutations of known HI genes are responsible for disease in children with diazoxide-unresponsive HI requiring surgery with histology not classified as focal or localized islet nuclear enl",
+          "cues": [
+            "unresponsive"
+          ],
+          "source": "MED",
+          "id": "39382384",
+          "year": 2025
+        },
+        {
+          "label": "contradicting",
+          "sentence": "Histology of the fifth case revealed minor islet abnormalities suggestive of Beckwith-Wiedemann spectrum although molecular analysis for 11pUPD was negative in pancreas.ConclusionThese results indicate that postzygotic somatic GCK mutations are responsible for some cases of nonfocal diazoxide-unresponsive HI.",
+          "cues": [
+            "unresponsive"
+          ],
+          "source": "MED",
+          "id": "39382384",
+          "year": 2025
+        },
+        {
+          "label": "contradicting",
+          "sentence": "In addition to typical focal or diffuse HI, some cases with diazoxide-unresponsive congenital HI have atypical pancreatic histology termed Localized Islet Nuclear Enlargement (LINE) or mosaic HI, characterized by histologic features similar to diffuse HI, but confined to only a region of pancreas.",
+          "cues": [
+            "unresponsive"
+          ],
+          "source": "MED",
+          "id": "35674212",
+          "year": 2022
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Hydrocortisone",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Bevacizumab",
+      "cancer": "undifferentiated carcinoma of the corpus uteri",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Belotecan",
+      "cancer": "malignant Sertoli-Leydig cell tumor of ovary",
+      "n_abstracts": 2,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Erlotinib",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 28,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 4,
+        "mixed": 1
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Carboplatin",
+      "cancer": "immature ovarian teratoma",
+      "n_abstracts": 21,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Subgroup analysis revealed that carboplatin-based chemotherapy did not increase the risk of treatment failure and death in ovarian GCT, while a higher risk of treatment failure and a similar risk of death were observed in testicular GCT.",
+          "cues": [
+            "did not increase",
+            "treatment failure"
+          ],
+          "source": "MED",
+          "id": "39924670",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Desoximetasone",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Dexamethasone",
+      "cancer": "Burkitt lymphoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Brigatinib",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 2,
+        "contradicting": 2,
+        "neutral": 2,
+        "mixed": 0
+      },
+      "supporting": 2,
+      "contradicting": 2,
+      "contra_fraction": 0.5,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Phase 1/2 trial of brigatinib plus panitumumab in patients with osimertinib-resistant EGFR-mutated non-small cell lung cancer harboring EGFR C797S mutation..",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "41558224",
+          "year": 2026
+        },
+        {
+          "label": "contradicting",
+          "sentence": "BackgroundSecond-generation anaplastic lymphoma kinase (ALK) inhibitors, including alectinib and brigatinib, are widely used in patients with ALK-positive non-small cell lung cancer (NSCLC) who develop resistance or progress on crizotinib.",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "41074399",
+          "year": 2025
+        },
+        {
+          "label": "supporting",
+          "sentence": "After about 20 years of exciting improvements in treatment efficacy outcomes of advanced epidermal growth factor receptor (EGFR) mutant and anaplastic lymphoma kinase (ALK) rearranged non-small cell lung cancer (NSCLC), also combined with a progressively better safety profile, from chemotherapy to new generation tyrosine kinase inhibitors (TKIs) (osimertinib, alectinib, brigatinib), the recent MAR",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "41930161",
+          "year": 2026
+        },
+        {
+          "label": "supporting",
+          "sentence": "Real World Data on the Efficacy of Brigatinib in ALK-Positive Non-Small Cell Lung Cancer: A Single-Center Experience..",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "41008926",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Lonidamine",
+      "cancer": "lung neoplasm",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 6,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Oteracil",
+      "cancer": "diffuse gastric adenocarcinoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 1,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "BackgroundImmune checkpoint inhibitors have shown promising results in the treatment of advanced gastric or gastroesophageal junction (G/GEJ) adenocarcinoma.ObjectivesTo evaluate the safety and efficacy of camrelizumab combined with S-1 plus oxaliplatin chemotherapy in the postoperative setting for pathological stage III (pStage III) G/GEJ adenocarcinoma.DesignThis study was a prospective, multice",
+          "cues": [
+            "efficacy",
+            "promising"
+          ],
+          "source": "MED",
+          "id": "40656603",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Carmustine",
+      "cancer": "classic Hodgkin lymphoma, lymphocyte-rich type",
+      "n_abstracts": 13,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Tretamine",
+      "cancer": "malignant Sertoli-Leydig cell tumor of ovary",
+      "n_abstracts": 1,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Panobinostat",
+      "cancer": "plasma cell myeloma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Synergistic targeting of the ARID2-MYC axis by pomalidomide and panobinostat overcomes intrinsic IMiD resistance in multiple myeloma..",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "41639146",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Pemetrexed",
+      "cancer": "malignant mesothelioma",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 2,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Here, we report a case of epithelioid-type malignant pleural mesothelioma that demonstrated primary resistance to ipilimumab plus nivolumab, followed by a marked metabolic response on 18F-FDG PET/CT after switching to bevacizumab plus pemetrexed plus carboplatin.",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "42080609",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Vincristine",
+      "cancer": "T-cell/histiocyte rich large B cell lymphoma",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Vinblastine",
+      "cancer": "Hodgkins lymphoma",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Bleomycin",
+      "cancer": "primary cutaneous diffuse large B-cell lymphoma, Leg type",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Carmustine",
+      "cancer": "diffuse astrocytoma",
+      "n_abstracts": 19,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Hydroxyurea",
+      "cancer": "primary non-gestational choriocarcinoma of ovary",
+      "n_abstracts": 10,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Apalutamide",
+      "cancer": "prostate cancer",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 3,
+        "contradicting": 2,
+        "neutral": 18,
+        "mixed": 0
+      },
+      "supporting": 3,
+      "contradicting": 2,
+      "contra_fraction": 0.4,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "Despite promising evidence of the efficacy of the androgen deprivation therapy (ADT) plus apalutamide in metastatic castration-sensitive prostate cancer (mCSPC), it remains unknown how its effectiveness and safety are shaped by genetic factors, particularly among Asian populations.",
+          "cues": [
+            "efficacy",
+            "promising"
+          ],
+          "source": "MED",
+          "id": "42050823",
+          "year": 2026
+        },
+        {
+          "label": "contradicting",
+          "sentence": "BackgroundThe real-world retrospective DEAR study in patients with nonmetastatic castration-resistant prostate cancer (nmCRPC) demonstrated darolutamide was associated with lower risks of discontinuation and progression to metastatic castration-resistant disease vs enzalutamide and apalutamide.",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "41851476",
+          "year": 2026
+        },
+        {
+          "label": "contradicting",
+          "sentence": "BackgroundRadical prostatectomy is potentially curative in patients with high-risk localized or locally advanced prostate cancer; however, relapse occurs within 5 years in up to 50% of patients.MethodsWe conducted a phase 3, double-blind, placebo-controlled trial in which patients with newly diagnosed high-risk localized or locally advanced prostate cancer were randomly assigned in a 1:1 ratio to ",
+          "cues": [
+            "relapse"
+          ],
+          "source": "MED",
+          "id": "42223077",
+          "year": 2026
+        },
+        {
+          "label": "supporting",
+          "sentence": "Clinical efficacy of apalutamide in Asian patients with metastatic castration-sensitive prostate cancer: Bayesian reanalysis of the TITAN trial..",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "41450247",
+          "year": 2026
+        },
+        {
+          "label": "supporting",
+          "sentence": "BackgroundThe phase 3 TITAN trial revealed that apalutamide plus androgen deprivation therapy (ADT) has significantly improved outcomes in patients with metastatic castration-sensitive prostate cancer (mCSPC).",
+          "cues": [
+            "improved outcome",
+            "significantly improv"
+          ],
+          "source": "MED",
+          "id": "41450247",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Prednisone",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Bevacizumab",
+      "cancer": "primary peritoneal serous/papillary carcinoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "We describe the first, to our knowledge, case of PNP/PAMS associated with primary peritoneal clear cell carcinoma.Case presentationA 47-year-old woman with recurrent, platinum-resistant primary peritoneal clear cell carcinoma presented with painful oral mucosal erosions, intermittent epistaxis, and a pruritic cutaneous eruption involving the trunk, groin, and lower extremities approximately four w",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "42125300",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Glasdegib",
+      "cancer": "acute myeloid leukemia with inv3",
+      "n_abstracts": 3,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Hydroxyurea",
+      "cancer": "theca steroid-producing cell malignant tumor of ovary, not further specified",
+      "n_abstracts": 0,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Panobinostat",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Levothyroxine",
+      "cancer": "familial papillary thyroid carcinoma with renal papillary neoplasia",
+      "n_abstracts": 14,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Histamine",
+      "cancer": "unclassified acute myeloid leukemia",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Bleomycin",
+      "cancer": "lymphoma, non-Hodgkin, familial",
+      "n_abstracts": 14,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Idarubicin",
+      "cancer": "acute myeloblastic leukemia without maturation",
+      "n_abstracts": 15,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Methotrexate",
+      "cancer": "bone osteosarcoma",
+      "n_abstracts": 19,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Liothyronine",
+      "cancer": "differentiated thyroid carcinoma",
+      "n_abstracts": 26,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Dexamethasone",
+      "cancer": "diffuse large B-cell lymphoma of the central nervous system",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 1
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Imatinib",
+      "cancer": "gastrointestinal stromal tumor",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 3,
+        "neutral": 7,
+        "mixed": 1
+      },
+      "supporting": 1,
+      "contradicting": 3,
+      "contra_fraction": 0.75,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Nestin promotes imatinib resistance in gastrointestinal stromal tumors by enhancing PINK1-dependent mitophagy..",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "42157073",
+          "year": 2026
+        },
+        {
+          "label": "contradicting",
+          "sentence": "The most common PDGFRA alteration in gastrointestinal stromal tumors (GIST) is the exon 18 activation loop mutation D842V, which is resistant to imatinib and other type II TKIs but sensitive to type I TKI avapritinib.",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "42275235",
+          "year": 2026
+        },
+        {
+          "label": "contradicting",
+          "sentence": "BackgroundTreatments for metastatic, unresectable, or treatment-resistant gastrointestinal stromal tumors (GIST) include avapritinib, imatinib, regorafenib, ripretinib, and sunitinib.",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "42136545",
+          "year": 2026
+        },
+        {
+          "label": "supporting",
+          "sentence": "Objective: To explore the optimal duration of preoperative imatinib therapy in patients with locally advanced gastrointestinal stromal tumors (GIST) in order to optimize surgical timing and long-term survival benefits.",
+          "cues": [
+            "survival benefit"
+          ],
+          "source": "MED",
+          "id": "41287310",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Ivosidenib",
+      "cancer": "acute myeloblastic leukemia without maturation",
+      "n_abstracts": 14,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Sorafenib",
+      "cancer": "fibrolamellar hepatocellular carcinoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 1,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "LDN-57444 sensitizes hepatocellular carcinoma cells to sorafenib by promoting ferroptosis through histone deacetylase 2 (HDAC2) inhibition..",
+          "cues": [
+            "sensitize"
+          ],
+          "source": "MED",
+          "id": "41689036",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Doxorubicin",
+      "cancer": "acute myeloblastic leukemia with maturation",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Melphalan",
+      "cancer": "primary non-gestational choriocarcinoma of ovary",
+      "n_abstracts": 5,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Brentuximab vedotin",
+      "cancer": "Hodgkins lymphoma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 2,
+        "neutral": 4,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 2,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "In this study we have developed a 3D culture model of an EBV+/CD30+cell line, D430B, previously characterized as an Anaplastic Large Cell Lymphoma of B phenotype (B-ALCL), to determine the cytotoxic activity of the antibody-drug conjugate Brentuximab Vedotin.MethodsBy using of ultra-low attachment plates, we developed D430B spheroids that appeared particularly homogenous in terms of growth and siz",
+          "cues": [
+            "ineffective"
+          ],
+          "source": "MED",
+          "id": "41283513",
+          "year": 2025
+        },
+        {
+          "label": "contradicting",
+          "sentence": "Reduced incidence of relapse after checkpoint inhibitors relative to brentuximab vedotin as salvage therapy before allogeneic stem cell transplantation for refractory/relapsed Hodgkin lymphoma: A retrospective analysis..",
+          "cues": [
+            "refractory",
+            "relapse"
+          ],
+          "source": "MED",
+          "id": "40887735",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Hydroxyurea",
+      "cancer": "malignant germ cell tumor of ovary",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Gemcitabine",
+      "cancer": "ovarian adenocarcinoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 3,
+        "mixed": 2
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Bleomycin",
+      "cancer": "mantle cell lymphoma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 4,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Topotecan",
+      "cancer": "cervical carcinosarcoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Dactinomycin",
+      "cancer": "adenosarcoma",
+      "n_abstracts": 12,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Sorafenib",
+      "cancer": "nonpapillary renal cell carcinoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 1,
+      "contradicting": 1,
+      "contra_fraction": 0.5,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Neuropilin-2 (NRP2) mediates sorafenib resistance in clear cell renal cell carcinoma via the NRP2/NF-\u03baB/TNF\u03b1 axis..",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "41395296",
+          "year": 2025
+        },
+        {
+          "label": "supporting",
+          "sentence": "Sorafenib, a tyrosine kinase inhibitor, has demonstrated efficacy in the treatment of hepatocellular carcinoma and clear cell renal carcinoma.",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "40885409",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Belotecan",
+      "cancer": "maligant granulosa cell tumor of ovary",
+      "n_abstracts": 0,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Daunorubicin",
+      "cancer": "acute myeloid leukemia with inv3",
+      "n_abstracts": 15,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    },
+    {
+      "drug": "Tretamine",
+      "cancer": "ovarian carcinosarcoma",
+      "n_abstracts": 0,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "true"
+    }
+  ],
+  "shortlist_pairs": [
+    {
+      "drug": "Probenecid",
+      "cancer": "glioblastoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.7952641248703003,
+      "specificity_lift": 0.6740686297416687
+    },
+    {
+      "drug": "Cisplatin",
+      "cancer": "glioblastoma",
+      "n_abstracts": 29,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 2,
+        "mixed": 1
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Our findings indicate that Pt(acac)\u2082(DMS) may overcome key limitations of cisplatin, including toxicity issues and resistance associated with autophagic adaptation, highlighting its promise as a potential therapeutic candidate for glioblastoma treatment.",
+          "cues": [
+            "resistance"
+          ],
+          "source": "MED",
+          "id": "41513621",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.7914544343948364,
+      "specificity_lift": 0.672876238822937
+    },
+    {
+      "drug": "Carboplatin",
+      "cancer": "glioblastoma",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 1,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "Bifidobacterium enhances the antitumor efficacy of carboplatin in glioblastoma cells: targeting apoptotic and cell cycle regulatory pathways via Caspase, AKT/PTEN, and P53/P21 signaling..",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "41361440",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.7908177375793457,
+      "specificity_lift": 0.6727869510650635
+    },
+    {
+      "drug": "Tamoxifen",
+      "cancer": "glioblastoma",
+      "n_abstracts": 26,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 1,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.7881489396095276,
+      "specificity_lift": 0.6715319156646729
+    },
+    {
+      "drug": "Liothyronine",
+      "cancer": "glioblastoma",
+      "n_abstracts": 18,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.7882466316223145,
+      "specificity_lift": 0.6710421442985535
+    },
+    {
+      "drug": "Potassium chloride",
+      "cancer": "metastatic melanoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8784738183021545,
+      "specificity_lift": 0.7585043907165527
+    },
+    {
+      "drug": "Isoprenaline",
+      "cancer": "metastatic melanoma",
+      "n_abstracts": 24,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8682923316955566,
+      "specificity_lift": 0.7580391764640808
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "cancer": "metastatic melanoma",
+      "n_abstracts": 9,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8695209622383118,
+      "specificity_lift": 0.7579696178436279
+    },
+    {
+      "drug": "Tamoxifen",
+      "cancer": "metastatic melanoma",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 1,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 1,
+      "contra_fraction": 1.0,
+      "sentences": [
+        {
+          "label": "contradicting",
+          "sentence": "Moreover, the Hsp90 activator tamoxifen attenuated the effects of parthenolide in these cells.ConclusionOur findings provide the first evidence that parthenolide can overcome BRAFi resistance in melanoma, highlighting its potential as a lead compound for the development of Hsp90\u03b1 inhibitors to manage BRAFi-resistant cutaneous melanoma.",
+          "cues": [
+            "resistant"
+          ],
+          "source": "MED",
+          "id": "40815947",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8741334080696106,
+      "specificity_lift": 0.7575163841247559
+    },
+    {
+      "drug": "Pimecrolimus",
+      "cancer": "metastatic melanoma",
+      "n_abstracts": 21,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8745231628417969,
+      "specificity_lift": 0.7574427127838135
+    },
+    {
+      "drug": "Pamidronic acid",
+      "cancer": "prostate cancer",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.9355099201202393,
+      "specificity_lift": 0.830120861530304
+    },
+    {
+      "drug": "Pseudoephedrine",
+      "cancer": "prostate cancer",
+      "n_abstracts": 19,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.9398208856582642,
+      "specificity_lift": 0.8282695412635803
+    },
+    {
+      "drug": "Tetracosactide",
+      "cancer": "prostate cancer",
+      "n_abstracts": 11,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.9388661980628967,
+      "specificity_lift": 0.828014075756073
+    },
+    {
+      "drug": "Zinc chloride",
+      "cancer": "prostate cancer",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.9342398643493652,
+      "specificity_lift": 0.8272093534469604
+    },
+    {
+      "drug": "Nesiritide",
+      "cancer": "prostate cancer",
+      "n_abstracts": 21,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.9405534267425537,
+      "specificity_lift": 0.8259397745132446
+    },
+    {
+      "drug": "Insulin pork",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 1,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8627898693084717,
+      "specificity_lift": 0.7382356524467468
+    },
+    {
+      "drug": "Oxytocin",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 20,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8526210784912109,
+      "specificity_lift": 0.737238883972168
+    },
+    {
+      "drug": "Hydroflumethiazide",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 17,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8540897369384766,
+      "specificity_lift": 0.7369561791419983
+    },
+    {
+      "drug": "Atosiban",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 17,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8510870337486267,
+      "specificity_lift": 0.7367235422134399
+    },
+    {
+      "drug": "Glycine",
+      "cancer": "non-small cell lung carcinoma",
+      "n_abstracts": 25,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8548965454101562,
+      "specificity_lift": 0.7363327741622925
+    },
+    {
+      "drug": "Insulin pork",
+      "cancer": "colorectal cancer",
+      "n_abstracts": 2,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8356454968452454,
+      "specificity_lift": 0.7110912799835205
+    },
+    {
+      "drug": "Insulin human",
+      "cancer": "colorectal cancer",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.830131471157074,
+      "specificity_lift": 0.7099738121032715
+    },
+    {
+      "drug": "Tamoxifen",
+      "cancer": "colorectal cancer",
+      "n_abstracts": 29,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8242443799972534,
+      "specificity_lift": 0.7076273560523987
+    },
+    {
+      "drug": "Imatinib",
+      "cancer": "colorectal cancer",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 2,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 2,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "Zebularine Boosts Imatinib Efficacy in Cells of Colorectal Cancer via Wnt-Survivin-P-Glycoprotein Pathway..",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "42070100",
+          "year": 2026
+        },
+        {
+          "label": "supporting",
+          "sentence": "Cellular cytotoxicity assays demonstrated potent antiproliferative effects of these derivatives against DLD-1, HCT-116, and HT-29 colorectal cancer cell lines, exhibiting superior efficacy and selectivity (SI) compared to the benchmark drug imatinib mesylate (IC50\u00a0=\u00a018.3\u00a0\u03bcM; SI\u00a0=\u00a01.36).",
+          "cues": [
+            "efficacy"
+          ],
+          "source": "MED",
+          "id": "41785709",
+          "year": 2026
+        }
+      ],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8264372944831848,
+      "specificity_lift": 0.7072840332984924
+    },
+    {
+      "drug": "Metformin",
+      "cancer": "colorectal cancer",
+      "n_abstracts": 29,
+      "tally": {
+        "supporting": 1,
+        "contradicting": 0,
+        "neutral": 9,
+        "mixed": 0
+      },
+      "supporting": 1,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [
+        {
+          "label": "supporting",
+          "sentence": "Metformin significantly reduced colorectal neoplasms risk (Hazard ratio (HR) = 0.79, 95% confidence interval (CI), 0.73-0.85, Odds ratio (OR) = 0.80, 95% confidence interval, 0.74-0.87).",
+          "cues": [
+            "significantly reduc"
+          ],
+          "source": "MED",
+          "id": "41347173",
+          "year": 2025
+        }
+      ],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.8255077004432678,
+      "specificity_lift": 0.7070512175559998
+    },
+    {
+      "drug": "Ivermectin",
+      "cancer": "ovarian carcinoma",
+      "n_abstracts": 22,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.1938781589269638,
+      "specificity_lift": 0.06765307486057281
+    },
+    {
+      "drug": "Lapatinib",
+      "cancer": "ovarian carcinoma",
+      "n_abstracts": 27,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.18119056522846222,
+      "specificity_lift": 0.060528747737407684
+    },
+    {
+      "drug": "Glycine",
+      "cancer": "ovarian carcinoma",
+      "n_abstracts": 23,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.17727646231651306,
+      "specificity_lift": 0.0587126761674881
+    },
+    {
+      "drug": "Lindane",
+      "cancer": "ovarian carcinoma",
+      "n_abstracts": 21,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.17556753754615784,
+      "specificity_lift": 0.05787768214941025
+    },
+    {
+      "drug": "Liothyronine",
+      "cancer": "ovarian carcinoma",
+      "n_abstracts": 19,
+      "tally": {
+        "supporting": 0,
+        "contradicting": 0,
+        "neutral": 0,
+        "mixed": 0
+      },
+      "supporting": 0,
+      "contradicting": 0,
+      "contra_fraction": 0.0,
+      "sentences": [],
+      "network_error": false,
+      "group": "shortlist",
+      "model_score": 0.1740187257528305,
+      "specificity_lift": 0.056814223527908325
+    }
+  ]
+}

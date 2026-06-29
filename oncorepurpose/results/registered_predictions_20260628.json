@@ -1,0 +1,2163 @@
+{
+  "registry": "OncoEvidence forward prediction set",
+  "description": "Timestamped, hash-committed NOVEL mechanism-backed drug->cancer predictions for prospective checking against future ClinicalTrials.gov entries / approvals. Hypothesis-generating; not medical advice.",
+  "timestamp_utc": "2026-06-28T23:32:02.495845+00:00",
+  "git_commit": "54297932d08f01ec7b77996595e39efcc29dad4a",
+  "prediction_sha256": "d7bb30423e808f72912e40fa99c7f1bcfd07d5e95dbdc15cd03f76133358b2fd",
+  "n_predictions": 60,
+  "mode": "full",
+  "device": "cuda",
+  "config": {
+    "epochs": 50,
+    "seed": 0,
+    "n_diseases": 12,
+    "top_k": 5,
+    "pool": 60,
+    "hidden": 128
+  },
+  "target_edge_type": [
+    "drug",
+    "indication",
+    "disease"
+  ],
+  "novelty_criteria": "no existing indication/contraindication/off-label edge (exclude_known=True) AND a non-empty graph MOA path (direct target / PPI / shared pathway)",
+  "predictions": [
+    {
+      "drug": "Capsaicin",
+      "cancer": "B-cell neoplasm",
+      "model_score": 0.880638,
+      "specificity_lift": 0.76315,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 <--associated-- B-cell neoplasm",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "CCND1"
+          ],
+          "text": "Capsaicin --targets--> MPO --interacts--> CCND1 <--associated-- B-cell neoplasm",
+          "score": 2.029306
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- B-cell neoplasm",
+          "score": 1.046622
+        }
+      ]
+    },
+    {
+      "drug": "Fluphenazine",
+      "cancer": "B-cell neoplasm",
+      "model_score": 0.879058,
+      "specificity_lift": 0.762985,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Fluphenazine --targets--> CYP2E1 <--associated-- B-cell neoplasm",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CALM1",
+            "SYK"
+          ],
+          "text": "Fluphenazine --targets--> CALM1 --interacts--> SYK <--associated-- B-cell neoplasm",
+          "score": 2.058347
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "AR",
+            "EIF4E"
+          ],
+          "text": "Fluphenazine --targets--> AR --interacts--> EIF4E <--associated-- B-cell neoplasm",
+          "score": 2.052146
+        }
+      ]
+    },
+    {
+      "drug": "Naloxone",
+      "cancer": "B-cell neoplasm",
+      "model_score": 0.877033,
+      "specificity_lift": 0.763348,
+      "mechanism_score": 2.09748,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "GSK3B"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> GSK3B <--associated-- B-cell neoplasm",
+          "score": 2.09748
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "CREBBP"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> CREBBP <--associated-- B-cell neoplasm",
+          "score": 2.08365
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TLR4",
+            "SYK"
+          ],
+          "text": "Naloxone --targets--> TLR4 --interacts--> SYK <--associated-- B-cell neoplasm",
+          "score": 2.080633
+        }
+      ]
+    },
+    {
+      "drug": "Plerixafor",
+      "cancer": "B-cell neoplasm",
+      "model_score": 0.87709,
+      "specificity_lift": 0.762991,
+      "mechanism_score": 2.088075,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CXCR4",
+            "CD79B"
+          ],
+          "text": "Plerixafor --targets--> CXCR4 --interacts--> CD79B <--associated-- B-cell neoplasm",
+          "score": 2.088075
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CXCR4",
+            "NPM1"
+          ],
+          "text": "Plerixafor --targets--> CXCR4 --interacts--> NPM1 <--associated-- B-cell neoplasm",
+          "score": 2.073715
+        }
+      ]
+    },
+    {
+      "drug": "Tolmetin",
+      "cancer": "B-cell neoplasm",
+      "model_score": 0.875063,
+      "specificity_lift": 0.763021,
+      "mechanism_score": 2.143559,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "TDO2",
+            "EIF4E"
+          ],
+          "text": "Tolmetin --targets--> TDO2 --interacts--> EIF4E <--associated-- B-cell neoplasm",
+          "score": 2.143559
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "CCND1"
+          ],
+          "text": "Tolmetin --targets--> MPO --interacts--> CCND1 <--associated-- B-cell neoplasm",
+          "score": 2.029306
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "PTGS2",
+            "CSF2"
+          ],
+          "text": "Tolmetin --targets--> PTGS2 --in pathway--> Interleukin-10 signaling <--in pathway-- CSF2 <--associated-- B-cell neoplasm",
+          "score": 1.026526
+        }
+      ]
+    },
+    {
+      "drug": "Acetaminophen",
+      "cancer": "Hodgkins lymphoma",
+      "model_score": 0.944464,
+      "specificity_lift": 0.835123,
+      "mechanism_score": 3.029652,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "UGT1A1"
+          ],
+          "text": "Acetaminophen --targets--> UGT1A1 <--associated-- Hodgkins lymphoma",
+          "score": 3.029652
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "GSTP1"
+          ],
+          "text": "Acetaminophen --targets--> GSTP1 <--associated-- Hodgkins lymphoma",
+          "score": 3.02875
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "UGT1A6",
+            "UGT1A1"
+          ],
+          "text": "Acetaminophen --targets--> UGT1A6 --interacts--> UGT1A1 <--associated-- Hodgkins lymphoma",
+          "score": 2.044622
+        }
+      ]
+    },
+    {
+      "drug": "Clomipramine",
+      "cancer": "Hodgkins lymphoma",
+      "model_score": 0.944038,
+      "specificity_lift": 0.835607,
+      "mechanism_score": 3.02875,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "GSTP1"
+          ],
+          "text": "Clomipramine --targets--> GSTP1 <--associated-- Hodgkins lymphoma",
+          "score": 3.02875
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "GSTP1",
+            "GSTP1"
+          ],
+          "text": "Clomipramine --targets--> GSTP1 --in pathway--> Glutathione conjugation <--in pathway-- GSTP1 <--associated-- Hodgkins lymphoma",
+          "score": 1.041151
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "GSTP1",
+            "GSTP1"
+          ],
+          "text": "Clomipramine --targets--> GSTP1 --in pathway--> Detoxification of Reactive Oxygen Species <--in pathway-- GSTP1 <--associated-- Hodgkins lymphoma",
+          "score": 1.036596
+        }
+      ]
+    },
+    {
+      "drug": "Isoprenaline",
+      "cancer": "Hodgkins lymphoma",
+      "model_score": 0.945608,
+      "specificity_lift": 0.835306,
+      "mechanism_score": 2.122038,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "PIK3R1",
+            "SOCS1"
+          ],
+          "text": "Isoprenaline --targets--> PIK3R1 --interacts--> SOCS1 <--associated-- Hodgkins lymphoma",
+          "score": 2.122038
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PIK3R1",
+            "CDK2"
+          ],
+          "text": "Isoprenaline --targets--> PIK3R1 --interacts--> CDK2 <--associated-- Hodgkins lymphoma",
+          "score": 2.088075
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PIK3R1",
+            "GATA3"
+          ],
+          "text": "Isoprenaline --targets--> PIK3R1 --interacts--> GATA3 <--associated-- Hodgkins lymphoma",
+          "score": 2.07426
+        }
+      ]
+    },
+    {
+      "drug": "Nadroparin",
+      "cancer": "Hodgkins lymphoma",
+      "model_score": 0.943978,
+      "specificity_lift": 0.834609,
+      "mechanism_score": 2.135119,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "MYC",
+            "MTHFD2"
+          ],
+          "text": "Nadroparin --targets--> MYC --interacts--> MTHFD2 <--associated-- Hodgkins lymphoma",
+          "score": 2.135119
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MYC",
+            "TNFRSF8"
+          ],
+          "text": "Nadroparin --targets--> MYC --interacts--> TNFRSF8 <--associated-- Hodgkins lymphoma",
+          "score": 2.125
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MYC",
+            "CFLAR"
+          ],
+          "text": "Nadroparin --targets--> MYC --interacts--> CFLAR <--associated-- Hodgkins lymphoma",
+          "score": 2.115689
+        }
+      ]
+    },
+    {
+      "drug": "Naltrexone",
+      "cancer": "Hodgkins lymphoma",
+      "model_score": 0.944142,
+      "specificity_lift": 0.836841,
+      "mechanism_score": 3.029652,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "UGT1A1"
+          ],
+          "text": "Naltrexone --targets--> UGT1A1 <--associated-- Hodgkins lymphoma",
+          "score": 3.029652
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "UGT1A1",
+            "UGT1A1"
+          ],
+          "text": "Naltrexone --targets--> UGT1A1 --in pathway--> Defective UGT1A1 causes hyperbilirubinemia <--in pathway-- UGT1A1 <--associated-- Hodgkins lymphoma",
+          "score": 1.092684
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "OPRK1",
+            "PTPN1"
+          ],
+          "text": "Naltrexone --targets--> OPRK1 --in pathway--> MECP2 regulates neuronal receptors and channels <--in pathway-- PTPN1 <--associated-- Hodgkins lymphoma",
+          "score": 1.040719
+        }
+      ]
+    },
+    {
+      "drug": "Folic acid",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "model_score": 0.868929,
+      "specificity_lift": 0.743669,
+      "mechanism_score": 3.025554,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "ABCG2"
+          ],
+          "text": "Folic acid --targets--> ABCG2 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 3.025554
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "SLC25A32",
+            "SPI1"
+          ],
+          "text": "Folic acid --targets--> SLC25A32 --interacts--> SPI1 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.139476
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GGH",
+            "LIG4"
+          ],
+          "text": "Folic acid --targets--> GGH --interacts--> LIG4 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.101898
+        }
+      ]
+    },
+    {
+      "drug": "Hydroxocobalamin",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "model_score": 0.861352,
+      "specificity_lift": 0.743105,
+      "mechanism_score": 2.150515,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "MMACHC",
+            "IRF4"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMACHC --interacts--> IRF4 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.150515
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MMAA",
+            "CTCF"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMAA --interacts--> CTCF <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.131325
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CUBN",
+            "VDR"
+          ],
+          "text": "Hydroxocobalamin --targets--> CUBN --in pathway--> Vitamin D (calciferol) metabolism <--in pathway-- VDR <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 1.135119
+        }
+      ]
+    },
+    {
+      "drug": "Ivermectin",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "model_score": 0.869581,
+      "specificity_lift": 0.743236,
+      "mechanism_score": 3.025554,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "ABCG2"
+          ],
+          "text": "Ivermectin --targets--> ABCG2 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 3.025554
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "ABCC2",
+            "PICALM"
+          ],
+          "text": "Ivermectin --targets--> ABCC2 --interacts--> PICALM <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.032534
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "ABCC1",
+            "NOTCH1"
+          ],
+          "text": "Ivermectin --targets--> ABCC1 --interacts--> NOTCH1 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.026633
+        }
+      ]
+    },
+    {
+      "drug": "Pramlintide",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "model_score": 0.859786,
+      "specificity_lift": 0.743002,
+      "mechanism_score": 2.25,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CALCR",
+            "TOPBP1"
+          ],
+          "text": "Pramlintide --targets--> CALCR --interacts--> TOPBP1 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.25
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "RAMP2",
+            "IL6"
+          ],
+          "text": "Pramlintide --targets--> RAMP2 --in pathway--> ADORA2B mediated anti-inflammatory cytokines production <--in pathway-- IL6 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 1.089021
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "RAMP3",
+            "IL6"
+          ],
+          "text": "Pramlintide --targets--> RAMP3 --in pathway--> ADORA2B mediated anti-inflammatory cytokines production <--in pathway-- IL6 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 1.089021
+        }
+      ]
+    },
+    {
+      "drug": "Salmon calcitonin",
+      "cancer": "acute lymphoblastic/lymphocytic leukemia",
+      "model_score": 0.863691,
+      "specificity_lift": 0.743788,
+      "mechanism_score": 2.25,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CALCR",
+            "TOPBP1"
+          ],
+          "text": "Salmon calcitonin --targets--> CALCR --interacts--> TOPBP1 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 2.25
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CALCR",
+            "IL6"
+          ],
+          "text": "Salmon calcitonin --targets--> CALCR --in pathway--> ADORA2B mediated anti-inflammatory cytokines production <--in pathway-- IL6 <--associated-- acute lymphoblastic/lymphocytic leukemia",
+          "score": 1.070547
+        }
+      ]
+    },
+    {
+      "drug": "Capsaicin",
+      "cancer": "classic Hodgkin lymphoma",
+      "model_score": 0.857544,
+      "specificity_lift": 0.740057,
+      "mechanism_score": 2.098052,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "PHB2",
+            "CDK2"
+          ],
+          "text": "Capsaicin --targets--> PHB2 --interacts--> CDK2 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.098052
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PHB2",
+            "PTPN1"
+          ],
+          "text": "Capsaicin --targets--> PHB2 --interacts--> PTPN1 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.095207
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "PTGS2",
+            "CSF3"
+          ],
+          "text": "Capsaicin --targets--> PTGS2 --in pathway--> Interleukin-10 signaling <--in pathway-- CSF3 <--associated-- classic Hodgkin lymphoma",
+          "score": 1.026526
+        }
+      ]
+    },
+    {
+      "drug": "Insulin glargine",
+      "cancer": "classic Hodgkin lymphoma",
+      "model_score": 0.864165,
+      "specificity_lift": 0.740516,
+      "mechanism_score": 2.074263,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "INSR",
+            "SOCS1"
+          ],
+          "text": "Insulin glargine --targets--> INSR --interacts--> SOCS1 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.074263
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "IGF1R",
+            "SOCS1"
+          ],
+          "text": "Insulin glargine --targets--> IGF1R --interacts--> SOCS1 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.069738
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "INSR",
+            "PTPN1"
+          ],
+          "text": "Insulin glargine --targets--> INSR --interacts--> PTPN1 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.052041
+        }
+      ]
+    },
+    {
+      "drug": "Insulin human",
+      "cancer": "classic Hodgkin lymphoma",
+      "model_score": 0.860065,
+      "specificity_lift": 0.739829,
+      "mechanism_score": 2.113835,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "CDK2"
+          ],
+          "text": "Insulin human --targets--> RB1 --interacts--> CDK2 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.113835
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PCSK2",
+            "GATA3"
+          ],
+          "text": "Insulin human --targets--> PCSK2 --interacts--> GATA3 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.095979
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "INSR",
+            "SOCS1"
+          ],
+          "text": "Insulin human --targets--> INSR --interacts--> SOCS1 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.074263
+        }
+      ]
+    },
+    {
+      "drug": "Insulin pork",
+      "cancer": "classic Hodgkin lymphoma",
+      "model_score": 0.864613,
+      "specificity_lift": 0.739945,
+      "mechanism_score": 2.143644,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CCN3",
+            "CDK2"
+          ],
+          "text": "Insulin pork --targets--> CCN3 --interacts--> CDK2 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.143644
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "CDK2"
+          ],
+          "text": "Insulin pork --targets--> RB1 --interacts--> CDK2 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.113835
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PCSK2",
+            "GATA3"
+          ],
+          "text": "Insulin pork --targets--> PCSK2 --interacts--> GATA3 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.095979
+        }
+      ]
+    },
+    {
+      "drug": "Simvastatin",
+      "cancer": "classic Hodgkin lymphoma",
+      "model_score": 0.863167,
+      "specificity_lift": 0.739847,
+      "mechanism_score": 3.029652,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "UGT1A1"
+          ],
+          "text": "Simvastatin --targets--> UGT1A1 <--associated-- classic Hodgkin lymphoma",
+          "score": 3.029652
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "HDAC2",
+            "GATA3"
+          ],
+          "text": "Simvastatin --targets--> HDAC2 --interacts--> GATA3 <--associated-- classic Hodgkin lymphoma",
+          "score": 2.046034
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "HDAC2",
+            "NFKBIA"
+          ],
+          "text": "Simvastatin --targets--> HDAC2 --interacts--> NFKBIA <--associated-- classic Hodgkin lymphoma",
+          "score": 2.042711
+        }
+      ]
+    },
+    {
+      "drug": "Capsaicin",
+      "cancer": "leukemia, lymphocytic, susceptibility to",
+      "model_score": 0.858294,
+      "specificity_lift": 0.740806,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.024418
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP1A2"
+          ],
+          "text": "Capsaicin --targets--> CYP1A2 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.02143
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "RUNX1"
+          ],
+          "text": "Capsaicin --targets--> MPO --interacts--> RUNX1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 2.040888
+        }
+      ]
+    },
+    {
+      "drug": "Fluticasone furoate",
+      "cancer": "leukemia, lymphocytic, susceptibility to",
+      "model_score": 0.870422,
+      "specificity_lift": 0.740713,
+      "mechanism_score": 3.032584,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2C8"
+          ],
+          "text": "Fluticasone furoate --targets--> CYP2C8 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.032584
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "ABCB1"
+          ],
+          "text": "Fluticasone furoate --targets--> ABCB1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.018068
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "NR3C2",
+            "PRDM14"
+          ],
+          "text": "Fluticasone furoate --targets--> NR3C2 --interacts--> PRDM14 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 2.07769
+        }
+      ]
+    },
+    {
+      "drug": "Insulin human",
+      "cancer": "leukemia, lymphocytic, susceptibility to",
+      "model_score": 0.860803,
+      "specificity_lift": 0.740568,
+      "mechanism_score": 3.081853,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "RB1"
+          ],
+          "text": "Insulin human --targets--> RB1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.081853
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP1A2"
+          ],
+          "text": "Insulin human --targets--> CYP1A2 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.02143
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "CEBPE"
+          ],
+          "text": "Insulin human --targets--> RB1 --interacts--> CEBPE <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 2.166667
+        }
+      ]
+    },
+    {
+      "drug": "Insulin pork",
+      "cancer": "leukemia, lymphocytic, susceptibility to",
+      "model_score": 0.865356,
+      "specificity_lift": 0.740689,
+      "mechanism_score": 3.081853,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "RB1"
+          ],
+          "text": "Insulin pork --targets--> RB1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.081853
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP1A2"
+          ],
+          "text": "Insulin pork --targets--> CYP1A2 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.02143
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "CEBPE"
+          ],
+          "text": "Insulin pork --targets--> RB1 --interacts--> CEBPE <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 2.166667
+        }
+      ]
+    },
+    {
+      "drug": "Zopiclone",
+      "cancer": "leukemia, lymphocytic, susceptibility to",
+      "model_score": 0.86174,
+      "specificity_lift": 0.740657,
+      "mechanism_score": 3.032584,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2C8"
+          ],
+          "text": "Zopiclone --targets--> CYP2C8 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.032584
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 3.024418
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2C8"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2C8 <--associated-- leukemia, lymphocytic, susceptibility to",
+          "score": 1.046622
+        }
+      ]
+    },
+    {
+      "drug": "Hyaluronidase",
+      "cancer": "lung cancer",
+      "model_score": 0.860691,
+      "specificity_lift": 0.744354,
+      "mechanism_score": 3.047696,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "TGFB1"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 <--associated-- lung cancer",
+          "score": 3.047696
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "FOXO3"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> FOXO3 <--associated-- lung cancer",
+          "score": 2.092981
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CST6"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CST6 <--associated-- lung cancer",
+          "score": 2.085319
+        }
+      ]
+    },
+    {
+      "drug": "Ivermectin",
+      "cancer": "lung cancer",
+      "model_score": 0.869072,
+      "specificity_lift": 0.742727,
+      "mechanism_score": 3.040457,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "SLCO1B3"
+          ],
+          "text": "Ivermectin --targets--> SLCO1B3 <--associated-- lung cancer",
+          "score": 3.040457
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "ABCB1"
+          ],
+          "text": "Ivermectin --targets--> ABCB1 <--associated-- lung cancer",
+          "score": 3.018068
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "ABCC2",
+            "JUND"
+          ],
+          "text": "Ivermectin --targets--> ABCC2 --interacts--> JUND <--associated-- lung cancer",
+          "score": 2.042657
+        }
+      ]
+    },
+    {
+      "drug": "Mivacurium",
+      "cancer": "lung cancer",
+      "model_score": 0.864785,
+      "specificity_lift": 0.742906,
+      "mechanism_score": 3.061497,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CHRNA2"
+          ],
+          "text": "Mivacurium --targets--> CHRNA2 <--associated-- lung cancer",
+          "score": 3.061497
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CHRM3",
+            "SLC4A7"
+          ],
+          "text": "Mivacurium --targets--> CHRM3 --interacts--> SLC4A7 <--associated-- lung cancer",
+          "score": 2.077406
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CHRNA2",
+            "EGR1"
+          ],
+          "text": "Mivacurium --targets--> CHRNA2 --interacts--> EGR1 <--associated-- lung cancer",
+          "score": 2.040539
+        }
+      ]
+    },
+    {
+      "drug": "Pramlintide",
+      "cancer": "lung cancer",
+      "model_score": 0.859379,
+      "specificity_lift": 0.742595,
+      "mechanism_score": 3.170501,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "RAMP2"
+          ],
+          "text": "Pramlintide --targets--> RAMP2 <--associated-- lung cancer",
+          "score": 3.170501
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RAMP1",
+            "RAD21"
+          ],
+          "text": "Pramlintide --targets--> RAMP1 --interacts--> RAD21 <--associated-- lung cancer",
+          "score": 2.114885
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CALCR",
+            "TSHR"
+          ],
+          "text": "Pramlintide --targets--> CALCR --interacts--> TSHR <--associated-- lung cancer",
+          "score": 2.09748
+        }
+      ]
+    },
+    {
+      "drug": "Varenicline",
+      "cancer": "lung cancer",
+      "model_score": 0.862171,
+      "specificity_lift": 0.742451,
+      "mechanism_score": 3.061163,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CHRNA3"
+          ],
+          "text": "Varenicline --targets--> CHRNA3 <--associated-- lung cancer",
+          "score": 3.061163
+        },
+        {
+          "type": "direct_target",
+          "genes": [
+            "CHRNA7"
+          ],
+          "text": "Varenicline --targets--> CHRNA7 <--associated-- lung cancer",
+          "score": 3.037928
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CHRNA3",
+            "CHRNB4"
+          ],
+          "text": "Varenicline --targets--> CHRNA3 --interacts--> CHRNB4 <--associated-- lung cancer",
+          "score": 2.07072
+        }
+      ]
+    },
+    {
+      "drug": "Capsaicin",
+      "cancer": "lymphosarcoma",
+      "model_score": 0.884953,
+      "specificity_lift": 0.767465,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 <--associated-- lymphosarcoma",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "CCND1"
+          ],
+          "text": "Capsaicin --targets--> MPO --interacts--> CCND1 <--associated-- lymphosarcoma",
+          "score": 2.029306
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- lymphosarcoma",
+          "score": 1.046622
+        }
+      ]
+    },
+    {
+      "drug": "Chlorpromazine",
+      "cancer": "lymphosarcoma",
+      "model_score": 0.884935,
+      "specificity_lift": 0.766839,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Chlorpromazine --targets--> CYP2E1 <--associated-- lymphosarcoma",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CALM1",
+            "SYK"
+          ],
+          "text": "Chlorpromazine --targets--> CALM1 --interacts--> SYK <--associated-- lymphosarcoma",
+          "score": 2.058347
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "ADRA2A",
+            "SYK"
+          ],
+          "text": "Chlorpromazine --targets--> ADRA2A --interacts--> SYK <--associated-- lymphosarcoma",
+          "score": 2.043322
+        }
+      ]
+    },
+    {
+      "drug": "Citric acid",
+      "cancer": "lymphosarcoma",
+      "model_score": 0.882149,
+      "specificity_lift": 0.766805,
+      "mechanism_score": 2.18238,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "HGS",
+            "SYK"
+          ],
+          "text": "Citric acid --targets--> HGS --interacts--> SYK <--associated-- lymphosarcoma",
+          "score": 2.18238
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "HGS",
+            "PAX5"
+          ],
+          "text": "Citric acid --targets--> HGS --interacts--> PAX5 <--associated-- lymphosarcoma",
+          "score": 2.161492
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CTDSP1",
+            "PAX5"
+          ],
+          "text": "Citric acid --targets--> CTDSP1 --interacts--> PAX5 <--associated-- lymphosarcoma",
+          "score": 2.127979
+        }
+      ]
+    },
+    {
+      "drug": "Naloxone",
+      "cancer": "lymphosarcoma",
+      "model_score": 0.880647,
+      "specificity_lift": 0.766962,
+      "mechanism_score": 2.09748,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "GSK3B"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> GSK3B <--associated-- lymphosarcoma",
+          "score": 2.09748
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "CREBBP"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> CREBBP <--associated-- lymphosarcoma",
+          "score": 2.08365
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TLR4",
+            "SYK"
+          ],
+          "text": "Naloxone --targets--> TLR4 --interacts--> SYK <--associated-- lymphosarcoma",
+          "score": 2.080633
+        }
+      ]
+    },
+    {
+      "drug": "Tirofiban",
+      "cancer": "lymphosarcoma",
+      "model_score": 0.884935,
+      "specificity_lift": 0.766846,
+      "mechanism_score": 2.075923,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "ITGB3",
+            "SYK"
+          ],
+          "text": "Tirofiban --targets--> ITGB3 --interacts--> SYK <--associated-- lymphosarcoma",
+          "score": 2.075923
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "ITGA2B",
+            "SYK"
+          ],
+          "text": "Tirofiban --targets--> ITGA2B --in pathway--> Integrin signaling <--in pathway-- SYK <--associated-- lymphosarcoma",
+          "score": 1.083304
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "ITGA2B",
+            "BRAF"
+          ],
+          "text": "Tirofiban --targets--> ITGA2B --in pathway--> Signaling by high-kinase activity BRAF mutants <--in pathway-- BRAF <--associated-- lymphosarcoma",
+          "score": 1.073715
+        }
+      ]
+    },
+    {
+      "drug": "Bromazepam",
+      "cancer": "mantle cell lymphoma",
+      "model_score": 0.854256,
+      "specificity_lift": 0.732288,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Bromazepam --targets--> CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 3.024418
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Bromazepam --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.046622
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP1A2",
+            "CYP2E1"
+          ],
+          "text": "Bromazepam --targets--> CYP1A2 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.039678
+        }
+      ]
+    },
+    {
+      "drug": "Capsaicin",
+      "cancer": "mantle cell lymphoma",
+      "model_score": 0.849785,
+      "specificity_lift": 0.732298,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "CCND1"
+          ],
+          "text": "Capsaicin --targets--> MPO --interacts--> CCND1 <--associated-- mantle cell lymphoma",
+          "score": 2.029306
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.046622
+        }
+      ]
+    },
+    {
+      "drug": "Ferrous ascorbate",
+      "cancer": "mantle cell lymphoma",
+      "model_score": 0.854617,
+      "specificity_lift": 0.732434,
+      "mechanism_score": 3.044286,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "TFRC"
+          ],
+          "text": "Ferrous ascorbate --targets--> TFRC <--associated-- mantle cell lymphoma",
+          "score": 3.044286
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "NEIL2",
+            "PAX5"
+          ],
+          "text": "Ferrous ascorbate --targets--> NEIL2 --interacts--> PAX5 <--associated-- mantle cell lymphoma",
+          "score": 2.080746
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "FEN1",
+            "GSK3B"
+          ],
+          "text": "Ferrous ascorbate --targets--> FEN1 --interacts--> GSK3B <--associated-- mantle cell lymphoma",
+          "score": 2.064986
+        }
+      ]
+    },
+    {
+      "drug": "Trabectedin",
+      "cancer": "mantle cell lymphoma",
+      "model_score": 0.85736,
+      "specificity_lift": 0.73228,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Trabectedin --targets--> CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 3.024418
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Trabectedin --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.046622
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2C9",
+            "CYP2E1"
+          ],
+          "text": "Trabectedin --targets--> CYP2C9 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.039143
+        }
+      ]
+    },
+    {
+      "drug": "Zopiclone",
+      "cancer": "mantle cell lymphoma",
+      "model_score": 0.853668,
+      "specificity_lift": 0.732585,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 3.024418
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.046622
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2C8",
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2C8 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- mantle cell lymphoma",
+          "score": 1.041353
+        }
+      ]
+    },
+    {
+      "drug": "Amobarbital",
+      "cancer": "non-small cell lung carcinoma (disease)",
+      "model_score": 0.859269,
+      "specificity_lift": 0.738563,
+      "mechanism_score": 3.037392,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "GRIK2"
+          ],
+          "text": "Amobarbital --targets--> GRIK2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 3.037392
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GABRA2",
+            "MDM2"
+          ],
+          "text": "Amobarbital --targets--> GABRA2 --interacts--> MDM2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.031589
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GRIA2",
+            "GRIK2"
+          ],
+          "text": "Amobarbital --targets--> GRIA2 --interacts--> GRIK2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.031403
+        }
+      ]
+    },
+    {
+      "drug": "Capsaicin",
+      "cancer": "non-small cell lung carcinoma (disease)",
+      "model_score": 0.855802,
+      "specificity_lift": 0.738315,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Capsaicin --targets--> CYP2E1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PHB2",
+            "AKT1"
+          ],
+          "text": "Capsaicin --targets--> PHB2 --interacts--> AKT1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.064276
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MPO",
+            "SMARCA4"
+          ],
+          "text": "Capsaicin --targets--> MPO --interacts--> SMARCA4 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.036857
+        }
+      ]
+    },
+    {
+      "drug": "Insulin pork",
+      "cancer": "non-small cell lung carcinoma (disease)",
+      "model_score": 0.86269,
+      "specificity_lift": 0.738022,
+      "mechanism_score": 3.081853,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "RB1"
+          ],
+          "text": "Insulin pork --targets--> RB1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 3.081853
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "E2F5"
+          ],
+          "text": "Insulin pork --targets--> RB1 --interacts--> E2F5 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.25
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "RB1",
+            "E2F2"
+          ],
+          "text": "Insulin pork --targets--> RB1 --interacts--> E2F2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.25
+        }
+      ]
+    },
+    {
+      "drug": "Pentobarbital",
+      "cancer": "non-small cell lung carcinoma (disease)",
+      "model_score": 0.861134,
+      "specificity_lift": 0.739051,
+      "mechanism_score": 3.037392,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "GRIK2"
+          ],
+          "text": "Pentobarbital --targets--> GRIK2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 3.037392
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GRIN2B",
+            "DAPK1"
+          ],
+          "text": "Pentobarbital --targets--> GRIN2B --interacts--> DAPK1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.032011
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GABRA2",
+            "MDM2"
+          ],
+          "text": "Pentobarbital --targets--> GABRA2 --interacts--> MDM2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.031589
+        }
+      ]
+    },
+    {
+      "drug": "Zopiclone",
+      "cancer": "non-small cell lung carcinoma (disease)",
+      "model_score": 0.859445,
+      "specificity_lift": 0.738362,
+      "mechanism_score": 3.024418,
+      "mechanism_support": "direct-target mechanism",
+      "moa_paths": [
+        {
+          "type": "direct_target",
+          "genes": [
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 3.024418
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "GABRA2",
+            "MDM2"
+          ],
+          "text": "Zopiclone --targets--> GABRA2 --interacts--> MDM2 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 2.031589
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "CYP2E1",
+            "CYP2E1"
+          ],
+          "text": "Zopiclone --targets--> CYP2E1 --in pathway--> Biosynthesis of maresin-like SPMs <--in pathway-- CYP2E1 <--associated-- non-small cell lung carcinoma (disease)",
+          "score": 1.046622
+        }
+      ]
+    },
+    {
+      "drug": "Desmopressin",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "model_score": 0.888575,
+      "specificity_lift": 0.774111,
+      "mechanism_score": 2.087997,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "AVPR2",
+            "TAL1"
+          ],
+          "text": "Desmopressin --targets--> AVPR2 --interacts--> TAL1 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.087997
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PTGS2",
+            "BAX"
+          ],
+          "text": "Desmopressin --targets--> PTGS2 --interacts--> BAX <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.027799
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "AVPR2",
+            "IL7R"
+          ],
+          "text": "Desmopressin --targets--> AVPR2 --in pathway--> Cargo recognition for clathrin-mediated endocytosis <--in pathway-- IL7R <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 1.041295
+        }
+      ]
+    },
+    {
+      "drug": "Hyaluronidase",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "model_score": 0.891211,
+      "specificity_lift": 0.774875,
+      "mechanism_score": 2.08755,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CTCF"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CTCF <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.08755
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "BCL10"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> BCL10 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.069338
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "FBXW7"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> FBXW7 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.059368
+        }
+      ]
+    },
+    {
+      "drug": "Lindane",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "model_score": 0.891894,
+      "specificity_lift": 0.774129,
+      "mechanism_score": 2.099649,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "GABRR1",
+            "BCR"
+          ],
+          "text": "Lindane --targets--> GABRR1 --interacts--> BCR <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.099649
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PGR",
+            "STAT5B"
+          ],
+          "text": "Lindane --targets--> PGR --interacts--> STAT5B <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.04074
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "ESR1",
+            "DDX3X"
+          ],
+          "text": "Lindane --targets--> ESR1 --interacts--> DDX3X <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.032963
+        }
+      ]
+    },
+    {
+      "drug": "Naloxone",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "model_score": 0.887475,
+      "specificity_lift": 0.77379,
+      "mechanism_score": 2.215338,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "CCND3"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> CCND3 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.215338
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "ABL1"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> ABL1 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.096713
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "SMARCA4"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> SMARCA4 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.088592
+        }
+      ]
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "precursor T-cell acute lymphoblastic leukemia",
+      "model_score": 0.886526,
+      "specificity_lift": 0.774741,
+      "mechanism_score": 2.08552,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "APP",
+            "SET"
+          ],
+          "text": "Tromethamine --targets--> APP --interacts--> SET <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.08552
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "APP",
+            "DNM2"
+          ],
+          "text": "Tromethamine --targets--> APP --interacts--> DNM2 <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.05974
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "APP",
+            "CTCF"
+          ],
+          "text": "Tromethamine --targets--> APP --interacts--> CTCF <--associated-- precursor T-cell acute lymphoblastic leukemia",
+          "score": 2.058063
+        }
+      ]
+    },
+    {
+      "drug": "Citric acid",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "model_score": 0.883367,
+      "specificity_lift": 0.768024,
+      "mechanism_score": 2.101607,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "C8G",
+            "CTCF"
+          ],
+          "text": "Citric acid --targets--> C8G --interacts--> CTCF <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.101607
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "SRC",
+            "PLCG1"
+          ],
+          "text": "Citric acid --targets--> SRC --interacts--> PLCG1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.051218
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "SRC",
+            "STAT5B"
+          ],
+          "text": "Citric acid --targets--> SRC --interacts--> STAT5B <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.039169
+        }
+      ]
+    },
+    {
+      "drug": "Heparin",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "model_score": 0.885586,
+      "specificity_lift": 0.768033,
+      "mechanism_score": 2.079937,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "FGFR1",
+            "RPS6KA1"
+          ],
+          "text": "Heparin --targets--> FGFR1 --interacts--> RPS6KA1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.079937
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "FGFR2",
+            "RPS6KA1"
+          ],
+          "text": "Heparin --targets--> FGFR2 --interacts--> RPS6KA1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.079937
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "SERPINC1",
+            "PLCG1"
+          ],
+          "text": "Heparin --targets--> SERPINC1 --interacts--> PLCG1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.07072
+        }
+      ]
+    },
+    {
+      "drug": "Hyaluronidase",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "model_score": 0.885075,
+      "specificity_lift": 0.768738,
+      "mechanism_score": 2.08755,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CTCF"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CTCF <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.08755
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CDKN2A"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CDKN2A <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.04649
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "TGFB1",
+            "TP53"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --in pathway--> RUNX3 regulates CDKN1A transcription <--in pathway-- TP53 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 1.105155
+        }
+      ]
+    },
+    {
+      "drug": "Hydroxocobalamin",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "model_score": 0.886375,
+      "specificity_lift": 0.768127,
+      "mechanism_score": 2.150515,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "MMACHC",
+            "IRF4"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMACHC --interacts--> IRF4 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.150515
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MMAA",
+            "CTCF"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMAA --interacts--> CTCF <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.131325
+        }
+      ]
+    },
+    {
+      "drug": "Naloxone",
+      "cancer": "primary cutaneous T-cell lymphoma",
+      "model_score": 0.88188,
+      "specificity_lift": 0.768195,
+      "mechanism_score": 2.166667,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "PRKG1"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> PRKG1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.166667
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "RPS6KA1"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> RPS6KA1 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.166667
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "CHD3"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> CHD3 <--associated-- primary cutaneous T-cell lymphoma",
+          "score": 2.139471
+        }
+      ]
+    },
+    {
+      "drug": "Carboprost tromethamine",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "model_score": 0.889175,
+      "specificity_lift": 0.769304,
+      "mechanism_score": 2.079065,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "PTGER1",
+            "CTCF"
+          ],
+          "text": "Carboprost tromethamine --targets--> PTGER1 --interacts--> CTCF <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.079065
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "PTGER1",
+            "STAT5B"
+          ],
+          "text": "Carboprost tromethamine --targets--> PTGER1 --interacts--> STAT5B <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.066547
+        }
+      ]
+    },
+    {
+      "drug": "Hyaluronidase",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "model_score": 0.886986,
+      "specificity_lift": 0.77065,
+      "mechanism_score": 2.08755,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CTCF"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CTCF <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.08755
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "TGFB1",
+            "CDKN2A"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --interacts--> CDKN2A <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.04649
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "TGFB1",
+            "TP53"
+          ],
+          "text": "Hyaluronidase --targets--> TGFB1 --in pathway--> RUNX3 regulates CDKN1A transcription <--in pathway-- TP53 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 1.105155
+        }
+      ]
+    },
+    {
+      "drug": "Hydroxocobalamin",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "model_score": 0.887542,
+      "specificity_lift": 0.769295,
+      "mechanism_score": 2.150515,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "MMACHC",
+            "IRF4"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMACHC --interacts--> IRF4 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.150515
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "MMAA",
+            "CTCF"
+          ],
+          "text": "Hydroxocobalamin --targets--> MMAA --interacts--> CTCF <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.131325
+        }
+      ]
+    },
+    {
+      "drug": "Naloxone",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "model_score": 0.883136,
+      "specificity_lift": 0.769451,
+      "mechanism_score": 2.08397,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "TLR4",
+            "IRF4"
+          ],
+          "text": "Naloxone --targets--> TLR4 --interacts--> IRF4 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.08397
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "CREB1",
+            "ATM"
+          ],
+          "text": "Naloxone --targets--> CREB1 --interacts--> ATM <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.077211
+        },
+        {
+          "type": "ppi",
+          "genes": [
+            "OPRM1",
+            "ATM"
+          ],
+          "text": "Naloxone --targets--> OPRM1 --interacts--> ATM <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.025367
+        }
+      ]
+    },
+    {
+      "drug": "Tromethamine",
+      "cancer": "primary cutaneous T-cell non-Hodgkin lymphoma",
+      "model_score": 0.882104,
+      "specificity_lift": 0.770318,
+      "mechanism_score": 2.058063,
+      "mechanism_support": "interaction-level mechanism",
+      "moa_paths": [
+        {
+          "type": "ppi",
+          "genes": [
+            "APP",
+            "CTCF"
+          ],
+          "text": "Tromethamine --targets--> APP --interacts--> CTCF <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 2.058063
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "APP",
+            "NFKB2"
+          ],
+          "text": "Tromethamine --targets--> APP --in pathway--> The NLRP3 inflammasome <--in pathway-- NFKB2 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 1.053014
+        },
+        {
+          "type": "shared_pathway",
+          "genes": [
+            "APP",
+            "NFKB2"
+          ],
+          "text": "Tromethamine --targets--> APP --in pathway--> TRAF6 mediated NF-kB activation <--in pathway-- NFKB2 <--associated-- primary cutaneous T-cell non-Hodgkin lymphoma",
+          "score": 1.047031
+        }
+      ]
+    }
+  ]
+}

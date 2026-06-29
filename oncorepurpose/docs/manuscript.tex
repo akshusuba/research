@@ -47,10 +47,15 @@ future indications in the top 50 as a structure-blind control (recovering post-c
 approvals such as romidepsin and pralatrexate for cutaneous T-cell lymphoma and nilotinib
 for CML), although it is not better on median rank. A counterfactual test confirms the
 mechanism head is faithful: deleting the single curated mechanism edge collapses the
-prediction far more than deleting a random edge ($p\approx3.6\times10^{-34}$). Finally, a
-popularity-deconfounded ClinicalTrials.gov check is reported as a fully characterized
-negative. The contribution is not a new model but an honest account of \emph{when graph
-structure is actually necessary} and a mechanism-first pipeline that acts on that finding.
+prediction far more than deleting a random edge ($p\approx3.6\times10^{-34}$). Going further,
+a counterfactual stress test shows the prediction is \emph{causal} (target-edge ablation
+AUROC $0.878$), \emph{specific} (a wrong target is rejected $92.6\%$ of the time), and
+literature-supported over decoys, and independent DepMap/GTEx functional-genomics data
+corroborate that the bridge genes are real cancer dependencies (AUROC $0.607$,
+$p=4.6\times10^{-6}$). Finally, a popularity-deconfounded ClinicalTrials.gov check is reported
+as a fully characterized negative. The contribution is not a new model but an evidence-triage
+pipeline --- and an honest account of \emph{when graph structure is actually necessary} ---
+that tests whether a proposed mechanism is causally important, specific, and supported.
 \end{abstract}
 
 \section{Introduction}
@@ -91,6 +96,10 @@ titles) and is more precise than a lexical baseline against curated mechanisms
 \item \textbf{Prospective and faithfulness audits}: top-tail enrichment of future
 indications under a time-split (Sec.~\ref{sec:prospective}) and a counterfactual
 edge-deletion test of mechanism faithfulness (Sec.~\ref{sec:faith}).
+\item \textbf{A counterfactual evidence-triage layer} (Sec.~\ref{sec:triage}) that tests
+whether the prediction is \emph{causal} (target-edge ablation), \emph{specific}
+(wrong-target rejection), and \emph{supported} (decoy-path verification), with independent
+DepMap/GTEx corroboration and an evidence-weighted retrieval layer.
 \item \textbf{A popularity-deconfounded orthogonal check} against ClinicalTrials.gov,
 reported transparently as a negative (Sec.~\ref{sec:ct}).
 \end{enumerate}
@@ -257,6 +266,62 @@ Because the link-only head was never trained on the mechanism task, this isolate
 \emph{objective}, not the architecture: joint mechanism supervision creates a recoverable
 mechanism signal that a link objective alone does not. We do not claim de novo discovery;
 this is recovery of \emph{known} mechanism through indirect structure on a modest sample.
+
+\section{Counterfactual evidence-triage: causality, specificity, orthogonal support}\label{sec:triage}
+Faithfulness (Sec.~\ref{sec:faith}) asks whether the model uses the named edge. A stronger
+question --- and the project's central claim --- is whether the prediction is made for the
+\emph{right biological reason}. We probe this with three counterfactuals
+(Table~\ref{tab:cf}). \textbf{(i) Target-edge ablation:} deleting the curated drug--target
+edge drops the mechanism score far more than deleting a matched random edge of the same drug
+(contrast $0.168$, faithful $87.2\%$, paired Wilcoxon $p\approx10^{-40}$, separation AUROC
+$0.878$). \textbf{(ii) Wrong-target substitution:} replacing the true target with a
+degree-matched, disease-unassociated decoy is rejected $92.6\%$ of the time (true-vs-decoy
+AUROC $0.923$). \textbf{(iii) Decoy-path verification:} swapping the bridge gene for a decoy
+and re-running the literature verifier, true bridges are graded \emph{supported} $80\%$ of
+the time versus $17\%$ for decoys. The prediction is causally tied to, specific to, and
+literature-supported on the named mechanism.
+
+\begin{table}[t]
+\centering\small
+\caption{Counterfactual mechanism stress test. The model relies on the true MOA edge (T1),
+rejects wrong targets (T2), and is supported over decoy paths (T3).}
+\label{tab:cf}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Counterfactual} & \textbf{Key statistic} & \textbf{Sep.\ AUROC}\\
+\midrule
+T1 target-edge ablation (causal) & faithful $87.2\%$, $p\approx10^{-40}$ & 0.878\\
+T2 wrong-target substitution (specific) & rejection $92.6\%$ & 0.923\\
+T3 decoy-path verifier (supported) & supported $0.80$ vs $0.17$ & ---\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Independent functional-genomics corroboration.} The graph and the literature are
+not independent of each other. We add a third axis from data the model never saw: DepMap
+CRISPR (Chronos) gene-effect and GTEx tissue expression. The bridge genes of true
+indications are stronger dependencies in the matched cancer lineage than those of
+shared-target negatives (AUROC $0.607$, Mann--Whitney $p=4.6\times10^{-6}$) and more
+expressed in the matched tissue (AUROC $0.618$), with no reference to PrimeKG or text.
+Folding functional features into a specificity classifier lifts the hardest separation
+(true vs shared-target) from the path-only $0.609$ to $0.751$; the honest control is that a
+gradient-boosted model on structure-only features already reaches $0.731$, so the functional
+data add a clean increment ($+0.054$ on a linear model) on top of structure rather than the
+whole jump. The contribution is orthogonal evidence that the bridge genes are real cancer
+dependencies.
+
+\paragraph{Evidence weighting makes retrieval load-bearing.} Re-weighting each path by
+Europe PMC evidence (co-mention strength, recency, bridge-gene specificity, minus a
+contradiction penalty) leaves the saturated true-vs-random separation unchanged
+($0.886\to0.890$) but sharpens the hard case from $0.618$ to $0.742$, demoting coincidental
+hub paths (e.g.\ an Insulin$\to$RB1$\to$GIST chain with structure score $3.08$ collapses to
+$0$ because the drug is never co-mentioned with the cancer). The retrieval layer is thus
+load-bearing exactly where structure alone fails. For decision-readiness we add split-conformal
+calibration (empirical coverage $90.3\%$ at a $90\%$ target, abstaining on $96\%$ of negatives),
+bootstrap $95\%$ CIs on the headline separations, a multi-cutoff temporal trend
+($T{=}2000/2005/2010$, graph gain $+0.065/+0.037/+0.029$), a mechanism-novelty triage ($\sim$83\%
+of the shortlist are non-textbook MOAs), and a timestamped, hash-committed registry of 60 novel
+predictions for prospective falsification.
 
 \section{A popularity-deconfounded orthogonal check (an honest negative)}\label{sec:ct}
 Do the model's novel predictions show up as real human trials? A naive check against

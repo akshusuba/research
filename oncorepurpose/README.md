@@ -232,7 +232,10 @@ includes model scores, mechanism paths, and retrieved literature.
 - [x] Open-access full-text fetch wired in (PMC OA subset is sparse, so abstracts still dominate).
 - [x] Joint mechanism supervision creates recoverable mechanism signal: the jointly-trained graph names the held-out bridge gene at R@10 0.25, while degree-trivial and link-only baselines (no mechanism objective) hit 0 -- the signal comes from the mechanism objective, not architecture alone.
 - [x] Mechanism-first shortlist generator: ranks by specificity lift, keeps only candidates with a real MOA path (no phenotype bridges); see `results/repurposing_shortlist.md`.
-- [x] Learning-track notebooks: Parts 7--8 are executed with saved outputs (real numbers); Parts 1--6 and the full self-contained notebook are runnable templates.
+- [x] **Counterfactual stress test** (`counterfactual_stress_test.py`): the prediction is *causal* (target-edge ablation AUROC 0.878, faithful 87%), *specific* (wrong-target rejection 92.6%), and *literature-supported* over decoys (0.80 vs 0.17).
+- [x] **Independent functional-genomics corroboration** (`validate_functional_genomics.py`): DepMap CRISPR / GTEx confirm true-MOA bridge genes are real cancer dependencies (AUROC 0.607, p=4.6e-6) with no graph/text; a specificity classifier lifts the hardest separation 0.609→0.751 (honest control: structure-only GBM already 0.731).
+- [x] **Evidence-weighted graph** (`evidence_weighted_graph.py`): re-weighting paths by Europe PMC support sharpens the shared-target case 0.618→0.742 and demotes coincidental hub paths -- the retrieval layer is load-bearing.
+- [x] **Decision-readiness**: conformal abstention (90.3% coverage), bootstrap 95% CIs, multi-cutoff temporal trend, mechanism-novelty triage (~83% non-textbook), and 60 hash-committed registered predictions for prospective falsification.
 - [ ] Broaden full-text coverage (non-OA sources) and scale the LLM verifier run.
 
 *All predictions are hypothesis-generating and not medical advice.*

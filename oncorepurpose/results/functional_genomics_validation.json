@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "framing": "OncoEvidence: A Counterfactual Evidence-Triage Platform for Mechanism-Guided Cancer Drug Repurposing",
+    "n_true": 400,
+    "n_shared_target_neg": 368,
+    "disease_lineage_coverage": 0.8958333333333334,
+    "path_only_shared_target_auroc_reference": 0.609
+  },
+  "phase1_depmap": {
+    "available": true,
+    "lineage_cell_line_counts": {
+      "Ampulla of Vater": 4,
+      "Biliary Tract": 34,
+      "Bladder/Urinary Tract": 32,
+      "Bone": 37,
+      "Bowel": 59,
+      "Breast": 48,
+      "CNS/Brain": 86,
+      "Cervix": 18,
+      "Esophagus/Stomach": 65,
+      "Eye": 15,
+      "Head and Neck": 72,
+      "Kidney": 37,
+      "Liver": 24,
+      "Lung": 119,
+      "Lymphoid": 81,
+      "Myeloid": 37,
+      "Other": 1,
+      "Ovary/Fallopian Tube": 59,
+      "Pancreas": 47,
+      "Peripheral Nervous System": 41,
+      "Pleura": 19,
+      "Prostate": 10,
+      "Skin": 71,
+      "Soft Tissue": 36,
+      "Testis": 2,
+      "Thyroid": 11,
+      "Uterus": 33,
+      "Vulva/Vagina": 2
+    },
+    "n_depmap_genes_used": 1367,
+    "results": {
+      "mean_dependency": {
+        "auroc_true_vs_shared": 0.6068358445678033,
+        "mannwhitney_p": 4.6101923603167265e-06,
+        "n_true_scored": 325,
+        "n_neg_scored": 291,
+        "true_mean_chronos": -0.30432264683093413,
+        "neg_mean_chronos": -0.18648119807702493,
+        "true_frac_strong_dep_lt_-0.5": 0.20615384615384616,
+        "neg_frac_strong_dep_lt_-0.5": 0.058419243986254296
+      },
+      "strongest_dependency": {
+        "auroc_true_vs_shared": 0.5829764736981231,
+        "mannwhitney_p": 0.0003710622721453617,
+        "n_true_scored": 325,
+        "n_neg_scored": 291,
+        "true_mean_chronos": -1.2805946190772721,
+        "neg_mean_chronos": -1.0268329908811036,
+        "true_frac_strong_dep_lt_-0.5": 0.72,
+        "neg_frac_strong_dep_lt_-0.5": 0.6288659793814433
+      },
+      "best_path_dependency": {
+        "auroc_true_vs_shared": 0.5530637060533968,
+        "mannwhitney_p": 0.02286809646383635,
+        "n_true_scored": 325,
+        "n_neg_scored": 291,
+        "true_mean_chronos": -0.27865537040218336,
+        "neg_mean_chronos": -0.18123951615103015,
+        "true_frac_strong_dep_lt_-0.5": 0.19692307692307692,
+        "neg_frac_strong_dep_lt_-0.5": 0.14432989690721648
+      }
+    }
+  },
+  "phase2_gtex": {
+    "available": true,
+    "tissues_used": [
+      "Bladder",
+      "Brain - Cortex",
+      "Breast - Mammary Tissue",
+      "Cervix - Endocervix",
+      "Colon - Transverse",
+      "Kidney - Cortex",
+      "Liver",
+      "Lung",
+      "Minor Salivary Gland",
+      "Ovary",
+      "Pancreas",
+      "Prostate",
+      "Skin - Sun Exposed (Lower leg)",
+      "Spleen",
+      "Stomach",
+      "Testis",
+      "Thyroid",
+      "Uterus",
+      "Whole Blood"
+    ],
+    "n_gtex_genes": 1362,
+    "true_mean_log1p_tpm": 2.5686339275679138,
+    "neg_mean_log1p_tpm": 2.0742933628141564,
+    "standalone_auroc": 0.6183336046006944,
+    "standalone_p": 1.8643901956994849e-06,
+    "n_true_scored": 288,
+    "n_neg_scored": 256
+  },
+  "phase3_lincs": {
+    "available": false,
+    "reason": "clue.io API key not set (CLUE_API_KEY / LINCS_API_KEY); L1000 connectivity requires an authenticated key. SKIPPED per plan -- not burning time here."
+  },
+  "phase4_classifier": {
+    "feature_names": [
+      "mech_score",
+      "dep_mean",
+      "dep_min",
+      "gtex_expr",
+      "log_promiscuity",
+      "has_direct_target"
+    ],
+    "n_true": 400,
+    "n_shared_target_neg": 368,
+    "path_only_auroc": 0.6093036684782609,
+    "cv_auroc": {
+      "path_only_baseline": 0.6093036684782609,
+      "lr_structure_only": 0.6301677989130436,
+      "lr_struct_plus_depmap": 0.6629714673913043,
+      "lr_struct_plus_gtex": 0.6399823369565218,
+      "lr_functional_only": 0.6240597826086957,
+      "lr_all_features": 0.6678111413043478,
+      "gbm_structure_only": 0.7305115489130435,
+      "gbm_all_features": 0.7505366847826087
+    },
+    "cv_auroc_std": {
+      "path_only_baseline": 0.0,
+      "lr_structure_only": 0.0035182259728508236,
+      "lr_struct_plus_depmap": 0.0036765664158603323,
+      "lr_struct_plus_gtex": 0.0027741394524569297,
+      "lr_functional_only": 0.005468661557480889,
+      "lr_all_features": 0.0032874564356476102,
+      "gbm_structure_only": 0.0072655380086566294,
+      "gbm_all_features": 0.0033711269445805218
+    },
+    "best_model": "gbm_all_features",
+    "best_auroc": 0.7505366847826087,
+    "improvement_over_path_only": 0.1412330163043478,
+    "beats_path_only": true,
+    "cv": "repeated StratifiedKFold(5, shuffle) x5 seeds; median-imputed, standardized"
+  }
+}

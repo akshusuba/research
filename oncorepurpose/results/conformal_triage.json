@@ -1,0 +1,70 @@
+{
+  "timestamp_utc": "2026-06-28T23:31:49.053240+00:00",
+  "mode": "full",
+  "dataset": "PrimeKG",
+  "target_edge_type": [
+    "drug",
+    "indication",
+    "disease"
+  ],
+  "device": "cuda",
+  "config": {
+    "epochs": 40,
+    "patience": 10,
+    "seed": 0,
+    "hidden": 128,
+    "val_frac": 0.1,
+    "test_frac": 0.3,
+    "target_coverages": [
+      0.8,
+      0.9,
+      0.95
+    ]
+  },
+  "split_positives": {
+    "train": 5633,
+    "early_stop": 939,
+    "held_out": 2816
+  },
+  "held_out_score_auroc": 0.976185065655669,
+  "n_calibration_positives": 1408,
+  "n_test_positives": 1408,
+  "n_test_negatives": 1408,
+  "coverage_table": [
+    {
+      "target_coverage": 0.8,
+      "score_threshold": 0.6025767922401428,
+      "empirical_coverage_test_positives": 0.8061079545454546,
+      "abstention_rate_pool": 0.5848721590909091,
+      "negative_abstention_rate": 0.9758522727272727,
+      "n_accepted_pool": 1169,
+      "n_pool": 2816
+    },
+    {
+      "target_coverage": 0.9,
+      "score_threshold": 0.44185173511505127,
+      "empirical_coverage_test_positives": 0.9026988636363636,
+      "abstention_rate_pool": 0.5291193181818182,
+      "negative_abstention_rate": 0.9609375,
+      "n_accepted_pool": 1326,
+      "n_pool": 2816
+    },
+    {
+      "target_coverage": 0.95,
+      "score_threshold": 0.12808780372142792,
+      "empirical_coverage_test_positives": 0.9474431818181818,
+      "abstention_rate_pool": 0.4754971590909091,
+      "negative_abstention_rate": 0.8984375,
+      "n_accepted_pool": 1477,
+      "n_pool": 2816
+    }
+  ],
+  "headline_coverage": 0.9,
+  "headline": "At target coverage 90%, split-conformal triage achieves empirical coverage 90.3% on held-out true indications (score threshold 0.442), abstaining on 52.9% of a positives+negatives pool and 96.1% of negatives.",
+  "shortlist_calibration": {
+    "n_candidates": 30,
+    "n_accept": 25,
+    "n_abstain": 5,
+    "abstention_rate": 0.16666666666666666
+  }
+}

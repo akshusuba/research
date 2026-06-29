@@ -1,0 +1,154 @@
+{
+  "timestamp_utc": "2026-06-28T23:33:09.119595+00:00",
+  "mode": "full",
+  "dataset": "PrimeKG",
+  "n_boot": 2000,
+  "bootstrap": {
+    "mechanism_separation": {
+      "auroc": 0.879259375,
+      "ci95_low": 0.8562240625,
+      "ci95_high": 0.8998903125,
+      "boot_mean": 0.878722053125,
+      "boot_std": 0.011511173162864808,
+      "n_pos": 400,
+      "n_neg": 400,
+      "n_boot": 2000
+    },
+    "hard_negatives": {
+      "random": {
+        "auroc": 0.88715625,
+        "ci95_low": 0.865190390625,
+        "ci95_high": 0.90803125,
+        "boot_mean": 0.8867952625,
+        "boot_std": 0.010748819505379125,
+        "n_pos": 400,
+        "n_neg": 400,
+        "n_boot": 2000
+      },
+      "degree_matched": {
+        "auroc": 0.742521875,
+        "ci95_low": 0.7079071874999999,
+        "ci95_high": 0.776579140625,
+        "boot_mean": 0.74252705625,
+        "boot_std": 0.01730920303840042,
+        "n_pos": 400,
+        "n_neg": 400,
+        "n_boot": 2000
+      },
+      "oncology_drug": {
+        "auroc": 0.86966875,
+        "ci95_low": 0.8444940625,
+        "ci95_high": 0.89199234375,
+        "boot_mean": 0.8692966859374999,
+        "boot_std": 0.01190532964817179,
+        "n_pos": 400,
+        "n_neg": 400,
+        "n_boot": 2000
+      },
+      "shared_target": {
+        "auroc": 0.6093036684782609,
+        "ci95_low": 0.568524711277174,
+        "ci95_high": 0.6489622112771739,
+        "boot_mean": 0.6089039164402175,
+        "boot_std": 0.020529249015281734,
+        "n_pos": 400,
+        "n_neg": 368,
+        "n_boot": 2000
+      }
+    }
+  },
+  "temporal_multi_cutoff": {
+    "config": {
+      "n_pairs": 350,
+      "epochs": 40,
+      "mlp_epochs": 150,
+      "seeds": [
+        0,
+        1
+      ],
+      "years_from_cache": 341,
+      "unresolved": 9
+    },
+    "per_cutoff": [
+      {
+        "cutoff_year": 2000,
+        "n_past_total": 215,
+        "n_train_pos": 183,
+        "n_future_pos": 126,
+        "gnn_auroc_mean": 0.9303602922650542,
+        "gnn_auroc_std": 0.006298815822625425,
+        "mlp_auroc_mean": 0.8649722852103805,
+        "mlp_auroc_std": 0.009366339128243861,
+        "graph_gain_auroc": 0.06538800705467374,
+        "gnn_auroc_values": [
+          0.9240614764424288,
+          0.9366591080876796
+        ],
+        "mlp_auroc_values": [
+          0.8556059460821366,
+          0.8743386243386243
+        ]
+      },
+      {
+        "cutoff_year": 2005,
+        "n_past_total": 240,
+        "n_train_pos": 204,
+        "n_future_pos": 101,
+        "gnn_auroc_mean": 0.9329183413390845,
+        "gnn_auroc_std": 0.0005391628271738669,
+        "mlp_auroc_mean": 0.8964023134986766,
+        "mlp_auroc_std": 0.0054700519556906135,
+        "graph_gain_auroc": 0.03651602784040786,
+        "gnn_auroc_values": [
+          0.9323791785119105,
+          0.9334575041662583
+        ],
+        "mlp_auroc_values": [
+          0.9018723654543672,
+          0.890932261542986
+        ]
+      },
+      {
+        "cutoff_year": 2010,
+        "n_past_total": 288,
+        "n_train_pos": 245,
+        "n_future_pos": 53,
+        "gnn_auroc_mean": 0.9353862584549661,
+        "gnn_auroc_std": 0.004236383054467829,
+        "mlp_auroc_mean": 0.9066927732289072,
+        "mlp_auroc_std": 0.00907796368814523,
+        "graph_gain_auroc": 0.028693485226058968,
+        "gnn_auroc_values": [
+          0.9311498754004983,
+          0.939622641509434
+        ],
+        "mlp_auroc_values": [
+          0.8976148095407619,
+          0.9157707369170524
+        ]
+      }
+    ],
+    "trend": {
+      "cutoffs": [
+        2000,
+        2005,
+        2010
+      ],
+      "gnn_auroc_per_cutoff": [
+        0.9303602922650542,
+        0.9329183413390845,
+        0.9353862584549661
+      ],
+      "graph_gain_per_cutoff": [
+        0.06538800705467374,
+        0.03651602784040786,
+        0.028693485226058968
+      ],
+      "gnn_auroc_slope_per_year": 0.0005025966189911653,
+      "graph_gain_slope_per_year": -0.0036694521828612723,
+      "gnn_above_chance_all": true,
+      "graph_gain_positive_all": true
+    }
+  },
+  "headline": "Mechanism separation AUROC 0.879 (95% CI 0.856-0.900). Prospective GNN AUROC stays above chance at all cutoffs (yes); graph gain over MLP [T=2000:+0.065, T=2005:+0.037, T=2010:+0.029]."
+}
